@@ -3,7 +3,39 @@
 // VARIABLES
 
 // FUNCIONES (Inicialización, Uso...)
-
+#define REG_M1_di_PORT	PORTL
+		#define REG_M1_di_DDR	DDRL
+		#define REG_M1_di_PIN	PINL
+		
+		#define PIN_M1_di_PORT	PK0
+		#define PIN_M1_di_DDR  	DDK0
+		#define PIN_M1_di_PIN  	PINK0
+			// Enable
+		#define REG_M1_en_PORT	PORTK
+		#define REG_M1_en_DDR	DDRK
+		#define REG_M1_en_PIN	PINK
+		
+		#define PIN_M1_en_PORT	PK2
+		#define PIN_M1_en_DDR	DDK2
+		#define PIN_M1_en_PIN	PINK2
+		
+		// Motor M2 => Rodillos verticales
+			// Direction
+		#define REG_M2_di_PORT	PORTK
+		#define REG_M2_di_DDR	DDRK
+		#define REG_M2_di_PIN	PINK
+		
+		#define PIN_M2_di_PORT	PK4
+		#define PIN_M2_di_DDR  	DDK4
+		#define PIN_M2_di_PIN  	PINK4
+			// Enable
+		#define REG_M2_en_PORT	PORTK
+		#define REG_M2_en_DDR	DDRK
+		#define REG_M2_en_PIN	PINK
+		
+		#define PIN_M2_en_PORT	PK6
+		#define PIN_M2_en_DDR	DDK6
+		#define PIN_M2_en_PIN	PINK6
 
 // FUNCIONES LUZ (L1)
 
