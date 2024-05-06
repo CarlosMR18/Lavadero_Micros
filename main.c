@@ -5,7 +5,7 @@
 
 int main(void) {
     setup_Parte_1();
-	//setup_Parte_2();
+	setup_Parte_2();
 	//setup_Parte_3();
 	
 	while(1) {
