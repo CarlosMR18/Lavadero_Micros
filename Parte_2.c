@@ -3,20 +3,24 @@
 // VARIABLES
 
 // FUNCIONES (Inicialización, Uso...)
+
+
+// FUNCIONES LUZ (L1)
+
 void setup_luz(){
-	DDRL=0X00; 
+	DDRL=0X00; 	//Comentario Carlos (CC): debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
 	PORTL=0X00; 
 	cli();												//deshabilito las interrupciones globales
 	TCCR5A= 0x00;										//configurar CTC
-	TCCR5B= (1 << WGM52) | (1 << CS51) | (1 << CS50);	//Preescalador de 64
+	TCCR5B= (1 << WGM52) | (1 << CS51) | (1 << CS50);	//Preescalador de 64  									//CC: No olvides "|", TCCR5B |= (1 << WGM52) | (1 << CS51) | (1 << CS50);
 	OCR1A=62500-1;										//configuro el numero de ciclos a contar
-	TIMSK5= (1 << OCIE0A);								//habilito la mascara de la interrupcion
-	TIFR5= (1 << OCF5A);								//habilito la bandera de la interrupcion
+	TIMSK5= (1 << OCIE0A);								//habilito la mascara de la interrupcion 			//CC: No olvides "|", sería TIMSK5 |= (1 << OCIE0A);
+	TIFR5= (1 << OCF5A);								//habilito la bandera de la interrupcion			//CC: TIFR5 |= (1 << OCF5A);
 	sei();												//hbailito las interrupciones globales
 }
 
 
-void control_L1 (uint8_t modo){ // Se usará en la integración
+void control_L1 (uint8_t modo){ // Se usará en la integración							//CC: En setup_luz() configuras el timer5 cada 0.5s y en control_L1() no se usa el timer5. Consejo: Cada vez que entre al case reconfiguro el timer5 para cumplir con el parpadelo
 	if (regModoL1 != modo){ //Solo actualizo cuando cambia el modo
 		switch(modo){
 			case 0:
@@ -41,9 +45,13 @@ void control_L1 (uint8_t modo){ // Se usará en la integración
 	}
 	regModoL1 = modo;
 }
+
+
+// FUNCIONES BARRERA
+
 void setup_barrera(){
-	DDRK= 0X00;
-	PORTK=0X00;
+	DDRK= 0X00; 													//CC: debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
+	PORTK=0X00;													//CC: debes de configurar solo tus pines
 	
 	DDRB &= ~(1<< DDB0); //PCINT0 como entrada
 	cli();
@@ -55,7 +63,7 @@ void setup_barrera(){
 }
 
 void barrera(){
-	if(PINL2==1){
+	if(PINL2==1){								//CC: PINL2 es una macro que contiene un "2". Usar is Usar macros de General.h ( isBitSet(Registro, Bit), isClrSet(Registro, Bit) )
 		setbit(REG_M1_en_PORT, PIN_M1_en_PORT)//PORTK = 0x04; 
 	}
 	//delay_seconds(); //configurar segundos para el delay
@@ -70,8 +78,8 @@ ISR(PCINT0_vect){
 	}
 }
 
-int contador_ms;
-int main(void)
+int contador_ms;				//CC: puedes usar millis() 
+int main(void)					//CC: PARTE_2 NO TIENE MAIN, PREPARAR UNA FUNCIÓN "setup_Parte_2()" que contenga todos los setup y "Parte_2()" PARA INCLUIRLO EN EL while del main;
 {
 	setup_barrera();
 	setup_luz();
@@ -91,9 +99,9 @@ int main(void)
 
 
 
-//barrera
+//barrera						
 //si SO2==1, BARRERA CERRADA
-    si SO1 detecta un coche, EN=1¿CONTANDO PULSOS?
+//    si SO1 detecta un coche, EN=1¿CONTANDO PULSOS?
 
 //lavado vertical
 void lavadoV_on(){
