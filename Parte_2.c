@@ -8,15 +8,15 @@
 // FUNCIONES LUZ (L1)
 
 void setup_luz(){
-	DDRL=0X00; 	//Comentario Carlos (CC): debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
+	DDRL=10101010; 	//Comentario Carlos (CC): debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
 	PORTL=0X00; 
-	cli();												//deshabilito las interrupciones globales
-	TCCR5A= 0x00;										//configurar CTC
-	TCCR5B= (1 << WGM52) | (1 << CS51) | (1 << CS50);	//Preescalador de 64  									//CC: No olvides "|", TCCR5B |= (1 << WGM52) | (1 << CS51) | (1 << CS50);
-	OCR1A=62500-1;										//configuro el numero de ciclos a contar
-	TIMSK5= (1 << OCIE0A);								//habilito la mascara de la interrupcion 			//CC: No olvides "|", sería TIMSK5 |= (1 << OCIE0A);
-	TIFR5= (1 << OCF5A);								//habilito la bandera de la interrupcion			//CC: TIFR5 |= (1 << OCF5A);
-	sei();												//hbailito las interrupciones globales
+	// cli();												//deshabilito las interrupciones globales
+	// TCCR5A= 0x00;										//configurar CTC
+	// TCCR5B = (1 << WGM52) | (1 << CS51) | (1 << CS50);	//Preescalador de 64  									//CC: No olvides "|", TCCR5B |= (1 << WGM52) | (1 << CS51) | (1 << CS50);
+	// OCR1A =62500-1;										//configuro el numero de ciclos a contar
+	// TIMSK5 = (1 << OCIE0A);								//habilito la mascara de la interrupcion 			//CC: No olvides "|", sería TIMSK5 |= (1 << OCIE0A);
+	// TIFR5 = (1 << OCF5A);								//habilito la bandera de la interrupcion			//CC: TIFR5 |= (1 << OCF5A);
+	// sei();												//hbailito las interrupciones globales
 }
 
 
@@ -29,9 +29,7 @@ void control_L1 (uint8_t modo){ // Se usará en la integración							//CC: En s
 						setbit(REG_LED_PORT, PIN_L1_PORT);	//PORTL= 0x02;
 					}
 					clearbit(REG_LED_PORT, PIN_L1_PORT);//PORTL= 0x00;
-					}
 				}
-				else
 			break;
 			default:
 				if(ms%500==0){
