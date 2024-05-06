@@ -120,13 +120,14 @@ int main(void)					//CC: PARTE_2 NO TIENE MAIN, PREPARAR UNA FUNCIÓN "setup_Par
 	/* Replace with your application code */
 	while (1)
 	{
-		if(SO1==1){
-			if(contador_ms==10){
-				encendido==1;%si el sensor detecta se pone bandera a 1, bandera vale 0 al principio y cunado apaguemos.
-				contador_ms==0; 
-			} 
-        	}
-		contador_ms++; %para controlar cuanto tiempo despues entra el siguiente coche
-        	control_L1(); 
+		parte2(); 
+		// if(SO1==1){
+		// 	if(contador_ms==10){
+		// 		encendido==1;%si el sensor detecta se pone bandera a 1, bandera vale 0 al principio y cunado apaguemos.
+		// 		contador_ms==0; 
+		// 	} 
+  //       	}
+		// contador_ms++; %para controlar cuanto tiempo despues entra el siguiente coche
+  //       	control_L1(); 
 	}
 }
