@@ -3,45 +3,13 @@
 // VARIABLES
 
 // FUNCIONES (Inicialización, Uso...)
-#define REG_M1_di_PORT	PORTL
-		#define REG_M1_di_DDR	DDRL
-		#define REG_M1_di_PIN	PINL
-		
-		#define PIN_M1_di_PORT	PK0
-		#define PIN_M1_di_DDR  	DDK0
-		#define PIN_M1_di_PIN  	PINK0
-			// Enable
-		#define REG_M1_en_PORT	PORTK
-		#define REG_M1_en_DDR	DDRK
-		#define REG_M1_en_PIN	PINK
-		
-		#define PIN_M1_en_PORT	PK2
-		#define PIN_M1_en_DDR	DDK2
-		#define PIN_M1_en_PIN	PINK2
-		
-		// Motor M2 => Rodillos verticales
-			// Direction
-		#define REG_M2_di_PORT	PORTK
-		#define REG_M2_di_DDR	DDRK
-		#define REG_M2_di_PIN	PINK
-		
-		#define PIN_M2_di_PORT	PK4
-		#define PIN_M2_di_DDR  	DDK4
-		#define PIN_M2_di_PIN  	PINK4
-			// Enable
-		#define REG_M2_en_PORT	PORTK
-		#define REG_M2_en_DDR	DDRK
-		#define REG_M2_en_PIN	PINK
-		
-		#define PIN_M2_en_PORT	PK6
-		#define PIN_M2_en_DDR	DDK6
-		#define PIN_M2_en_PIN	PINK6
 
 // FUNCIONES LUZ (L1)
 
 void setup_luz(){
-	DDRL=10101010; 	//Comentario Carlos (CC): debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
-	PORTL=0X00; 
+	setbit(REG_LED_DDR, PIN_LED_DDR); 	//Comentario Carlos (CC): debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
+	setbit(REG_LED_PORT, PIN_LED_PORT);
+	set(
 	// cli();												//deshabilito las interrupciones globales
 	// TCCR5A= 0x00;										//configurar CTC
 	// TCCR5B = (1 << WGM52) | (1 << CS51) | (1 << CS50);	//Preescalador de 64  									//CC: No olvides "|", TCCR5B |= (1 << WGM52) | (1 << CS51) | (1 << CS50);
@@ -80,9 +48,10 @@ void control_L1 (uint8_t modo){ // Se usará en la integración							//CC: En s
 // FUNCIONES BARRERA
 
 void setup_barrera(){
-	DDRK= 0X00; 													//CC: debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
-	PORTK=0X00;													//CC: debes de configurar solo tus pines
-	
+	setbit(REG_M1_en_DDR, PIN_M1_en_DDR);													//CC: debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
+	clearbit(REG_M1_en_PORT, PIN_M1_en_PORT);
+	clearbit(REG_SOB_DDR, PIN_SO1_DDR);											//CC: debes de configurar solo tus pines
+	clearbit(REG_SOL_DDR, PIN_SO2_DDR); 
 	DDRB &= ~(1<< DDB0); //PCINT0 como entrada
 	cli();
 	PCICR |= (1<<PCIB0);	// Habilito grupo de interrupciones en PORTB (por cambio de estado)
@@ -108,11 +77,46 @@ ISR(PCINT0_vect){
 	}
 }
 
+//lavado vertical
+
+void setup_lv(){
+	setbit(REG_M2_en_DDR, PIN_M2_en_DDR); 
+	clearbit(REG_M2_en_PORT, PIN_M2_en_PORT); //por defecto apagado
+}
+//lavado vertical
+void lavadoV_on(){
+	setbit(REG_M2_en_PORT, PIN_M2_en_PORT);		    
+}
+
+void lavadoV_off(){
+	clearbit(REG_M2_en_PORT, PIN_M2_en_PORT);
+}
+
+void setup_Parte_2(){
+	setup_barrera(); 
+	setup_luz(); 
+	setup_lv();
+}
+
+void parte2(){
+	while(1){
+		control_L1(); 
+	}
+	if(PIN_SO1_PIN==0){
+		barrera();
+	}
+	delay_ms(100);
+	lavadoV_on(); 
+	if(PIN_S05_PIN==0){
+		lavadoV_off(); 
+	}
+		
+}
+
 int contador_ms;				//CC: puedes usar millis() 
 int main(void)					//CC: PARTE_2 NO TIENE MAIN, PREPARAR UNA FUNCIÓN "setup_Parte_2()" que contenga todos los setup y "Parte_2()" PARA INCLUIRLO EN EL while del main;
 {
-	setup_barrera();
-	setup_luz();
+	setup_Parte_2();
 	/* Replace with your application code */
 	while (1)
 	{
@@ -125,19 +129,4 @@ int main(void)					//CC: PARTE_2 NO TIENE MAIN, PREPARAR UNA FUNCIÓN "setup_Par
 		contador_ms++; %para controlar cuanto tiempo despues entra el siguiente coche
         	control_L1(); 
 	}
-}
-
-
-
-//barrera						
-//si SO2==1, BARRERA CERRADA
-//    si SO1 detecta un coche, EN=1¿CONTANDO PULSOS?
-
-//lavado vertical
-void lavadoV_on(){
-	setbit(REG_M2_en_PORT, PIN_M2_en_PORT);		    
-}
-
-void lavadoV_off(){
-	clearbit(REG_M2_en_PORT, PIN_M2_en_PORT);
 }
