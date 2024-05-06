@@ -60,9 +60,9 @@ void lavaderoHorizontal(){
 	}
 
 	if(aux_lavH){
-		if (lav_H[0] == 1 && (lav_H[1] == 0 || lav_H[2] == 0)){
+		if (lav_H[1]==0 && (lav_H[0]==1 || lav_H[2]==1)){
 			stop_AlturaH();
-		} else if(lav_H[0]==1 && lav_H[1]==1){
+		} else if(lav_H[0]==0 && lav_H[1]==0){
 			upLavHorizontal();
 		} else {
 	           	down_LavHorizontal();
@@ -113,14 +113,32 @@ void stop_secado(){
 }
 
 void secado(){
-	if (limit_switch_secado = 1 && isBitSet(REG_M5_en_PORT,PIN_M5_en_PORT)){
+	
+	if (limit_switch_secado == 1 && isBitSet(REG_M5_en_PORT,PIN_M5_en_PORT)){  // devuelve '1' si detecta fin de carrera Y si el motor esta encendido
+		toggleBit(REG_M5_di_PORT,PIN_M5_di_PORT); // cambia el sentido del motor
+		if (isBitSet(REG_M5_di_PORT,PIN_M5_di_PORT)){ //el rodillo esta abajo 
+			up_secado(); //vuelvo a la posicion inicial(arriba)
+		}else{ //el rodillo esta arriba
+			stop_secado(); //me quedo en la posicion inicial(arriba)
+		}
+	}
+
+	if(aux_secado){
+		if (secado[1]==0 && (secado[0]==1 || secado[2]==1)){
+			stop_secado();
+		} else if(secado[0]==0 && secado[1]==0){
+			up_secado();
+		} else {
+	           	down_secado();
+	        }
+	/*if (limit_switch_secado = 1 && isBitSet(REG_M5_en_PORT,PIN_M5_en_PORT)){
 		stop_secado();
 		toggleBit(REG_M5_di_PORT,PIN_M5_di_PORT);
 	}
 	
 	if(aux_secado){
 		// EQUIVALENTE A LAVADO_H
-	}
+	}*/
 }
 
 void setup_Parte1(){
