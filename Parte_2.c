@@ -62,14 +62,13 @@ void setup_barrera(){
 }
 
 void barrera(){
-	if(isBitSet(REG_SOL_PIN, PIN_SO2_PIN)==1){								//CC: PINL2 es una macro que contiene un "2". Usar is Usar macros de General.h ( isBitSet(Registro, Bit), isClrSet(Registro, Bit) )
+	if(isClrSet(REG_SOL_PIN, PIN_SO2_PIN)==1){								//CC: PINL2 es una macro que contiene un "2". Usar is Usar macros de General.h ( isBitSet(Registro, Bit), isClrSet(Registro, Bit) )
 		setbit(REG_M1_en_PORT, PIN_M1_en_PORT)//PORTK = 0x04; 
 	}
-	//delay_seconds(); //configurar segundos para el delay
 }
 
 ISR(PCINT0_vect){
-	if(PINB0 != 1){ 
+	if(isClrSet(REG_SOB_PIN, PIN_SO1_PIN)== 1){ 
 		barrera();
 	}
 	else {
