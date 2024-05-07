@@ -62,7 +62,7 @@ void setup_barrera(){
 }
 
 void barrera(){
-	if(PINL2==1){								//CC: PINL2 es una macro que contiene un "2". Usar is Usar macros de General.h ( isBitSet(Registro, Bit), isClrSet(Registro, Bit) )
+	if(isBitSet(REG_SOL_PIN, PIN_SO2_PIN)==1){								//CC: PINL2 es una macro que contiene un "2". Usar is Usar macros de General.h ( isBitSet(Registro, Bit), isClrSet(Registro, Bit) )
 		setbit(REG_M1_en_PORT, PIN_M1_en_PORT)//PORTK = 0x04; 
 	}
 	//delay_seconds(); //configurar segundos para el delay
