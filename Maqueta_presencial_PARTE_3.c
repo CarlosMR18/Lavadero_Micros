@@ -454,8 +454,7 @@ int main(void) {
 		clearBit(REG_LED_PORT, PIN_L5_PORT);// RED: Apagado
 		delay_milliseconds(2000);
 	}
-		
-    }
+
 }
 
 
