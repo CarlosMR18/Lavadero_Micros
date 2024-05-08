@@ -33,7 +33,7 @@ void setup_leds(){ //setup_L1
 
 	// Semaforo [LED4 y LED5]
 void semaforo(){ //LED_4_5
-	if(isBitSet(REG_SOL_PORT, PIN_SO10_PIN)){ 
+	if(isBitSet(REG_SOL_PIN, PIN_SO10_PIN)){ 
 		// No hay coche liberado de la cinta
 		clearBit(REG_LED_PORT, PIN_L4_PORT);	// GREEN: Apagado
 		setBit(REG_LED_PORT, PIN_L5_PORT);		// RED: Encendido
