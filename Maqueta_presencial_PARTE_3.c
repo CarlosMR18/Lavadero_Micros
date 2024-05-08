@@ -9,7 +9,7 @@
 #define isBitSet(Registro, Bit) (Registro & (1 << Bit))		// devuelve '1' si dicho bit es '1'
 #define isClrSet(Registro, Bit) (!isBitSet(Registro, Bit))	// devuelve '1' si dicho bit es '0'
 
-/ Caracteristicas del microprocesador
+// Caracteristicas del microprocesador
 		#define Freq_uC 8000000
 		#define Check_height_sensors 50 // MS en comprobar estado (Regular en maqueta)
 		#define Tiempo_prove_new 1200 // Tiempo comprobación entrada nueva en ms(dos sensores distintos)
@@ -235,7 +235,7 @@
 volatile uint8_t Stop = 0; // '1' Bloque maqueta
 volatile uint32_t s = 0; // Cuenta segundos
 volatile uint32_t ms = 0; // Cuenta milisegundos
-volatile uint8_t numCar = 0; // Cuenta coches dentro del lavadero
+volatile uint8_t NumCar = 0; // Cuenta coches dentro del lavadero
 
 volatile uint8_t EnableEntrance = 1; // '1' permite nuevas entradas de vehículos y '0' no permite
 volatile uint8_t enable_prove_new = 0; // '1' pendiente comprobar entradas de vehículos 
@@ -280,12 +280,12 @@ void setupTimers(void){
 	TCCR1A = 0b00000000;
 	TCCR1B = 0b00001101;
 	TIMSK1 = 0b00000010;
-	OCR1A =  uCFreq/256;
+	OCR1A =  Freq_uC/256;
 	// TIMER 3 => Timer milisegundos :  Modo CTC (ICRn) sin preescalado
 	TCCR3A = 0b00000000;
 	TCCR3B = 0b00001001;
 	TIMSK3 = 0b00000010;
-	OCR3A =	uCFreq/1000;
+	OCR3A =	Freq_uC/1000;
 	sei();
 }
 
@@ -369,7 +369,7 @@ void setup_leds(){ //setup_L1
 
 	// Semaforo [LED4 y LED5]
 void semaforo(){ //LED_4_5
-	if(isBitSet(REG_SOL_PORT, PIN_SO10_PIN)){ 
+	if(isBitSet(REG_SOL_PIN, PIN_SO10_PIN)){ 
 		// No hay coche liberado de la cinta
 		clearBit(REG_LED_PORT, PIN_L4_PORT);	// GREEN: Apagado
 		setBit(REG_LED_PORT, PIN_L5_PORT);		// RED: Encendido
