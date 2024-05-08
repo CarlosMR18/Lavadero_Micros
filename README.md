@@ -21,8 +21,8 @@ Trabajo Sistemas Microprocesadores 2023/2024 - EQUIPO LAVADERO 2
 		SW4	=>	PD0 	// (INT0)
 	// LED
 		L1 	=>	PL1 // (ICP5)
-		L4 	=>	PL3 // (OC5A)	
-		L5 	=>	PL5 // (OC5C)
+		L4 22 	=>	PL3 // (OC5A)	22
+		L5 24	=>	PL5 // (OC5C)	24
 		L6 	=>	PL7 // (-)
 	// SENSORES	
 		SO1 	=>	PB0 // (PCINT0)
