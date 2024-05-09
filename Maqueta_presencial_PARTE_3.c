@@ -20,7 +20,7 @@
 // Caracteristicas del microprocesador
 #define Freq_uC 8000000
 #define Check_height_sensors 50 // MS en comprobar estado (Regular en maqueta)
-#define Tiempo_prove_new 1200 // Tiempo comprobación entrada nueva en ms(dos sensores distintos)
+#define Tiempo_prove_new 50 // Tiempo comprobación entrada nueva en s(dos sensores distintos)
 // Estado de maqueta
 #define MAQUETA_ON 1 //CYCLE_WORKING
 #define MAQUETA_OFF 0 //CYCLE_STOPPED
@@ -340,7 +340,9 @@ void incNumCarLavado(void){ // Incrementa en uno el contador de coches en lavade
 }
 
 void decNumCarLavado(void){ // Decrementa en uno el contador de coches en lavadero
-	NumCarLavado--;
+	if(NumCarLavado > 0) {
+		NumCarLavado--;
+	}
 }
 	
 	// NumCarSecado
@@ -353,7 +355,9 @@ void incNumCarSecado(void){ // Incrementa en uno el contador de coches en lavade
 }
 
 void decNumCarSecado(void){ // Decrementa en uno el contador de coches en lavadero
-	NumCarSecado--;
+	if(NumCarSecado > 0) {
+		NumCarSecado--;
+	}
 }
 ////////////////////////////
 
