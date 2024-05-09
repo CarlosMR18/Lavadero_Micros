@@ -69,18 +69,26 @@
 		#define REG_M3_di_PORT	PORTB
 		#define REG_M3_di_DDR	DDRB
 		#define REG_M3_di_PIN	PINB
+
+		#define PIN_M3_di_PORT	PL4
+		#define PIN_M3_di_PORT	DDL4
+		#define PIN_M3_di_PIN	PINL4
 		
-		#define PIN_M3_di_PORT	PB1
-		#define PIN_M3_di_DDR  	DDB1
-		#define PIN_M3_di_PIN  	PINB1
+//		#define PIN_M3_di_PORT	PB1
+//		#define PIN_M3_di_DDR  	DDB1
+//		#define PIN_M3_di_PIN  	PINB1
 			// Enable
 		#define REG_M3_en_PORT	PORTB
 		#define REG_M3_en_DDR	DDRB
 		#define REG_M3_en_PIN	PINB
-		
-		#define PIN_M3_en_PORT	PB3
-		#define PIN_M3_en_DDR	DDB3
-		#define PIN_M3_en_PIN	PINB3	
+
+		#define PIN_M3_en_PORT	PD4
+		#define PIN_M3_en_DDR	DDD4
+		#define PIN_M3_en_PIN	PIND4	
+
+//		#define PIN_M3_en_PORT	PB3
+//		#define PIN_M3_en_DDR	DDB3
+//		#define PIN_M3_en_PIN	PINB3	
 		
 		// Motor M4 => Rodillo horizontal giro
 			// Direction
@@ -96,9 +104,13 @@
 		#define REG_M4_en_DDR	DDRK
 		#define REG_M4_en_PIN	PINK
 
-		#define PIN_M4_en_PORT	PK7
-		#define PIN_M4_en_DDR	DDK7
-		#define PIN_M4_en_PIN	PINK7
+		#define PIN_M4_en_PORT PD6
+		#define PIN_M4_en_DDR  DDD6
+		#define PIN_M4_en_PIN  PIND6
+
+//		#define PIN_M4_en_PORT	PK7
+//		#define PIN_M4_en_DDR	DDK7
+//		#define PIN_M4_en_PIN	PINK7
 		
 		// Motor M5 => Ventilador de secado
 			// Direction
@@ -202,7 +214,7 @@
 		// SO3
 		#define PIN_SO3_PORT PL4
 		#define PIN_SO3_DDR  DDL4
-		#define PIN_SO3_PIN  PINL4
+		#define PIN_SO3_PIN  PINL4	
 		// SO4
 		#define PIN_SO4_PORT PL6
 		#define PIN_SO4_DDR  DDL6
