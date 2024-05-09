@@ -212,17 +212,26 @@
 		#define PIN_SO2_DDR  DDL2
 		#define PIN_SO2_PIN  PINL2	
 		// SO3
-		#define PIN_SO3_PORT PL4
-		#define PIN_SO3_DDR  DDL4
-		#define PIN_SO3_PIN  PINL4	
+		#define PIN_SO3_PORT	PB1
+		#define PIN_SO3_DDR  	DDB1
+		#define PIN_SO3_PIN  	PINB1
+//		#define PIN_SO3_PORT PL4
+//		#define PIN_SO3_DDR  DDL4
+//		#define PIN_SO3_PIN  PINL4	
 		// SO4
-		#define PIN_SO4_PORT PL6
-		#define PIN_SO4_DDR  DDL6
-		#define PIN_SO4_PIN  PINL6
+		#define PIN_SO4_PORT	PK5
+		#define PIN_SO4_DDR  	DDK5
+		#define PIN_SO4_PIN  	PINK5
+//		#define PIN_SO4_PORT PL6
+//		#define PIN_SO4_DDR  DDL6
+//		#define PIN_SO4_PIN  PINL6
 		// SO5 => PCINT6
-		#define PIN_SO5_PORT PB6
-		#define PIN_SO5_DDR  DDB6
-		#define PIN_SO5_PIN  PINB6
+		#define PIN_SO5_PORT	PK1
+		#define PIN_SO5_DDR  	DDK1
+		#define PIN_SO5_PIN  	PINK1
+//		#define PIN_SO5_PORT PB6
+//		#define PIN_SO5_DDR  DDB6
+//		#define PIN_SO5_PIN  PINB6
 		// SO6 => PCINT4
 		#define PIN_SO6_PORT PB4
 		#define PIN_SO6_DDR  DDB4
