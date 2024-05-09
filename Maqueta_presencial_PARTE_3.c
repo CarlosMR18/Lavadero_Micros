@@ -5,6 +5,7 @@
  * Author : usuario
  */ 
 
+
 //	Librerias de trabajo
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -308,6 +309,7 @@ void delay_milliseconds(uint32_t dms){
 	volatile uint32_t delay = ms + dms;
 	while( ms < delay ){}
 }
+
 void delay_seconds(uint32_t ds){
 	volatile uint32_t delay = s + ds;
 	while( s < delay ){}
@@ -368,6 +370,64 @@ ISR(TIMER1_COMPA_vect){ // Segundos
 
 ISR(TIMER3_COMPA_vect){ // Milisegundos
 	ms++;
+	if(enable_prove_new == 1) {		//--------------------------------------------------------------------------------------------------------NUEVO LEYRE
+		cnt_prove_new++;
+	}
+}
+
+// IDK
+ISR(PCINT0_vect){
+	//SO1 [SOB] (PCINT0)
+	if (isBitSet(REG_SOB_PIN,PIN_SO1_PIN) && reg_SO1 == 0){ // Flanco subida
+		//closeBarrera(); // Pendiente Parte2
+		reg_SO1 = 1; // Actualizo registro SO1 con valor actual
+	}	
+	else if (isClrSet(REG_SOB_PIN,PIN_SO1_PIN) && (reg_SO1 == 1) && (EnableEntrance == 1)){ // Flanco bajada y entrada habilitada
+		NumCarLavado++;		// Ha entrado coche
+		enable_prove_new = 1; // Activo comprobación entrada
+		cnt_prove_new = 0;
+		moveCinta(); //--------------------------------------------------------------------------------------------------------------- Mejor ponerlo por consulta periódica en main???
+		//openBarrera(); // Pendiente Parte2
+		//on_LavHorizontal(); // Pendiente Parte1
+		//on_LavVertical(); // Pendiente Parte2
+		
+		reg_SO1 = 0; // Actualizo registro SO1 con valor actual
+	}
+	//SO3 [SOL] *PB1*(*PCINT1*) -- MODIFICACIÓN PROPUESTA POR NACHO :) --
+	else if (isClrSet(REG_SOL_PIN,PIN_SO3_PIN) && reg_SO3 == 1 && enable_prove_new == 1 && cnt_prove_new < Tiempo_prove_new){ // Flanco bajada y entrada habilitada
+		enable_prove_new = 0;
+		
+		reg_SO3 = 0; // Actualizo registro SO3 con valor actual
+	} 
+	
+	else if (isBitSet(REG_SOL_PIN,PIN_SO3_PIN) && reg_SO3 == 0 ){ // Flanco subida 
+		reg_SO3 = 1; // Actualizo registro SO3 con valor actual
+	} 
+	
+	//SO6 [SOB] (PCINT4)
+	else if (isBitSet(REG_SOB_PIN,PIN_SO6_PIN) && reg_SO6 == 0){ // Flanco subida - Paso del culo
+		EnableEntrance = 1;
+		decNumCarLavado();
+		
+		reg_SO6 = 1; // Actualizo registro SO6 con valor actual
+	}
+	
+	else if (isClrSet(REG_SOB_PIN,PIN_SO6_PIN) && reg_SO6 == 1){ // Flanco bajada - Paso del morro
+		incNumCarSecado();
+		reg_SO6 = 0;
+	}
+	
+	//SO12 [SOB] PB2 (PCINT2)
+	else if (isBitSet(REG_SOB_PIN,PIN_SO12_PIN) && reg_SO12 == 0){ // Flanco subida
+		decNumCarSecado();
+	
+		reg_SO12 = 1; // Actualizo registro SO12 con valor actual
+	}
+	
+	else if (isClrSet(REG_SOB_PIN,PIN_SO12_PIN) && reg_SO12 == 1){ // Flanco bajada
+		reg_SO12 = 0; // Actualizo registro SO12 con valor actual
+	}
+	
 }
 
 ///////////////////////////
@@ -505,18 +565,39 @@ void setup_Parte3(){
 	setupCinta(); // Cinta de arrastre
 	setup_leds(); // LEDs (Estado maqueta y Semaforo)
 	setup_ParadaEmergencia(); // Parada de emergencia
+	setup_sensores_parte3();
 	sei();
 }
 
 
 int main(void) {
-	setupTimers();
-	setupCinta();
-	setup_leds();
+	setup_Parte3();
+	setup_General();
 	//setup_ParadaEmergencia();
 	while(1) {
 		cinta();
-		semaforo();
+		//semaforo();
+		
+		if (NumCarLavado == 1 && NumCarSecado == 0){	// Ningún vehículo
+			setBit(REG_LED_PORT, PIN_L4_PORT);	// GREEN: Encendido
+			clearBit(REG_LED_PORT, PIN_L5_PORT);	// RED: Apagado
+		}
+		else if (NumCarLavado == 0 && NumCarSecado == 1){	// Ningún vehículo
+			clearBit(REG_LED_PORT, PIN_L4_PORT);	// GREEN: Apagado
+			setBit(REG_LED_PORT, PIN_L5_PORT);	// RED: Encendido
+		}
+		else if (NumCarLavado == 0 && NumCarSecado == 0){	// Ningún vehículo
+			clearBit(REG_LED_PORT, PIN_L4_PORT);	// GREEN: Apagado
+			clearBit(REG_LED_PORT, PIN_L5_PORT);	// RED: Apagado
+		} else {
+			setBit(REG_LED_PORT, PIN_L4_PORT);	// GREEN: Encendido
+			setBit(REG_LED_PORT, PIN_L5_PORT);	// RED: Encendido
+		}
+		
+	//	if (isClrSet(REG_SOB_PIN,PIN_SO1_PIN) && reg_SO1 == 1 && EnableEntrance == 1){ // Flanco bajada y entrada habilitada
+	//		NumCarLavado++;		// Ha entrado coche
+	//	}
+		
 		/*
 		// Cinta
 		moveCinta();
@@ -545,51 +626,6 @@ int main(void) {
 		clearBit(REG_LED_PORT, PIN_L5_PORT);// RED: Apagado
 		delay_milliseconds(2000);
 		*/
-	}
-	
-}
-
-
-ISR(PCINT0_vect){
-	//SO1 [SOB] (PCINT0)
-	if (isBitSet(REG_SOB_PIN,PIN_SO1_PIN) && reg_SO1 == 0){ // Flanco subida
-		//closeBarrera(); // Pendiente Parte2
-		
-		reg_SO1 = 1; // Actualizo registro SO1 con valor actual
-	}
-	else if (isClrSet(REG_SOB_PIN,PIN_SO1_PIN) && reg_SO1 == 1 && EnableEntrance == 1){ // Flanco bajada y entrada habilitada
-		NumCarLavado++;
-		enable_prove_new = 1; //Activo comprobación entrada
-		cnt_prove_new = 0;
-		moveCinta();
-		//openBarrera(); // Pendiente Parte2
-		//on_LavHorizontal(); // Pendiente Parte1
-		//on_LavVertical(); // Pendiente Parte2
-		
-		reg_SO1 = 0; // Actualizo registro SO1 con valor actual
-	}
-	
-	//SO3 [SOL] *PB1*(*PCINT1*) -- MODIFICACIÓN PROPUESTA POR NACHO :) -- 
-	else if (isClrSet(REG_SOL_PIN,PIN_SO3_PIN) && reg_SO3 == 1 && enable_prove_new == 1 && cnt_prove_new < Tiempo_prove_new){ // Flanco bajada y entrada habilitada
-		enable_prove_new = 0;
-		
-		reg_SO3 = 0; // Actualizo registro SO3 con valor actual
-	}
-	
-	//SO6 [SOB] (PCINT4)
-	else if (isBitSet(REG_SOB_PIN,PIN_SO6_PIN) && reg_SO6 == 0){ // Flanco subida
-		EnableEntrance = 1;
-		incNumCarSecado();
-		decNumCarLavado();
-		
-		reg_SO6 = 1; // Actualizo registro SO6 con valor actual
-	}
-	
-	//SO12 [SOB] PB2 (PCINT2)
-	else if (isBitSet(REG_SOB_PIN,PIN_SO12_PIN) && reg_SO12 == 0){ // Flanco subida
-		decNumCarSecado();
-		
-		reg_SO12 = 1; // Actualizo registro SO12 con valor actual
 	}
 	
 }
