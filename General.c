@@ -4,7 +4,8 @@
 volatile uint8_t Stop = 0; // '1' Bloque maqueta
 volatile uint32_t s = 0; // Cuenta segundos
 volatile uint32_t ms = 0; // Cuenta milisegundos
-volatile uint8_t NumCar = 0; // Cuenta coches dentro del lavadero
+volatile uint8_t NumCarLavado = 0; // Cuenta coches en zona lavado
+volatile uint8_t NumCarSecado = 0; // Cuenta coches en zona secado
 
 volatile uint8_t EnableEntrance = 1; // '1' permite nuevas entradas de vehículos y '0' no permite
 volatile uint8_t enable_prove_new = 0; // '1' pendiente comprobar entradas de vehículos 
@@ -21,11 +22,10 @@ volatile uint8_t prev_secado[3] = {0,0,0};
 volatile uint8_t aux_secado = 0;
 volatile uint8_t limit_switch_secado = 0; //'1' SW3 detecta secador abajo
 
-/* Puede ser interesante
-volatile uint8_t estLavV = 0; // '1' activado Lavadero Vertical y '0' desactivado
-volatile uint8_t estLavH = 0; // '1' activado Lavadero Vertical y '0' desactivado
-volatile uint8_t estSec  = 0; // '1' activado Secadero y '0' desctivado
-*/
+volatile uint8_t reg_SO1 = 1; // Almacena valor de SO1
+volatile uint8_t reg_SO3 = 1; // Almacena valor de SO3
+volatile uint8_t reg_SO6 = 1; // Almacena valor de SO6
+volatile uint8_t reg_SO12 = 1; // Almacena valor de SO12
 
 //////////////////////////////
 
@@ -83,16 +83,34 @@ void setup_General(void){ //Incluir todas funciones inicialización
 	setupTimers();
 }
 
-uint8_t getNumCar(void){ // Devuelve número coches en lavadero
-	return NumCar;
+	// NumCarLavado
+uint8_t getNumCarLavado(void){ // Devuelve número coches en lavadero
+	return NumCarLavado;
 }
 
-void incNumCar(void){ // Incrementa en uno el contador de coches en lavadero
-	NumCar++;
+void incNumCarLavado(void){ // Incrementa en uno el contador de coches en lavadero
+	NumCarLavado++;
 }
 
-void decNumCar(void){ // Decrementa en uno el contador de coches en lavadero
-	NumCar--;
+void decNumCarLavado(void){ // Decrementa en uno el contador de coches en lavadero
+	if(NumCarLavado > 0) {
+		NumCarLavado--;
+	}
+}
+	
+	// NumCarSecado
+uint8_t getNumCarSecado(void){ // Devuelve número coches en lavadero
+	return NumCarSecado;
+}
+
+void incNumCarSecado(void){ // Incrementa en uno el contador de coches en lavadero
+	NumCarSecado++;
+}
+
+void decNumCarSecado(void){ // Decrementa en uno el contador de coches en lavadero
+	if(NumCarSecado > 0) {
+		NumCarSecado--;
+	}
 }
 
 ////////////////////////////
@@ -101,12 +119,22 @@ void decNumCar(void){ // Decrementa en uno el contador de coches en lavadero
 
 ISR(TIMER1_COMPA_vect){ // Segundos
 	s++;
-	// CONTINUARÁ
+	if (cnt_prove_new > Tiempo_prove_new && NumCarLavado > 0 && enable_prove_new == 0){
+		NumCarLavado--;
+		EnableEntrance = 1;
+		enable_prove_new = 0;
+	}
 }
 
 ISR(TIMER3_COMPA_vect){ // Milisegundos
 	ms++;
-	// CONTINUARÁ
+	//Parte 3
+	if (cnt_prove_new > Tiempo_prove_new && NumCarLavado > 0 && enable_prove_new == 0){
+		NumCarLavado--;
+		EnableEntrance = 1;
+		enable_prove_new = 0;
+	}
+	// Parte 1
 	if(ms % Check_height_sensors == 0){ //#define macro en General.h
 		prev_lav_H = lav_H;
 		//lav_H[0] = REG_S03_PIN & (1<<PIN_SO3_PIN); //REG_S03_PIN sustituir por etiqueta correcta
