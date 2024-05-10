@@ -97,7 +97,7 @@ void setup_Parte_2(){
 	setup_lv();
 }
 
-void parte2(){
+void Parte_2(){
 	while(1){
 		control_L1(); 
 	}
