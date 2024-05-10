@@ -119,7 +119,8 @@ void decNumCarSecado(void){ // Decrementa en uno el contador de coches en lavade
 
 ISR(TIMER1_COMPA_vect){ // Segundos
 	s++;
-	if (cnt_prove_new > Tiempo_prove_new && NumCarLavado > 0 && enable_prove_new == 0){
+	//Parte 3
+	if ((s - cnt_prove_new) > Tiempo_prove_new && NumCarLavado > 0 && enable_prove_new == 1){ // ORIGINAL: enable_prove_new == 0 
 		NumCarLavado--;
 		EnableEntrance = 1;
 		enable_prove_new = 0;
@@ -165,17 +166,58 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 	}
 	
 }
-
-ISR(FLACO SUBIDA_SO1){ // Nuevo vehículo - Etapa 1
-	if (BARRERA NO ABAJO){
-		enable_prove_new = 1;
-		cnt_prove_new = ms;
+// Sensores Parte3 --PENSAR DONDE INCLUIR ESTA INTERRUPCIÓN
+ISR(PCINT0_vect){
+	//SO1 [SOB] (PCINT0)
+	if (isBitSet(REG_SOB_PIN,PIN_SO1_PIN) && reg_SO1 == 0){ // Flanco subida
+		//closeBarrera(); // Pendiente Parte2
+		reg_SO1 = 1; // Actualizo registro SO1 con valor actual
+	}	
+	else if (isClrSet(REG_SOB_PIN,PIN_SO1_PIN) && (reg_SO1 == 1) && (EnableEntrance == 1)){ // Flanco bajada y entrada habilitada
+		NumCarLavado++;		// Ha entrado coche
+		enable_prove_new = 1; // Activo comprobación entrada
+		cnt_prove_new = s; // No usamos contador propio, comparamos (s - cnt_prove_new) > Tiempo_prove_new
+		//moveCinta();		SOBRA, AL HACER NumCarLavado++ LA FUNCIÓN cINTA() ACTIVA EL MOVIMIENTO
+		//openBarrera(); // Pendiente Parte2
+		//on_LavHorizontal(); // Pendiente Parte1
+		//on_LavVertical(); // Pendiente Parte2
+		
+		reg_SO1 = 0; // Actualizo registro SO1 con valor actual
 	}
-}
-
-ISR(FLACO BAJADA_SO3){ // Nuevo vehículo - Etapa 2
-	if (enable_prove_new){
-		incNumCar();
+	
+	//SO3 [SOL] *PB1*(*PCINT1*) -- MODIFICACIÓN PROPUESTA POR NACHO :) --
+	else if (isClrSet(REG_SOL_PIN,PIN_SO3_PIN) && reg_SO3 == 1 && enable_prove_new == 1 && cnt_prove_new < Tiempo_prove_new){ // Flanco bajada y entrada habilitada
 		enable_prove_new = 0;
+		
+		reg_SO3 = 0; // Actualizo registro SO3 con valor actual
+	} 
+	
+	else if (isBitSet(REG_SOL_PIN,PIN_SO3_PIN) && reg_SO3 == 0 ){ // Flanco subida 
+		reg_SO3 = 1; // Actualizo registro SO3 con valor actual
+	} 
+	
+	//SO6 [SOB] (PCINT4)
+	else if (isBitSet(REG_SOB_PIN,PIN_SO6_PIN) && reg_SO6 == 0){ // Flanco subida - Paso del culo
+		EnableEntrance = 1;
+		decNumCarLavado();
+		
+		reg_SO6 = 1; // Actualizo registro SO6 con valor actual
 	}
+	
+	else if (isClrSet(REG_SOB_PIN,PIN_SO6_PIN) && reg_SO6 == 1){ // Flanco bajada - Paso del morro
+		incNumCarSecado();
+		reg_SO6 = 0;
+	}
+	
+	//SO12 [SOB] PB2 (PCINT2)
+	else if (isBitSet(REG_SOB_PIN,PIN_SO12_PIN) && reg_SO12 == 0){ // Flanco subida
+		decNumCarSecado();
+	
+		reg_SO12 = 1; // Actualizo registro SO12 con valor actual
+	}
+	
+	else if (isClrSet(REG_SOB_PIN,PIN_SO12_PIN) && reg_SO12 == 1){ // Flanco bajada
+		reg_SO12 = 0; // Actualizo registro SO12 con valor actual
+	}
+	
 }
