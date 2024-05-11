@@ -137,7 +137,9 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 	}
 	// Parte 1
 	if(ms % Check_height_sensors == 0){ //#define macro en General.h
-		prev_lav_H = lav_H;
+		prev_lav_H[0] = lav_H[0];
+		prev_lav_H[1] = lav_H[1];
+		prev_lav_H[2] = lav_H[2];
 		//lav_H[0] = REG_S03_PIN & (1<<PIN_SO3_PIN); //REG_S03_PIN sustituir por etiqueta correcta
 		//lav_H[1] = REG_S04_PIN & (1<<PIN_SO4_PIN); //REG_S04_PIN sustituir por etiqueta correcta
 		//lav_H[2] = REG_S05_PIN & (1<<PIN_SO5_PIN); //REG_S05_PIN sustituir por etiqueta correcta
@@ -146,7 +148,9 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 		lav_H[2] = isBitSet(REG_S05_PIN,PIN_SO5_PIN);
 		limit_switch_lavH = isClrSet(REG_SW_PIN,PIN_SW2_PIN); // isClrSet porque SW2 '0' al detectar
 		
-		prev_secado = secado;
+		prev_secado[0] = secado[0];
+		prev_secado[1] = secado[1];
+		prev_secado[2] = secado[2];
 		lav_H[0] = isBitSet(REG_S07_PIN,PIN_SO7_PIN); //REG_S07_PIN sustituir por etiqueta correcta
 		lav_H[1] = isBitSet(REG_S08_PIN,PIN_SO8_PIN); //REG_S08_PIN sustituir por etiqueta correcta
 		lav_H[2] = isBitSet(REG_S09_PIN,PIN_SO9_PIN); //REG_S09_PIN sustituir por etiqueta correcta
