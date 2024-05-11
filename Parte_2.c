@@ -7,9 +7,9 @@
 // FUNCIONES LUZ (L1)
 
 void setup_luz(){
-	setbit(REG_LED_DDR, PIN_LED_DDR); 	//Comentario Carlos (CC): debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
-	setbit(REG_LED_PORT, PIN_LED_PORT);
-	set(
+	setBit(REG_LED_DDR, PIN_L1_DDR); 	//Comentario Carlos (CC): debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
+	setBit(REG_LED_PORT, PIN_L1_PORT);
+	
 	// cli();												//deshabilito las interrupciones globales
 	// TCCR5A= 0x00;										//configurar CTC
 	// TCCR5B = (1 << WGM52) | (1 << CS51) | (1 << CS50);	//Preescalador de 64  									//CC: No olvides "|", TCCR5B |= (1 << WGM52) | (1 << CS51) | (1 << CS50);
@@ -28,15 +28,15 @@ void control_L1 (uint8_t modo){ // Se usará en la integración							//CC: En s
  					while(millis()%500!=0){
  						setbit(REG_LED_PORT, PIN_L1_PORT);	//PORTL= 0x02;
  					}
- 					clearbit(REG_LED_PORT, PIN_L1_PORT);//PORTL= 0x00;
+ 					clearBit(REG_LED_PORT, PIN_L1_PORT);//PORTL= 0x00;
  				}
  			break;
  			default:
  				if(millis()%500==0){
  					if(PINL0==1){
- 						clearbit(REG_LED_PORT, PIN_L1_PORT); //PORTL= 0x00;
+ 						clearBit(REG_LED_PORT, PIN_L1_PORT); //PORTL= 0x00;
  					} else{
- 						setbit(REG_LED_PORT, PIN_L1_PORT);//PORTL=0x02;
+ 						setBit(REG_LED_PORT, PIN_L1_PORT);//PORTL=0x02;
  					}
  				}
 }
