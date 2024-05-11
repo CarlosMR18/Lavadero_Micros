@@ -44,6 +44,9 @@ void control_L1 (uint8_t modo){ // Se usará en la integración							//CC: En s
  	regModoL1 = modo;
 }
 
+//definir 2 modos para variable "modo": modo_intermitente (cuando algún sensor detecte coche o algún motor esté activo)
+//		 			modo_destello 
+
 
 // FUNCIONES BARRERA
 
