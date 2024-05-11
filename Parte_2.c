@@ -19,76 +19,86 @@ void setup_luz(){
 	// sei();												//hbailito las interrupciones globales
 }
 
-
+volatile uint8_t regModoL1; //REVISAR
 void control_L1 (uint8_t modo){ // Se usará en la integración							//CC: En setup_luz() configuras el timer5 cada 0.5s y en control_L1() no se usa el timer5. Consejo: Cada vez que entre al case reconfiguro el timer5 para cumplir con el parpadelo
-	if (regModoL1 != modo){ //Solo actualizo cuando cambia el modo
-		switch(modo){
-			case 0:
-				if(s%10==0){
-					while(ms%500!=0){
-						setbit(REG_LED_PORT, PIN_L1_PORT);	//PORTL= 0x02;
-					}
-					clearbit(REG_LED_PORT, PIN_L1_PORT);//PORTL= 0x00;
-				}
-			break;
-			default:
-				if(ms%500==0){
-					if(PINL0==1){
-						clearbit(REG_LED_PORT, PIN_L1_PORT); //PORTL= 0x00;
-					} else{
-						setbit(REG_LED_PORT, PIN_L1_PORT);//PORTL=0x02;
-					}
-				}
-		}
-	}
-	regModoL1 = modo;
+ 	if (regModoL1 != modo){ //Solo actualizo cuando cambia el modo
+ 		switch(modo){
+ 			case 0:
+ 				if(seconds()%10==0){
+ 					while(millis()%500!=0){
+ 						setbit(REG_LED_PORT, PIN_L1_PORT);	//PORTL= 0x02;
+ 					}
+ 					clearbit(REG_LED_PORT, PIN_L1_PORT);//PORTL= 0x00;
+ 				}
+ 			break;
+ 			default:
+ 				if(millis()%500==0){
+ 					if(PINL0==1){
+ 						clearbit(REG_LED_PORT, PIN_L1_PORT); //PORTL= 0x00;
+ 					} else{
+ 						setbit(REG_LED_PORT, PIN_L1_PORT);//PORTL=0x02;
+ 					}
+ 				}
+}
+ 	}
+ 	regModoL1 = modo;
 }
 
 
 // FUNCIONES BARRERA
 
 void setup_barrera(){
-	setbit(REG_M1_en_DDR, PIN_M1_en_DDR);													//CC: debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
-	clearbit(REG_M1_en_PORT, PIN_M1_en_PORT);
-	clearbit(REG_SOB_DDR, PIN_SO1_DDR);											//CC: debes de configurar solo tus pines
-	clearbit(REG_SOL_DDR, PIN_SO2_DDR); 
+	setBit(REG_M1_en_DDR, PIN_M1_en_DDR);													//CC: debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
+	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+	clearBit(REG_SOB_DDR, PIN_SO1_DDR);											//CC: debes de configurar solo tus pines
+	clearBit(REG_SOL_DDR, PIN_SO2_DDR); 
 	DDRB &= ~(1<< DDB0); //PCINT0 como entrada
 	cli();
-	PCICR |= (1<<PCIB0);	// Habilito grupo de interrupciones en PORTB (por cambio de estado)
+	PCICR |= setBit(REG_SOB_PIN, PIN_SO1_PIN);	// Habilito grupo de interrupciones en PORTB (por cambio de estado)
 	PCMSK0 |= (1<<PCINT0);  //Habilito interrupción en pin PCINT0
 	sei();			//Habilito interrupciones globales
 	
 	  
 }
 
+volatile int cuenta=0; 
 void barrera(){
 	if(isClrSet(REG_SOL_PIN, PIN_SO2_PIN)==1){								//CC: PINL2 es una macro que contiene un "2". Usar is Usar macros de General.h ( isBitSet(Registro, Bit), isClrSet(Registro, Bit) )
-		setbit(REG_M1_en_PORT, PIN_M1_en_PORT)//PORTK = 0x04; 
+		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 	}
+	if(cuenta==3){
+		clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+		cuenta=0;
+		}
+	if(isClrSet(REG_SOL_PIN, PIN_SO3_PIN)){
+		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);//PORTK = 0x04;
+	} 
 }
 
 ISR(PCINT0_vect){
 	if(isClrSet(REG_SOB_PIN, PIN_SO1_PIN)== 1){ 
 		barrera();
 	}
+	if(PIN_SW1_PIN & isBitSet(REG_SW_PIN, PIN_SW1_PIN)){
+		cuenta++; 
+	}
 	else {
-		clearbit(REG_M1_en_PORT, PIN_M1_en_PORT);//PORTK = 0x00; //deshabilitar barrera
+		clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);//PORTK = 0x00; //deshabilitar barrera
 	}
 }
-
 //lavado vertical
 
 void setup_lv(){
-	setbit(REG_M2_en_DDR, PIN_M2_en_DDR); 
-	clearbit(REG_M2_en_PORT, PIN_M2_en_PORT); //por defecto apagado
+	setBit(REG_M2_en_DDR, PIN_M2_en_DDR); 
+	clearBit(REG_M2_en_PORT, PIN_M2_en_PORT); //por defecto apagado
 }
 //lavado vertical
 void lavadoV_on(){
-	setbit(REG_M2_en_PORT, PIN_M2_en_PORT);		    
+	setBit(REG_M2_en_PORT, PIN_M2_en_PORT);		    
 }
 
 void lavadoV_off(){
-	clearbit(REG_M2_en_PORT, PIN_M2_en_PORT);
+	clearBit(REG_M2_en_PORT, PIN_M2_en_PORT);
 }
 
 void setup_Parte_2(){
@@ -97,16 +107,16 @@ void setup_Parte_2(){
 	setup_lv();
 }
 
+
 void Parte_2(){
 	while(1){
-		control_L1(); 
+		//control_L1(modo1); 
 	}
-	if(PIN_SO1_PIN==0){
-		barrera();
-	}
-	delay_ms(100);
+// 	if(PIN_SO1_PIN==0){
+// 		barrera();
+// 	}
 	lavadoV_on(); 
-	if(PIN_S05_PIN==0){
+	if(PIN_SO5_PIN==0){
 		lavadoV_off(); 
 	}
 		
