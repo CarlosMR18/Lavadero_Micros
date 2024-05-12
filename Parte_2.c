@@ -65,25 +65,27 @@ void setup_barrera(){
 	  
 }
 
-volatile int cuenta=0; 
+volatile int cuenta=0; //cuenta es una variable que cuenta los flancos que se producen en SW1
 void barrera(){
-	if(isClrSet(REG_SOL_PIN, PIN_SO2_PIN)==1){								//CC: PINL2 es una macro que contiene un "2". Usar is Usar macros de General.h ( isBitSet(Registro, Bit), isClrSet(Registro, Bit) )
+	if(isClrSet(REG_SOL_PIN, PIN_SO2_PIN)==1){//si SO2 está a 0(cerrada) accionamos la barrera								//CC: PINL2 es una macro que contiene un "2". Usar is Usar macros de General.h ( isBitSet(Registro, Bit), isClrSet(Registro, Bit) )
 		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 	}
-	if(cuenta==3){
+	if(cuenta==3){//cuando se hayan producido 3 flancos de subida, parar la barrera
 		clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 		cuenta=0;
 		}
-	if(isClrSet(REG_SOL_PIN, PIN_SO3_PIN)){
-		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);//PORTK = 0x04;
+	if(isClrSet(REG_SOL_PIN, PIN_SO3_PIN)){//cuando SO3 detecte, el coche entre en el lavado horizontal, bajar la barrera de nuevo 
+		if(isClrSet(REG_SOL_PIN, PIN_SO2_PIN)!=1){//mientras SO2 no esté a 1
+			setBit(REG_M1_en_PORT, PIN_M1_en_PORT);//PORTK = 0x04;//cerrar la barrera
+		}
 	} 
 }
 
 ISR(PCINT0_vect){
-	if(isClrSet(REG_SOB_PIN, PIN_SO1_PIN)== 1){ 
+	if(isClrSet(REG_SOB_PIN, PIN_SO1_PIN)== 1){ //si SO1 está a 0(detecta coche) accionar la barrera
 		barrera();
 	}
-	if(PIN_SW1_PIN & isBitSet(REG_SW_PIN, PIN_SW1_PIN)){
+	if(PIN_SW1_PIN & isBitSet(REG_SW_PIN, PIN_SW1_PIN)){//si se ha producido un flanco de subida, amentamos cuenta
 		cuenta++; 
 	}
 	else {
@@ -116,10 +118,10 @@ void Parte_2(){
 	while(1){
 		//control_L1(modo1); 
 	}
-// 	if(PIN_SO1_PIN==0){
-// 		barrera();
-// 	}
-	lavadoV_on(); 
+ 	if(PIN_SO1_PIN==0){
+ 		barrera();//este no se si se puede quitar
+		lavadoV_on();//por establecer un criterio, llamamos a barrera a la vez que llamamos a lavado vertical
+ 	} 
 	if(PIN_SO5_PIN==0){
 		lavadoV_off(); 
 	}
