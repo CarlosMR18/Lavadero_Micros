@@ -368,6 +368,46 @@ void decNumCarSecado(void){ // Decrementa en uno el contador de coches en lavade
 		NumCarSecado--;
 	}
 }
+
+/*
+volatile uint8_t button_state = 0;  // Estado actual del botón (0 o 1)
+volatile uint8_t last_button_state = 0;  // Estado anterior del botón
+volatile uint8_t stable_count = 0; 
+
+#define DEBOUNCE_TIME 5		// Número de lecturas consecutivas
+
+uint8_t filtradotipo1() {	// No me gusta mucho, para empezar, cómo recogemos todas las opciones de los sensores??
+	volatile uint8_t current_state = (BUTTON_PIN & (1 << BUTTON_BIT)) != 0;  // Lee el estado actual del botón
+
+	if (current_state != last_button_state) {  // Si el estado cambió
+		delay_milliseconds(20);  // Retardo para el filtrado de rebotes
+		current_state = (BUTTON_PIN & (1 << BUTTON_BIT)) != 0;  // Lee el estado del botón nuevamente
+	}
+
+	last_button_state = current_state;  // Actualiza el último estado conocido
+	return current_state;
+}
+
+int filtradotipo2() {		// Este me gusta más porque verifica que ha habido un cambio en el valor del sensor, pero seguimos teniendo el mismo problema de globalizarlo a todos los sensores
+	volatile uint8_t current_reading = (BUTTON_PIN & (1 << BUTTON_BIT)) != 0;
+
+	if (current_reading == last_button_state) {
+		if (stable_count < DEBOUNCE_TIME) {
+			stable_count++;
+		}
+		if (stable_count == DEBOUNCE_TIME) {
+			button_state = current_reading;  // Actualiza el estado del botón solo si es estable
+		}
+		} else {
+		stable_count = 0;  // Restablece el contador si el estado cambia
+	}
+
+	last_button_state = current_reading;
+	return button_state;
+}
+*/
+
+
 ////////////////////////////
 
 // Funciones de interrupción
@@ -392,6 +432,20 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 ISR(PCINT0_vect){
 	//SO1 [SOB] (PCINT0)
 	if (isBitSet(REG_SOB_PIN,PIN_SO1_PIN) && reg_SO1 == 0){ // Flanco subida
+
+		/*	Filtrado tipo 3:		La forma que más me gusta porque se puede implementar fácilmente, aunque aumenta mucho el tiempo de la interrupción, pero quizá se pueden habilitar de nuevo y quitamos el problema ya que el tiempo aquí no es tan importante (el coche se mueve muy lentamente, no nos lo vamos a perder porque salte la interrupción milis)
+									Habría que repetirlo para todos los casos
+		volatile unint8_t current_state;
+		sei();	// ???
+		for (volatile unint8_t i = 0; i++; i = 5) {
+			current_state = isBitSet(REG_SOB_PIN,PIN_SO1_PIN);
+			if (current_state == reg_SO1) {
+				i=5;
+			} 
+		}
+		reg_SO1 = current_state; 		
+		*/
+		
 		//closeBarrera(); // Pendiente Parte2
 		reg_SO1 = 1; // Actualizo registro SO1 con valor actual
 	}	
