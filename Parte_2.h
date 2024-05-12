@@ -3,7 +3,7 @@
 #ifndef PARTE_2_H_
 #define PARTE_2_H_
 
---Incluir macros necesarias
+//Incluir macros necesarias
 //void funciones();
 void setup_luz(); 
 void control_L1(); 
