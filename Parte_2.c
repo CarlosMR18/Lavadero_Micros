@@ -33,7 +33,7 @@ void control_L1 (uint8_t modo){ // Se usará en la integración							//CC: En s
  			break;
  			default:
  				if(millis()%500==0){
-					ToggleBit(REG_LED_PORT, PIN_L1_PORT); 
+					toggleBit(REG_LED_PORT, PIN_L1_PORT); 
  					// if(PINL0==1){
  					// 	clearBit(REG_LED_PORT, PIN_L1_PORT); //PORTL= 0x00;
  					// } else{
