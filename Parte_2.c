@@ -71,7 +71,9 @@ void barrera(){
 	} 
 }
 
-
+ISR(SO2){
+	
+}
 //lavado vertical
 
 void setup_lv(){
