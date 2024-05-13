@@ -85,8 +85,8 @@ void setupTimers(void){
 	TIMSK1 = 0b00000010;
 	OCR1A =  Freq_uC/256;
 	// TIMER 3 => Timer milisegundos :  Modo CTC (ICRn) sin preescalado
-	TCCR3A = 0b00000000;
-	TCCR3B = 0b00001001;
+	TCCR3A = 0b00000000;  //WGM30 y WGM31 == 0
+	TCCR3B = 0b00001001;  //WGM32 y WGM33 == 1  CS30 == 1(no preescalado)
 	TIMSK3 = 0b00000010;
 	OCR3A =	Freq_uC/1000;
 	sei();
@@ -110,6 +110,8 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 		
 		if(prev_lav_H == lav_H){ // Filtrado rebotes
 			aux_lavH = 1;
+		}else{
+			aux_lavH = 0;
 		}
 		
 	}
@@ -117,6 +119,7 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 
 	void setup_LavHorizontal(){
 		// Motor 3: Altura rodillo H
+		cli();
 		setBit(REG_M3_en_DDR,PIN_M3_en_DDR); // Definir como salida
 		setBit(REG_M3_di_DDR,PIN_M3_di_DDR);
 		setBit(REG_M3_en_PORT,PIN_M3_en_PORT); // Subir rodillo
@@ -126,6 +129,7 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 		//setBit(REG_M4_di_DDR,PIN_M4_di_DDR);
 		clearBit(REG_M4_en_PORT,PIN_M4_en_PORT); // Apagado de inicio
 		//setBit(REG_M4_di_PORT,PIN_M4_di_PORT); // Sentido giro -- COMPROBAR EN MAQUETA
+		sei();
 	}
 
 	// Lavadero Horizontal - Altura
