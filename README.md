@@ -3,7 +3,7 @@ Trabajo Sistemas Microprocesadores 2023/2024 - EQUIPO LAVADERO 2
 # Puertos a usar (J1)
 	// MOTORES
 		M1_di	=>	PK0 // (PCINT16)  //**no se usa***
-		M1_en	=>	PL2 // (-)   --> revisar
+		M1_en	=>	PL2 // (-)  
 		M2_di	=>	PK4 // (PCINT20)  //**no se usa***
 		M2_en	=>	PK6 // (PCINT22)
 		M3_di	=>	PL4 // (OC5B)
@@ -15,14 +15,14 @@ Trabajo Sistemas Microprocesadores 2023/2024 - EQUIPO LAVADERO 2
 		M6_di	=>	PB5 // (PCINT5)
 		M6_en	=>	PB7 // (PCINT7)
 	// SWITCHES
-		SW1	=>	PD3 	// (INT3)
-		SW2	=>	PD1 	// (INT1)
-		SW3	=>	PD2 	// (INT2)
-		SW4	=>	PD0 	// (INT0)
+		SW1	=>	PD3 // (INT3)
+		SW2	=>	PD1 // (INT1)
+		SW3	=>	PD2 // (INT2)
+		SW4	=>	PD0 // (INT0)
 	// LED
 		L1 	=>	PL1 // (ICP5)
-		L4 22 	=>	PL3 // (OC5A)	22
-		L5 24	=>	PL5 // (OC5C)	24
+		L4 	=>	PL3 // (OC5A)	
+		L5 	=>	PL5 // (OC5C)	
 		L6 	=>	PL7 // (-)
 	// SENSORES	
 		SO1 	=>	PB0 // (PCINT0)
@@ -35,7 +35,7 @@ Trabajo Sistemas Microprocesadores 2023/2024 - EQUIPO LAVADERO 2
 		SO8	=>	PK7 // (PCINT23)
 		SO9	=>	PK3 // (PCINT19)
 		SO10 	=>	PL0 // (ICP4)
-		SO11 	=>	PD5 // (-)
+		SO11 	=>	PD5 // (-) -->revisar
 		SO12 	=>	PB2 // (PCINT2/OC2A)
   
 # Partición de la maqueta : Lavadero
