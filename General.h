@@ -191,7 +191,7 @@
 		#define PIN_L6_PIN  PINL7
 		
 	// SENSORES
-		// REGISTROS S01-S05-S06-S12 B
+		// REGISTROS S01-S06-S12 B
 		#define REG_SOB_PORT PORTB
 		#define REG_SOB_DDR  DDRB
 		#define REG_SOB_PIN  PINB
@@ -202,7 +202,12 @@
 		// REGISTROS S07-S08-S09-2011 D
 		#define REG_SOD_PORT PORTD
 		#define REG_SOD_DDR  DDRD
-		#define REG_SOD_PIN  PIND		
+		#define REG_SOD_PIN  PIND
+		// REGISTROS S05 K
+		#define REG_SOK_PORT PORTK
+		#define REG_SOK_DDR  DDRK
+		#define REG_SOK_PIN  PINK
+
 		// SO1 => PCINT0
 		#define PIN_SO1_PORT PB0
 		#define PIN_SO1_DDR  DDB0
