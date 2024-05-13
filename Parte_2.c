@@ -19,30 +19,29 @@ void setup_luz(){
 	// sei();												//hbailito las interrupciones globales
 }
 
-volatile uint8_t regModoL1; //REVISAR
-void control_L1 (uint8_t modo){ // Se usará en la integración							//CC: En setup_luz() configuras el timer5 cada 0.5s y en control_L1() no se usa el timer5. Consejo: Cada vez que entre al case reconfiguro el timer5 para cumplir con el parpadelo
- 	if (regModoL1 != modo){ //Solo actualizo cuando cambia el modo
- 		switch(modo){
- 			case 0:
- 				if(seconds()%10==0){
- 					while(millis()%500!=0){
- 						setbit(REG_LED_PORT, PIN_L1_PORT);	//PORTL= 0x02;
- 					}
- 					clearBit(REG_LED_PORT, PIN_L1_PORT);//PORTL= 0x00;
+volatile uint8_t modo; //REVISAR
+void control_L1 (uint8_t modo_parametro){ // Se usará en la integración							//CC: En setup_luz() configuras el timer5 cada 0.5s y en control_L1() no se usa el timer5. Consejo: Cada vez que entre al case reconfiguro el timer5 para cumplir con el parpadelo
+ 	//if (regModoL1 != modo){ //Solo actualizo cuando cambia el modo
+ 		if(modo_parametro == 0){
+ 			if(seconds()%10==0){
+ 				while(millis()%500!=0){
+ 					setbit(REG_LED_PORT, PIN_L1_PORT);	//PORTL= 0x02;
  				}
- 			break;
- 			default:
- 				if(millis()%500==0){
-					toggleBit(REG_LED_PORT, PIN_L1_PORT); 
+ 				clearBit(REG_LED_PORT, PIN_L1_PORT);//PORTL= 0x00;
+ 			}
+		}
+ 		else {
+ 			if(millis()%500==0){
+				toggleBit(REG_LED_PORT, PIN_L1_PORT); 
  					// if(PINL0==1){
  					// 	clearBit(REG_LED_PORT, PIN_L1_PORT); //PORTL= 0x00;
  					// } else{
  					// 	setBit(REG_LED_PORT, PIN_L1_PORT);//PORTL=0x02;
  					// }
- 				}
-}
- 	}
- 	regModoL1 = modo;
+ 			}
+		}
+ 	
+ 	//regModoL1 = modo;
 }
 
 //definir 2 modos para variable "modo": modo_intermitente (cuando algún sensor detecte coche o algún motor esté activo)
@@ -58,6 +57,8 @@ void setup_barrera(){
 	clearBit(REG_SOL_DDR, PIN_SO2_DDR); 
 	DDRB &= ~(1<< DDB0); //PCINT0 como entrada
 	cli();
+	EIMSK = 0x08;
+	EICRA = 11000000;
 	PCICR |= setBit(REG_SOB_PIN, PIN_SO1_PIN);	// Habilito grupo de interrupciones en PORTB (por cambio de estado)
 	PCMSK0 |= (1<<PCINT0);  //Habilito interrupción en pin PCINT0
 	sei();			//Habilito interrupciones globales
