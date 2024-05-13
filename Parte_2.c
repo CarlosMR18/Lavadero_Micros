@@ -25,7 +25,7 @@ void control_L1 (uint8_t modo_parametro){ // Se usará en la integración							
  		if(modo_parametro == 0){
  			if(seconds()%10==0){
  				while(millis()%500!=0){
- 					setbit(REG_LED_PORT, PIN_L1_PORT);	//PORTL= 0x02;
+ 					setBit(REG_LED_PORT, PIN_L1_PORT);	//PORTL= 0x02;
  				}
  				clearBit(REG_LED_PORT, PIN_L1_PORT);//PORTL= 0x00;
  			}
@@ -102,12 +102,16 @@ ISR(PCINT0_vect){
 		lavadoV_on();
 		modo = 1;
 	}
-	if(PIN_SW1_PIN & isBitSet(REG_SW_PIN, PIN_SW1_PIN)){//si se ha producido un flanco de subida, amentamos cuenta
-		cuenta++; 
-	}
+	// if(PIN_SW1_PIN & isBitSet(REG_SW_PIN, PIN_SW1_PIN)){//si se ha producido un flanco de subida, amentamos cuenta
+	// 	cuenta++; 
+	// }
 	else {
 		clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);//PORTK = 0x00; //deshabilitar barrera
 	}
+}
+
+ISR(INT3_VECT){
+	cuenta++; 
 }
 void setup_Parte_2(){
 	setup_barrera(); 
@@ -119,7 +123,7 @@ void setup_Parte_2(){
 
 void Parte_2(){
 	while(1){
-		//control_L1(modo1); 
+		//control_L1(modo); 
 	}
  	//if(PIN_SO1_PIN==0){
  		//barrera();//este no se si se puede quitar
