@@ -253,7 +253,7 @@ void Parte_2(){
 int main(){
 	setup_Parte_2();
 	while(1){
-		cli();
+		//cli();
 		
 		/*
 		//Parte_2();
