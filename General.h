@@ -38,13 +38,13 @@
 		#define PIN_M1_di_DDR  	DDK0
 		#define PIN_M1_di_PIN  	PINK0
 			// Enable
-		#define REG_M1_en_PORT	PORTK
-		#define REG_M1_en_DDR	DDRK
-		#define REG_M1_en_PIN	PINK
+		#define REG_M1_en_PORT	PORTL
+		#define REG_M1_en_DDR	DDRL
+		#define REG_M1_en_PIN	PINL
 		
-		#define PIN_M1_en_PORT	PK2
-		#define PIN_M1_en_DDR	DDK2
-		#define PIN_M1_en_PIN	PINK2
+		#define PIN_M1_en_PORT	PL2
+		#define PIN_M1_en_DDR	DDL2
+		#define PIN_M1_en_PIN	PINL2
 		
 		// Motor M2 => Rodillos verticales
 			// Direction
@@ -195,7 +195,7 @@
 		#define REG_SOB_PORT PORTB
 		#define REG_SOB_DDR  DDRB
 		#define REG_SOB_PIN  PINB
-		// REGISTROS S02-S03-S04-S010 L
+		// REGISTROS S03-S04-S010 L
 		#define REG_SOL_PORT PORTL
 		#define REG_SOL_DDR  DDRL
 		#define REG_SOL_PIN  PINL		
@@ -203,7 +203,7 @@
 		#define REG_SOD_PORT PORTD
 		#define REG_SOD_DDR  DDRD
 		#define REG_SOD_PIN  PIND
-		// REGISTROS S05 K
+		// REGISTROS S05-SO2 K
 		#define REG_SOK_PORT PORTK
 		#define REG_SOK_DDR  DDRK
 		#define REG_SOK_PIN  PINK
@@ -213,9 +213,9 @@
 		#define PIN_SO1_DDR  DDB0
 		#define PIN_SO1_PIN  PINB0
 		// SO2
-		#define PIN_SO2_PORT PL2
-		#define PIN_SO2_DDR  DDL2
-		#define PIN_SO2_PIN  PINL2	
+		#define PIN_SO2_PORT PK2
+		#define PIN_SO2_DDR  DDK2
+		#define PIN_SO2_PIN  PINK2	
 		// SO3
 		#define PIN_SO3_PORT	PB1
 		#define PIN_SO3_DDR  	DDB1
