@@ -9,7 +9,7 @@
 void setup_luz(){
 	setBit(REG_LED_DDR, PIN_L1_DDR); 	//Comentario Carlos (CC): debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
 	setBit(REG_LED_PORT, PIN_L1_PORT);
-	
+
 	// cli();												//deshabilito las interrupciones globales
 	// TCCR5A= 0x00;										//configurar CTC
 	// TCCR5B = (1 << WGM52) | (1 << CS51) | (1 << CS50);	//Preescalador de 64  									//CC: No olvides "|", TCCR5B |= (1 << WGM52) | (1 << CS51) | (1 << CS50);
@@ -81,17 +81,7 @@ void barrera(){
 	} 
 }
 
-ISR(PCINT0_vect){
-	if(isClrSet(REG_SOB_PIN, PIN_SO1_PIN)== 1){ //si SO1 está a 0(detecta coche) accionar la barrera
-		barrera();
-	}
-	if(PIN_SW1_PIN & isBitSet(REG_SW_PIN, PIN_SW1_PIN)){//si se ha producido un flanco de subida, amentamos cuenta
-		cuenta++; 
-	}
-	else {
-		clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);//PORTK = 0x00; //deshabilitar barrera
-	}
-}
+
 //lavado vertical
 
 void setup_lv(){
@@ -107,10 +97,24 @@ void lavadoV_off(){
 	clearBit(REG_M2_en_PORT, PIN_M2_en_PORT);
 }
 
+ISR(PCINT0_vect){
+	if(isClrSet(REG_SOB_PIN, PIN_SO1_PIN)== 1){ //si SO1 está a 0(detecta coche) accionar la barrera
+		barrera();
+		lavadoV_on();
+		modo = 1;
+	}
+	if(PIN_SW1_PIN & isBitSet(REG_SW_PIN, PIN_SW1_PIN)){//si se ha producido un flanco de subida, amentamos cuenta
+		cuenta++; 
+	}
+	else {
+		clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);//PORTK = 0x00; //deshabilitar barrera
+	}
+}
 void setup_Parte_2(){
 	setup_barrera(); 
 	setup_luz(); 
 	setup_lv();
+	modo = 0;
 }
 
 
@@ -118,9 +122,9 @@ void Parte_2(){
 	while(1){
 		//control_L1(modo1); 
 	}
- 	if(PIN_SO1_PIN==0){
- 		barrera();//este no se si se puede quitar
-		lavadoV_on();//por establecer un criterio, llamamos a barrera a la vez que llamamos a lavado vertical
+ 	//if(PIN_SO1_PIN==0){
+ 		//barrera();//este no se si se puede quitar
+		//lavadoV_on();//por establecer un criterio, llamamos a barrera a la vez que llamamos a lavado vertical
  	} 
 	if(PIN_SO5_PIN==0){
 		lavadoV_off(); 
