@@ -10,13 +10,7 @@ void setup_luz(){
 	setBit(REG_LED_DDR, PIN_L1_DDR); 	//Comentario Carlos (CC): debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
 	setBit(REG_LED_PORT, PIN_L1_PORT);
 
-	// cli();												//deshabilito las interrupciones globales
-	// TCCR5A= 0x00;										//configurar CTC
-	// TCCR5B = (1 << WGM52) | (1 << CS51) | (1 << CS50);	//Preescalador de 64  									//CC: No olvides "|", TCCR5B |= (1 << WGM52) | (1 << CS51) | (1 << CS50);
-	// OCR1A =62500-1;										//configuro el numero de ciclos a contar
-	// TIMSK5 = (1 << OCIE0A);								//habilito la mascara de la interrupcion 			//CC: No olvides "|", sería TIMSK5 |= (1 << OCIE0A);
-	// TIFR5 = (1 << OCF5A);								//habilito la bandera de la interrupcion			//CC: TIFR5 |= (1 << OCF5A);
-	// sei();												//hbailito las interrupciones globales
+
 }
 
 volatile uint8_t modo; //REVISAR
@@ -33,11 +27,7 @@ void control_L1 (uint8_t modo_parametro){ // Se usará en la integración							
  		else {
  			if(millis()%500==0){
 				toggleBit(REG_LED_PORT, PIN_L1_PORT); 
- 					// if(PINL0==1){
- 					// 	clearBit(REG_LED_PORT, PIN_L1_PORT); //PORTL= 0x00;
- 					// } else{
- 					// 	setBit(REG_LED_PORT, PIN_L1_PORT);//PORTL=0x02;
- 					// }
+ 					
  			}
 		}
  	
