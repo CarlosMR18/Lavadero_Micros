@@ -1,4 +1,6 @@
 
+
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
@@ -133,25 +135,25 @@ void setup_barrera(){
 	setBit(REG_M1_en_DDR, PIN_M1_en_DDR);													//CC: debes de configurar solo tus pines. Si otra persona usa el puerto L, le estás cambiando la configuración de sus pines. puedes Usar macros de General.h (setBit, clrBit)
 	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 	clearBit(REG_SOB_DDR, PIN_SO1_DDR);											//CC: debes de configurar solo tus pines
-	clearBit(REG_SOL_DDR, PIN_SO2_DDR);
+	clearBit(REG_SOK_DDR, PIN_SO2_DDR);
 	DDRB &= ~(1<< DDB0); //PCINT0 como entrada
 	cli();
 	EIMSK = 0x08;
 	EICRA = 0xC0;
 	//PCICR |= setBit(REG_SOB_PIN, PIN_SO1_PIN);	// Habilito grupo de interrupciones en PORTB (por cambio de estado)
 	PCMSK0 |= (1<<PCINT0);  //Habilito interrupción en pin PCINT0
-	PCMSK2 |= (1<<PCINT18);  
-	PCICR |= (1<< PCIE0) | (1<< PCIE2); 
-	//PCIFR |= (1<< PCIF2) & (1 << PCIF0); 
+	PCMSK2 |= (1<<PCINT18);
+	PCICR |= (1<< PCIE0) | (1<< PCIE2);
+	//PCIFR |= (1<< PCIF2) & (1 << PCIF0);
 	sei();			//Habilito interrupciones globales
-	while(isClrSet(REG_SOL_PIN, PIN_SO2_PIN)!=1){
+	while(isBitSet(REG_SOK_PIN, PIN_SO2_PIN)==1){
 		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 	}
 	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
-	barrera_cerrada=1; 
+	barrera_cerrada=1;
 }
 
- //cuenta es una variable que cuenta los flancos que se producen en SW1
+//cuenta es una variable que cuenta los flancos que se producen en SW1
 // void barrera(){
 // 	if((coche==1) && (millis()%500==0)){
 // 		if(isClrSet(REG_SOL_PIN, PIN_SO2_PIN)==1){//si SO2 está a 0(cerrada) accionamos la barrera								//CC: PINL2 es una macro que contiene un "2". Usar is Usar macros de General.h ( isBitSet(Registro, Bit), isClrSet(Registro, Bit) )
@@ -162,7 +164,7 @@ void setup_barrera(){
 // 			cuenta=0;
 // 		}
 // 	}
-// 	
+//
 // 	if(flanco de subida s03){//cuando SO3 detecte, el coche entre en el lavado horizontal, bajar la barrera de nuevo//poner una bandera para cuadno SO3 detecte el culo del coche
 // 		if(isClrSet(REG_SOL_PIN, PIN_SO2_PIN)!=1){//mientras SO2 no esté a 1
 // 			setBit(REG_M1_en_PORT, PIN_M1_en_PORT);//PORTK = 0x04;//cerrar la barrera
@@ -173,7 +175,7 @@ void setup_barrera(){
 void openbarrera(){
 	if(barrera_cerrada==1){
 		//while(cuenta<3){
-			setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 		//}
 	}
 }
@@ -183,17 +185,17 @@ void closebarrera(){
 		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 	}
 }
-	
+
 void stopbarrera(){
 	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 }
-	
- 
+
+
 ISR(PCINT2_vect){
 	if(isClrSet(REG_SOK_PORT, PIN_SO2_PIN)==1){//¿FLANCO DE BAJADA?
-		barrera_cerrada=1;   
+		barrera_cerrada=1;
 	}
- }
+}
 //lavado vertical
 
 void setup_lv(){
@@ -233,16 +235,16 @@ void Parte_2(){
 		openbarrera();//este no se si se puede quitar
 		delay_seconds(2);
 		//while(seconds()%1!=1){
-			stopbarrera(); 
+		stopbarrera();
 		//}
-		delay_seconds(2); 
+		delay_seconds(2);
 		closebarrera();
 		//lavadoV_on();//por establecer un criterio, llamamos a barrera a la vez que llamamos a lavado vertical
-		 
+		
 	}
-// 	if(PIN_SO5_PIN==0){
-// 		lavadoV_off();
-// 	}
+	// 	if(PIN_SO5_PIN==0){
+	// 		lavadoV_off();
+	// 	}
 
 }
 
@@ -250,14 +252,17 @@ void Parte_2(){
 int main(){
 	setup_Parte_2();
 	while(1){
+		cli();
+		
+		/*
 		//Parte_2();
 		openbarrera();//este no se si se puede quitar
 		delay_seconds(2);
 		//while(seconds()%1!=1){
-			stopbarrera(); 
+		stopbarrera();
 		//}
-		delay_seconds(2); 
-		closebarrera();
+		delay_seconds(2);
+		closebarrera();*/
 	}
-	return 0; 
+	return 0;
 }
