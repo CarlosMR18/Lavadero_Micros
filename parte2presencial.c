@@ -184,6 +184,7 @@ void closebarrera(){
 	while(barrera_cerrada!=1){
 		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 	}
+	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 }
 
 void stopbarrera(){
