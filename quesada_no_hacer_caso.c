@@ -168,9 +168,9 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 		if(aux_lavH){
 			if (lav_H[1]==0 && (lav_H[0]==1 || lav_H[2]==1)){
 				stop_AlturaH();
-				} else if(lav_H[0]==0 && lav_H[1]==0){ //para direccion contraria: (lav_H[0]==0 || lav_H[2]==0) && lav_H[1]==0 
+			} else if(lav_H[0]==0 && lav_H[1]==0){ //para direccion contraria: (lav_H[0]==0 || lav_H[2]==0) && lav_H[1]==0 
 				up_LavHorizontal();
-				} else {
+			} else {
 				down_LavHorizontal();
 			}
 		}
