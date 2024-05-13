@@ -141,9 +141,9 @@ void setup_barrera(){
 	EIMSK = 0x08;
 	EICRA = 0xC0;
 	//PCICR |= setBit(REG_SOB_PIN, PIN_SO1_PIN);	// Habilito grupo de interrupciones en PORTB (por cambio de estado)
+	PCICR |= (1<< PCIE0) | (1<< PCIE2);
 	PCMSK0 |= (1<<PCINT0);  //Habilito interrupción en pin PCINT0
 	PCMSK2 |= (1<<PCINT18);
-	PCICR |= (1<< PCIE0) | (1<< PCIE2);
 	//PCIFR |= (1<< PCIF2) & (1 << PCIF0);
 	sei();			//Habilito interrupciones globales
 	while(isBitSet(REG_SOK_PIN, PIN_SO2_PIN)==1){
