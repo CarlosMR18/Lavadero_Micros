@@ -71,9 +71,9 @@ void barrera(){
 	} 
 }
 
-ISR(SO2){
+// ISR(SO2){//cambiar pines de SO2 para implementar la interrupcion
 	
-}
+// }
 //lavado vertical
 
 void setup_lv(){
