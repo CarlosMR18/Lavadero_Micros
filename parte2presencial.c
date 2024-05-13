@@ -147,6 +147,7 @@ void setup_barrera(){
 	while(isClrSet(REG_SOL_PIN, PIN_SO2_PIN)!=1){
 		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 	}
+	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 	barrera_cerrada=1; 
 }
 
