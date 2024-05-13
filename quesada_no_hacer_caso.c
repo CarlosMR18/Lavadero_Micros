@@ -1,13 +1,12 @@
 #include <avr/io.h>
+#include <stdio.h>
 #include <avr/interrupt.h>
-#include <stddef.h>
-//#include <string.h>
+
 
 // Definicion de macros de trabajo
 #define setBit(Registro,Bit)	(Registro |= (1 << Bit))	// pone a 1 el bit B del puerto P
 #define clearBit(Registro,Bit)	(Registro &= ~(1 << Bit))	// pone a 0 el bit B del puerto P
 #define toggleBit(Registro,Bit) (Registro ^= (1 << Bit))  	// cambia el valor del bit B del puerto P
-
 #define isBitSet(Registro, Bit) (Registro & (1 << Bit))		// devuelve '1' si dicho bit es '1'
 #define isClrSet(Registro, Bit) (!isBitSet(Registro, Bit))	// devuelve '1' si dicho bit es '0'
 
@@ -114,6 +113,7 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 		}
 		
 	}
+}
 
 	void setup_LavHorizontal(){
 		// Motor 3: Altura rodillo H
@@ -156,7 +156,7 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 
 	void lavaderoHorizontal(){
 		if (limit_switch_lavH == 1 && isBitSet(REG_M3_en_PORT,PIN_M3_en_PORT)){  // devuelve '1' si detecta fin de carrera Y si el motor esta encendido
-			clearBit(REG_M4_en_PORT,PIN_M4_en_PORT) //deja de girar el rodillo
+			clearBit(REG_M4_en_PORT,PIN_M4_en_PORT); //deja de girar el rodillo
 			toggleBit(REG_M3_di_PORT,PIN_M3_di_PORT); // cambia el sentido del motor
 			if (isBitSet(REG_M3_di_PORT,PIN_M3_di_PORT)){ //el rodillo esta abajo
 				up_LavHorizontal(); //vuelvo a la posicion inicial(arriba)
@@ -168,14 +168,15 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 		if(aux_lavH){
 			if (lav_H[1]==0 && (lav_H[0]==1 || lav_H[2]==1)){
 				stop_AlturaH();
-				} else if(lav_H[0]==0 && lav_H[1]==0){
+				} else if(lav_H[0]==0 && lav_H[1]==0){ //para direccion contraria: (lav_H[0]==0 || lav_H[2]==0) && lav_H[1]==0 
 				up_LavHorizontal();
 				} else {
 				down_LavHorizontal();
 			}
 		}
 	}
-	volatile uint8_t Stop = 0;
+	
+volatile uint8_t Stop = 0;
 void setStop(void){
 	Stop = 1;
 }
@@ -183,14 +184,19 @@ void setStop(void){
 uint8_t getStop(void){
 	return Stop;
 }
-	int main(void) {
-		setup_LavHorizontal();
-		
-		while(1) {
-			if(!getStop()){
-				lavaderoHorizontal();
-			}
+
+int main(void){
+	setupTimers();
+	setup_LavHorizontal();
+	
+	while(1) {
+		if(!getStop()){
+			lavaderoHorizontal();
 		}
-	 return 0; 
 	}
+	return 0;
 }
+	
+//aplicar PWM al secado para el secado-->mas despacio
+//mirar señales osciloscopio--> rebotes
+	
