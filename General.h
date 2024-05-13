@@ -30,9 +30,9 @@
 	
 		// Motor M1 => Barrera de entrada
 			// Direction
-		#define REG_M1_di_PORT	PORTL
-		#define REG_M1_di_DDR	DDRL
-		#define REG_M1_di_PIN	PINL
+		#define REG_M1_di_PORT	PORTK
+		#define REG_M1_di_DDR	DDRK
+		#define REG_M1_di_PIN	PINK
 		
 		#define PIN_M1_di_PORT	PK0
 		#define PIN_M1_di_DDR  	DDK0
@@ -66,69 +66,57 @@
 		
 		// Motor M3 => Rodillo horizontal altura
 			// Direction => PCINT1
-		#define REG_M3_di_PORT	PORTB
-		#define REG_M3_di_DDR	DDRB
-		#define REG_M3_di_PIN	PINB
+		#define REG_M3_di_PORT	PORTL
+		#define REG_M3_di_DDR	DDRL
+		#define REG_M3_di_PIN	PINL
 
 		#define PIN_M3_di_PORT	PL4
 		#define PIN_M3_di_PORT	DDL4
 		#define PIN_M3_di_PIN	PINL4
-		
-//		#define PIN_M3_di_PORT	PB1
-//		#define PIN_M3_di_DDR  	DDB1
-//		#define PIN_M3_di_PIN  	PINB1
 			// Enable
-		#define REG_M3_en_PORT	PORTB
-		#define REG_M3_en_DDR	DDRB
-		#define REG_M3_en_PIN	PINB
+		#define REG_M3_en_PORT	PORTD
+		#define REG_M3_en_DDR	DDRD
+		#define REG_M3_en_PIN	PIND
 
 		#define PIN_M3_en_PORT	PD4
 		#define PIN_M3_en_DDR	DDD4
 		#define PIN_M3_en_PIN	PIND4	
-
-//		#define PIN_M3_en_PORT	PB3
-//		#define PIN_M3_en_DDR	DDB3
-//		#define PIN_M3_en_PIN	PINB3	
 		
 		// Motor M4 => Rodillo horizontal giro
 			// Direction
-		#define REG_M4_di_PORT	PORTK
-		#define REG_M4_di_DDR	DDRK
-		#define REG_M4_di_PIN	PINK
+		#define REG_M4_di_PORT	PORTL
+		#define REG_M4_di_DDR	DDRL
+		#define REG_M4_di_PIN	PINL
 		
-		#define PIN_M4_di_PORT	PK5
-		#define PIN_M4_di_DDR  	DDK5
-		#define PIN_M4_di_PIN  	PINK5
+		#define PIN_M4_di_PORT	PL6
+		#define PIN_M4_di_DDR  	DDL6
+		#define PIN_M4_di_PIN  	PINL6
 			// Enable
-		#define REG_M4_en_PORT	PORTK
-		#define REG_M4_en_DDR	DDRK
-		#define REG_M4_en_PIN	PINK
+		#define REG_M4_en_PORT	PORTD
+		#define REG_M4_en_DDR	DDRD
+		#define REG_M4_en_PIN	PIND
 
 		#define PIN_M4_en_PORT PD6
 		#define PIN_M4_en_DDR  DDD6
 		#define PIN_M4_en_PIN  PIND6
 
-//		#define PIN_M4_en_PORT	PK7
-//		#define PIN_M4_en_DDR	DDK7
-//		#define PIN_M4_en_PIN	PINK7
-		
 		// Motor M5 => Ventilador de secado
 			// Direction
-		#define REG_M5_di_PORT	PORTK
-		#define REG_M5_di_DDR	DDRK
-		#define REG_M5_di_PIN	PINK
+		#define REG_M5_di_PORT	PORTB
+		#define REG_M5_di_DDR	DDRB
+		#define REG_M5_di_PIN	PINB
 		
-		#define PIN_M5_di_PORT	PK1
-		#define PIN_M5_di_DDR  	DDK1
-		#define PIN_M5_di_PIN  	PINK1
+		#define PIN_M5_di_PORT	PB6
+		#define PIN_M5_di_DDR  	DDB6
+		#define PIN_M5_di_PIN  	PINB6
 			// Enable
-		#define REG_M5_en_PORT	PORTK
-		#define REG_M5_en_DDR	DDRK
-		#define REG_M5_en_PIN	PINK
+		#define REG_M5_en_PORT	PORTD
+		#define REG_M5_en_DDR	DDRD
+		#define REG_M5_en_PIN	PIND
 
-		#define PIN_M5_en_PORT	PK3
-		#define PIN_M5_en_DDR	DDK3
-		#define PIN_M5_en_PIN	PINK3
+		#define PIN_M5_en_PORT	PD7
+		#define PIN_M5_en_DDR	DDD7
+		#define PIN_M5_en_PIN	PIND7
 		
 		// Motor M6 => Cinta de arrastre
 			// Direction => PCINT5
@@ -220,39 +208,30 @@
 		#define PIN_SO3_PORT	PB1
 		#define PIN_SO3_DDR  	DDB1
 		#define PIN_SO3_PIN  	PINB1
-//		#define PIN_SO3_PORT PL4
-//		#define PIN_SO3_DDR  DDL4
-//		#define PIN_SO3_PIN  PINL4	
 		// SO4
 		#define PIN_SO4_PORT	PK5
 		#define PIN_SO4_DDR  	DDK5
 		#define PIN_SO4_PIN  	PINK5
-//		#define PIN_SO4_PORT PL6
-//		#define PIN_SO4_DDR  DDL6
-//		#define PIN_SO4_PIN  PINL6
 		// SO5 => PCINT6
 		#define PIN_SO5_PORT	PK1
 		#define PIN_SO5_DDR  	DDK1
 		#define PIN_SO5_PIN  	PINK1
-//		#define PIN_SO5_PORT PB6
-//		#define PIN_SO5_DDR  DDB6
-//		#define PIN_SO5_PIN  PINB6
 		// SO6 => PCINT4
 		#define PIN_SO6_PORT PB4
 		#define PIN_SO6_DDR  DDB4
 		#define PIN_SO6_PIN  PINB4
 		// SO7
-		#define PIN_SO7_PORT PD4
-		#define PIN_SO7_DDR  DDD4
-		#define PIN_SO7_PIN  PIND4
+		#define PIN_SO7_PORT PB3
+		#define PIN_SO7_DDR  DDB3
+		#define PIN_SO7_PIN  PINB3
 		// SO8
-		#define PIN_SO8_PORT PD6
-		#define PIN_SO8_DDR  DDD6
-		#define PIN_SO8_PIN  PIND6
+		#define PIN_SO8_PORT PK7
+		#define PIN_SO8_DDR  DDK7
+		#define PIN_SO8_PIN  PINK7
 		// SO9
-		#define PIN_SO9_PORT PD7
-		#define PIN_SO9_DDR  DDD7
-		#define PIN_SO9_PIN  PIND7
+		#define PIN_SO9_PORT PK3
+		#define PIN_SO9_DDR  DDK3
+		#define PIN_SO9_PIN  PINK3
 		// SO10
 		#define PIN_SO10_PORT PL0
 		#define PIN_SO10_DDR  DDL0
