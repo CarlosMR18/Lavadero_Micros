@@ -50,8 +50,9 @@ void setup_barrera(){
 	PCICR |= setBit(REG_SOB_PIN, PIN_SO1_PIN);	// Habilito grupo de interrupciones en PORTB (por cambio de estado)
 	PCMSK0 |= (1<<PCINT0);  //Habilito interrupción en pin PCINT0
 	sei();			//Habilito interrupciones globales
-	
-	  
+	while(isClearbit(REG_SOL_PIN, PIN_SO2_PIN)!=1){
+		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+	}  
 }
 
 volatile int cuenta=0; //cuenta es una variable que cuenta los flancos que se producen en SW1
