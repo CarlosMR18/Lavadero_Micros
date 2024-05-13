@@ -64,7 +64,7 @@ void barrera(){
 		clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 		cuenta=0;
 		}
-	if(isClrSet(REG_SOL_PIN, PIN_SO3_PIN)){//cuando SO3 detecte, el coche entre en el lavado horizontal, bajar la barrera de nuevo 
+	if(isClrSet(REG_SOL_PIN, PIN_SO3_PIN)){//cuando SO3 detecte, el coche entre en el lavado horizontal, bajar la barrera de nuevo//poner una bandera para cuadno SO3 detecte el culo del coche 
 		if(isClrSet(REG_SOL_PIN, PIN_SO2_PIN)!=1){//mientras SO2 no esté a 1
 			setBit(REG_M1_en_PORT, PIN_M1_en_PORT);//PORTK = 0x04;//cerrar la barrera
 		}
