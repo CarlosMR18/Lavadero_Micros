@@ -122,9 +122,7 @@ void setup_Parte_2(){
 
 
 void Parte_2(){
-	while(1){
-		//control_L1(modo); 
-	}
+		control_L1(modo); 
  	//if(PIN_SO1_PIN==0){
  		//barrera();//este no se si se puede quitar
 		//lavadoV_on();//por establecer un criterio, llamamos a barrera a la vez que llamamos a lavado vertical
