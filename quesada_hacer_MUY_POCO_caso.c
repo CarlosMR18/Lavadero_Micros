@@ -12,7 +12,7 @@
 
 // Caracteristicas del microprocesador
 #define Freq_uC 8000000
-#define Check_height_sensors 150 // MS en comprobar estado (Regular en maqueta)
+#define Check_height_sensors 50 // MS en comprobar estado (Regular en maqueta)
 #define Tiempo_prove_new 1200 // Tiempo comprobación entrada nueva en ms(dos sensores distintos)
 
 //////////////
@@ -72,14 +72,14 @@
 
 volatile uint32_t ms = 0;
 // Variables globales - Lavadero Horizontal
-volatile uint8_t lav_H[3] = {1,1,1}; // lav_H[0] para SO3, lav_H[1] para SO4, lav_H[2] para SO5
-volatile uint8_t prev_lav_H[3] = {0,0,0};
-volatile uint8_t aux_lavH = 0;
-volatile uint8_t limit_switch_lavH = 0; //'1' SW2 detecta rodillo en un extremo
-
 volatile uint8_t so3 = 1;
 volatile uint8_t so4 = 1;
 volatile uint8_t so5 = 1;
+volatile uint8_t so3p = 1;
+volatile uint8_t so4p = 1;
+volatile uint8_t so5p = 1;
+volatile uint8_t aux_lavH = 0;
+volatile uint8_t limit_switch_lavH = 0; //'1' SW2 detecta rodillo en un extremo
 
 void setupTimers(void){
 	cli();
@@ -96,59 +96,53 @@ void setupTimers(void){
 	sei();
 }
 
+// Filtrado rebotes
+ISR(TIMER3_COMPA_vect){ // Milisegundos
+	ms++;
+	if(ms % Check_height_sensors == 0){   //cada cuanto chequeo los sensores de altura //#define macro en General.h
+		so3p =so3;
+		so4p =so4;
+		so5p =so5;
+
+		//cargo los valores de los sensores de ese instante
+		so3 = isBitSet(REG_SOB_PIN,PIN_SO3_PIN);
+		so4 = isBitSet(REG_SOK_PIN,PIN_SO4_PIN);
+		so5 = isBitSet(REG_SOK_PIN,PIN_SO5_PIN);
+		limit_switch_lavH = isClrSet(REG_SW_PIN,PIN_SW2_PIN); // isClrSet porque SW2 '0' al detectar
+		
+		
+		if((so3p==so3) && (so4p==so4) && (so5p==so5)){  //Si los valores son los mismos que en instante anterior
+			aux_lavH = 1;		  //muevo el rodillo
+			}else{
+			aux_lavH = 0;		  //no hago nada
+		}
+		
+	}
+}
+
 void setup_LavHorizontal(){
 	// Motor 3: Altura rodillo H
 	cli();
-	setBit(REG_M3_en_DDR,PIN_M3_en_DDR);		// Definir en. como salida
-	setBit(REG_M3_di_DDR,PIN_M3_di_DDR);		// Definir dir. como salida
-	clearBit(REG_M3_di_PORT,PIN_M3_di_PORT);	// Direccion para abajo
-	clearBit(REG_M3_en_PORT,PIN_M3_en_PORT);		// Bajar rodillo
-	
-	// Motor 4: Giro rodillo
-	setBit(REG_M4_en_DDR,PIN_M4_en_DDR);		// Definir como salida
-	clearBit(REG_M4_en_PORT,PIN_M4_en_PORT);	// Apagado de inicio
-	
-	DDRD = 0b11111101;
-	EICRA |= (1<<ISC11); // Para flanco bajada
-	EIMSK |= (1<<INT1);
+	setBit(REG_M3_en_DDR,PIN_M3_en_DDR); // Definir como salida
+	setBit(REG_M3_di_DDR,PIN_M3_di_DDR);
+	setBit(REG_M3_en_PORT,PIN_M3_en_PORT); // Subir rodillo
+	clearBit(REG_M3_di_PORT,PIN_M3_di_PORT);
+	// Motor 4: Giro rodillo 
+	setBit(REG_M4_en_DDR,PIN_M4_en_DDR); // Definir como salida
+	clearBit(REG_M4_en_PORT,PIN_M4_en_PORT); // Apagado de inicio
 	sei();
 }
-
-
-// Filtrado rebotes
-//ISR(TIMER3_COMPA_vect){ // Milisegundos
-//	ms++;
-//	if(ms % Check_height_sensors == 0){   //cada cuanto chequeo los sensores de altura //#define macro en General.h
-//		for (int i = 0; i < 3; i++) {
-//			prev_lav_H[i] = lav_H[i];     //guardo los valores del instante anterior
-//		}
-//
-//		//cargo los valores de los sensores de ese instante
-//		lav_H[0] = isBitSet(REG_SOB_PIN,PIN_SO3_PIN);
-//		lav_H[1] = isBitSet(REG_SOK_PIN,PIN_SO4_PIN);
-//		lav_H[2] = isBitSet(REG_SOK_PIN,PIN_SO5_PIN);
-//		limit_switch_lavH = isClrSet(REG_SW_PIN,PIN_SW2_PIN); // isClrSet porque SW2 '0' al detectar
-//		
-//		
-//		if(prev_lav_H == lav_H){  //Si los valores son los mismos que en instante anterior
-//			aux_lavH = 1;		  //muevo el rodillo
-//			}else{
-//			aux_lavH = 0;		  //no hago nada
-//		}
-//		
-//	}
-//}
 
 // Lavadero Horizontal - Altura
 
 void up_LavHorizontal(){
-	setBit(REG_M3_di_PORT,PIN_M3_di_PORT); // COMPROBAR EN MAQUETA si es setBit() o clearBit()
 	setBit(REG_M3_en_PORT,PIN_M3_en_PORT);
+	setBit(REG_M3_di_PORT,PIN_M3_di_PORT); // COMPROBAR EN MAQUETA si es setBit() o clearBit()
 }
 
 void down_LavHorizontal(){
-	clearBit(REG_M3_di_PORT,PIN_M3_di_PORT); // COMPROBAR EN MAQUETA si es ~[setBit() o clearBit()]
 	setBit(REG_M3_en_PORT,PIN_M3_en_PORT);
+	clearBit(REG_M3_di_PORT,PIN_M3_di_PORT); // COMPROBAR EN MAQUETA si es ~[setBit() o clearBit()]
 }
 
 void stop_AlturaH(){
@@ -165,80 +159,25 @@ void off_LavHorizontal(){
 	clearBit(REG_M4_en_PORT,PIN_M4_en_PORT);
 }
 
-
-// void lavaderoHorizontal(){
-//	if (limit_switch_lavH == 1 && isBitSet(REG_M3_en_PORT,PIN_M3_en_PORT)) {  // devuelve '1' si detecta fin de carrera Y si el motor esta encendido
-//		off_LavHorizontal();							//deja de girar el rodillo
-//		toggleBit(REG_M3_di_PORT,PIN_M3_di_PORT);		// cambia el sentido del motor
-//		if (isBitSet(REG_M3_di_PORT,PIN_M3_di_PORT)){	//el rodillo esta abajo
-//			stop_AlturaH();			//me quedo en la posicion inicial(abajo)
-//			}else{					//el rodillo esta arriba
-//			down_LavHorizontal();	//vuelvo a la posicion inicial(abajo)
-//		}
-//	}
-//
-//	if(aux_lavH){		//si los valores de los sensores son los mismos que en instante anterior (antirrebotes)
-//		if (lav_H[1]==0){		//detecta abajo pero no a los lados
-//			stop_AlturaH();
-//			on_LavHorizontal(); 
-//			} else if(lav_H[0]==0){ //detecta alguno de los lados
-//			up_LavHorizontal();  //sube el rodillo
-//			on_LavHorizontal();  //empieza a girar el rodillo
-//			} else {												//no detecta nada
-//			down_LavHorizontal();
-//		}
-//	}
-// }
-
-ISR(TIMER3_COMPA_vect){ // Milisegundos
-	ms++;
-	if(ms % Check_height_sensors == 0){ 
-		
-		so3 = isBitSet(REG_SOB_PIN,PIN_SO3_PIN);
-		so4 = isBitSet(REG_SOK_PIN,PIN_SO4_PIN);
-		so5 = isBitSet(REG_SOK_PIN,PIN_SO5_PIN);
-		
-	//	lav_H[0] = isBitSet(REG_SOB_PIN,PIN_SO3_PIN);
-//		lav_H[1] = isBitSet(REG_SOK_PIN,PIN_SO4_PIN);
-	//	lav_H[2] = isBitSet(REG_SOK_PIN,PIN_SO5_PIN);
-		limit_switch_lavH = isClrSet(REG_SW_PIN,PIN_SW2_PIN);
-	}	
-}
-
 void lavaderoHorizontal(){
 	
-//		so3 = isBitSet(REG_SOB_PIN,PIN_SO3_PIN);
-//		so4 = isBitSet(REG_SOK_PIN,PIN_SO4_PIN);
-//		so5 = isBitSet(REG_SOK_PIN,PIN_SO5_PIN);
-	
-	if (so4==0 && so3!=0){		//detecta abajo pero no a los lados
-		stop_AlturaH();
-		on_LavHorizontal(); 
-	} else if(so3==0){					//detecta alguno de los lados
-		up_LavHorizontal();  //sube el rodillo
-		on_LavHorizontal();  //empieza a girar el rodillo
-	} else if(limit_switch_lavH==0){												//no detecta nada
-		down_LavHorizontal();
-		on_LavHorizontal(); 
-	} else{
-		off_LavHorizontal();
+	if(aux_lavH){		//si los valores de los sensores son los mismos que en instante anterior (antirrebotes)
+		if (so4==0 && so3!=0){		//detecta abajo pero no a los lados
+				stop_AlturaH();
+				on_LavHorizontal();
+			} else if(so3==0){					//detecta alguno de los lados
+				up_LavHorizontal();  //sube el rodillo
+				on_LavHorizontal();  //empieza a girar el rodillo
+			} else if(limit_switch_lavH==0){												//no detecta nada
+				down_LavHorizontal();
+				on_LavHorizontal();
+			} else{
+				off_LavHorizontal();
+		}
 	}
 }
-/*
-void lavaderoHorizontal(){
-
-	if (lav_H[1]==0 && (lav_H[0]==1 || lav_H[2]==1)){		//detecta abajo pero no a los lados
-		stop_AlturaH();
-	} else if(lav_H[0]==0 || lav_H[2]==0){					//detecta alguno de los lados
-		up_LavHorizontal();  //sube el rodillo
-		on_LavHorizontal();  //empieza a girar el rodillo
-	} else {												//no detecta nada
-		down_LavHorizontal();
-	}
-}*/
 
 volatile uint8_t Stop = 0;
-
 void setStop(void){
 	Stop = 1;
 }
@@ -246,17 +185,6 @@ void setStop(void){
 uint8_t getStop(void){
 	return Stop;
 }
-/*
-ISR(INT1_vect){
-	off_LavHorizontal();
-	
-	if(isBitSet(REG_M3_di_PORT,PIN_M3_di_PORT)){	//el rodillo esta abajo
-		down_LavHorizontal();	//vuelvo a la posicion inicial(abajo)
-		}else{							//el rodillo esta arriba
-		stop_AlturaH(); 		//me quedo en la posicion inicial(abajo)
-	}
-}
-*/
 
 int main(void){
 	setupTimers();
