@@ -79,11 +79,11 @@ volatile uint8_t limit_switch_lavH = 0; //'1' SW2 detecta rodillo en un extremo
 
 void setupTimers(void){
 	cli();
-	// TIMER 1 => Timer segundos : Modo CTC (ICRn) con preescalado 256
-	TCCR1A = 0b00000000;
-	TCCR1B = 0b00001101;
-	TIMSK1 = 0b00000010;
-	OCR1A =  Freq_uC/256;
+	// TIMER 4 => Timer segundos : Modo CTC (ICRn) con preescalado 256
+	TCCR4A = 0b00000000;
+	TCCR4B = 0b00001101;
+	TIMSK4 = 0b00000010;
+	OCR4A =  Freq_uC/256;
 	// TIMER 3 => Timer milisegundos :  Modo CTC (ICRn) sin preescalado
 	TCCR3A = 0b00000000; //WGM30 y WGM31 == 0
 	TCCR3B = 0b00001101; //WGM32(bit3) y WGM33(bit2) == 1  CS30 == 1(no preescalado)(bit0)
