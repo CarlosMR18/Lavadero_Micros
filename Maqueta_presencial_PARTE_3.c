@@ -307,7 +307,7 @@ void setupTimers(void){
 	
 	// TIMER 3 => Timer milisegundos :  Modo CTC (ICRn) sin preescalado
 	TCCR3A = 0b00000000;
-	TCCR3B = 0b00001001;
+	TCCR3B = 0b00001001;         	// ***creo que es TCCR3B = 0b00001101;
 	TIMSK3 = 0b00000010;
 	OCR3A =	Freq_uC/1000;
 	// TIMER 4 => Timer segundos : Modo CTC (ICRn) con preescalado 256
