@@ -201,3 +201,5 @@ int main(void){
 
 //aplicar PWM al secado para el secado-->mas despacio
 //mirar señales osciloscopio--> rebotes
+//EICRA |= (1<<ISC11); // Para flanco bajada
+//EIMSK |= (1<<INT1);
