@@ -305,12 +305,12 @@ void setupTimers(void){
 	//TIMSK1 = (1 << OCIE1A);	// Se habilita la máscara que habilita recibir interrupciones por el timer
 	//TIFR1 = (1 << OCF1A);		// Se deshabilitan las demás interrupciones cuando salte la interrupción del OCR1A
 	
-	// TIMER 3 => Timer milisegundos :  Modo CTC (ICRn) sin preescalado
+	// TIMER 3 => Timer milisegundos :  Modo CTC (OCRnA) sin preescalado
 	TCCR3A = 0b00000000;
 	TCCR3B = 0b00001001;         	
 	TIMSK3 = 0b00000010;
 	OCR3A =	Freq_uC/1000;
-	// TIMER 4 => Timer segundos : Modo CTC (ICRn) con preescalado 256
+	// TIMER 4 => Timer segundos : Modo CTC (OCRnA) con preescalado 256
 	TCCR4A = 0b00000000;
 	TCCR4B = 0b00001101;
 	TIMSK4 = 0b00000010;
