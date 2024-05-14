@@ -157,7 +157,7 @@ void off_LavHorizontal(){
 
 void lavaderoHorizontal(){
 	if (limit_switch_lavH == 1 && isBitSet(REG_M3_en_PORT,PIN_M3_en_PORT)) {  // devuelve '1' si detecta fin de carrera Y si el motor esta encendido
-		clearBit(REG_M4_en_PORT,PIN_M4_en_PORT);		//deja de girar el rodillo
+		off_LavHorizontal();							//deja de girar el rodillo
 		toggleBit(REG_M3_di_PORT,PIN_M3_di_PORT);		// cambia el sentido del motor
 		if (isBitSet(REG_M3_di_PORT,PIN_M3_di_PORT)){	//el rodillo esta abajo
 			stop_AlturaH();			//me quedo en la posicion inicial(abajo) 
@@ -169,13 +169,12 @@ void lavaderoHorizontal(){
 	if(aux_lavH){		//si los valores de los sensores son los mismos que en instante anterior (antirrebotes)
 		if (lav_H[1]==0 && (lav_H[0]==1 || lav_H[2]==1)){		//detecta abajo pero no a los lados
 			stop_AlturaH();
-		} else if((lav_H[0]==0 || lav_H[2]==0) && lav_H[1]==0){ //detecta abajo y a alguno de los lados  //solo (lav_H[0]==0 || lav_H[2]==0)??
-			up_LavHorizontal();
+		} else if(lav_H[0]==0 || lav_H[2]==0){ //detecta alguno de los lados 
+			up_LavHorizontal();  //sube el rodillo
+			on_LavHorizontal();  //empieza a girar el rodillo
 		} else {												//no detecta nada 
 			down_LavHorizontal();
 		}
-//	} else {
-	//	down_LavHorizontal();
 	}
 }
 
@@ -191,7 +190,6 @@ uint8_t getStop(void){
 int main(void){
 	setupTimers();
 	setup_LavHorizontal();
-	//	up_LavHorizontal();
 	
 	while(1) {
 		if(!getStop()){
