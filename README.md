@@ -2,16 +2,16 @@
 Trabajo Sistemas Microprocesadores 2023/2024 - EQUIPO LAVADERO 2
 # Puertos a usar (J1)
 	// MOTORES
-		M1_di	=>	PK0 // (PCINT16)  //**no se usa***
+		M1_di	=>	PK0 // (PCINT16)	//**no se usa***
 		M1_en	=>	PL2 // (-)  
-		M2_di	=>	PK4 // (PCINT20)  //**no se usa***
+		M2_di	=>	PK4 // (PCINT20)	//**no se usa***
 		M2_en	=>	PK6 // (PCINT22)
 		M3_di	=>	PL4 // (OC5B)
   		M3_en	=>	PD4 // (-)
-		M4_di	=>	PL6 // (-)  //**no se usa***
+		M4_di	=>	PL6 // (-)  		//**no se usa***
 		M4_en	=>	PD6 // (-)
-		M5_di	=>	PB6 // (PCINT6/OC0A/OC1C)
-		M5_en	=>	PD7 // (-)  
+		M5_di	=>	PD7 // (-)
+		M5_en	=>	PB6 // (PCINT6/OC0A/OC1C)
 		M6_di	=>	PB5 // (PCINT5)
 		M6_en	=>	PB7 // (PCINT7)
 	// SWITCHES
