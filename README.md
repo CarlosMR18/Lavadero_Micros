@@ -11,7 +11,7 @@ Trabajo Sistemas Microprocesadores 2023/2024 - EQUIPO LAVADERO 2
 		M4_di	=>	PL6 // (-)  		//**no se usa***
 		M4_en	=>	PD6 // (-)
 		M5_di	=>	PD7 // (-)
-		M5_en	=>	PB6 // (PCINT6/OC0A/OC1C)
+		M5_en	=>	PB6 // (PCINT6/OC1B)
 		M6_di	=>	PB5 // (PCINT5)
 		M6_en	=>	PB7 // (PCINT7)
 	// SWITCHES
