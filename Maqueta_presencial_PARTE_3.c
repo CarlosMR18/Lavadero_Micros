@@ -19,6 +19,7 @@
 
 // Caracteristicas del microprocesador
 #define Freq_uC 8000000
+#define CICLO_TRABAJO	800		// rango hasta 1600
 #define Check_height_sensors 50 // MS en comprobar estado (Regular en maqueta)
 #define Tiempo_prove_new 50 // Tiempo comprobación entrada nueva en s(dos sensores distintos)
 // Estado de maqueta
@@ -297,10 +298,11 @@ uint8_t getStop(void){
 void setupTimers(void){
 	cli();
 	// TIMER 1 => Timer PWM : Modo PWM, Phase and Frequency Correct sin preescalado
-	TCCR1A = 0b00001001;	// (1 << WGM10) | (1 << COM1C1)
+	TCCR1A = 0b00101001;	// (1 << WGM10) | (1 << COM1B1) | (1 << COM1C1);
 	TCCR1B = 0b00010001;	// (1 << WGM13) | (1 << CS10);
 	TIMSK1 = 0b00000010;
 	OCR1A =  Freq_uC/5000;	// Frecuencia de 5KHz, 0.2ms el ciclo
+	OCR1B = CICLO_TRABAJO - 1;
 	OCR1C = 1280 - 1;		// Ciclo de trabajo del 80%
 	//TIMSK1 = (1 << OCIE1A);	// Se habilita la máscara que habilita recibir interrupciones por el timer
 	//TIFR1 = (1 << OCF1A);		// Se deshabilitan las demás interrupciones cuando salte la interrupción del OCR1A
