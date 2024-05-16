@@ -86,15 +86,17 @@ volatile uint32_t ms = 0; // Cuenta milisegundos
 void setupTimers(void){
 	cli();
 	// TIMER 1 => Timer segundos : Modo CTC (ICRn) con preescalado 256
-	TCCR1A = 0b00000000;
-	TCCR1B = 0b00001101;
-	TIMSK1 = 0b00000010;
-	OCR1A =  Freq_uC/256;
+	TCCR1A |= (1 << WGM11);  //0b00000000
+	TCCR1B |= (1<< COM1A0) | (1 << COM1A1) | (1<< CS12); //0b00001101 SET OC1A ON COMPARE MATCH
+	TIMSK1|= (1 << OCIE1A);//0b00000010
+	OCR1A |=  Freq_uC/256;
+	TIFR1 |= (1 << OCF1A);
 	// TIMER 3 => Timer milisegundos :  Modo CTC (ICRn) sin preescalado
-	TCCR3A = 0b00000000;
-	TCCR3B = 0b00001001;
-	TIMSK3 = 0b00000010;
-	OCR3A =	Freq_uC/1000;
+	TCCR3A |= ( 1 << WGM31);//0b00000000
+	TCCR3B |= ( 1<< COM3A0) | (1<< COM3A1);
+	TIMSK3 |= (1 << OCIE3A);
+	OCR3A |=	Freq_uC/1000;
+	TIFR3 |= (1 << OCF3A);
 	sei();
 }
 
@@ -189,14 +191,18 @@ void setup_barrera(){
 	}
 	
 	// Dejo Barrera Cerrada de incicio
-	while(barrera_cerrada == 0){		// Mientras barrera no bajada, activo motor barrera
-		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
-	} clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
+// 	while(isClrSet(REG_SOK_PIN, PIN_SO2_PIN) == 0){		// Mientras barrera no bajada, activo motor barrera
+// 		setBit(REG_M1_en_PORT, PIN_M1_en_PORT); 
+// 	} 
+// 	if(isClrSet(REG_SOK_PIN, PIN_SO2_PIN)==1){
+// 		clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+// 	} 
+	 // Apago motor barrera
 	// La variable barrera_cerrada se controla con INTERRUPCIONES
 }
 
 void openbarrera(){
-	cnt_apertura_barrera = millis();
+	cnt_apertura_barrera = ms;
 	modo_barrera = 1;	// Para barrera()
 }
 
@@ -216,10 +222,11 @@ void barrera(){		// En WHILE del MAIN
 			break;
 			
 		case 1:		//Barrera Subir 
-			setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido
-			if(millis() - cnt_apertura_barrera > 1200){		//Usar macro #define Check_apertura_barrera 1200 en Parte_2.h
+			if(ms - cnt_apertura_barrera < 1200){		//Usar macro #define Check_apertura_barrera 1200 en Parte_2.h
+				setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido
+			} else{
 				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
-				modo_barrera = 0; // Cambio a modo 0 (Barrera parada)
+				modo_barrera = 0;  // Cambio a modo 0 (Barrera parada)
 			}
 			break;
 			
@@ -232,17 +239,17 @@ void barrera(){		// En WHILE del MAIN
 			break;
 	}
 }
-//volatile uint8_t coche=0; 
-// ISR(PCINT0_vect){
-// 	if (isBitSet(PINB,PIN_SO1_PIN) && reg_SO1 == 0){ // Flanco subida - Deja de detectar (No abajo)
-// 		reg_SO1 = 1;			// Actualizo registro SO1 con valor actual
-// 	}
-// 	else if (isClrSet(PINB,PIN_SO1_PIN) && (reg_SO1 == 1)){ // Flanco bajada y entrada habilitada - Empieza a detectar (Abajo)
-// 		coche=1;  
-//		reg_SO1=0; 
-// 		//modo_led1=1; 			// Actualizo registro SO1 con valor actual
-// 	}
-// }
+volatile uint8_t coche=0; 
+ISR(PCINT0_vect){
+	if (isBitSet(PINB,PIN_SO1_PIN) && reg_SO1 == 0){ // Flanco subida - Deja de detectar (No abajo)
+		reg_SO1 = 1;			// Actualizo registro SO1 con valor actual
+	}
+	else if (isClrSet(PINB,PIN_SO1_PIN) && (reg_SO1 == 1)){ // Flanco bajada y entrada habilitada - Empieza a detectar (Abajo)
+		coche=1;  
+		reg_SO1=0; 
+		//modo_led1=1; 			// Actualizo registro SO1 con valor actual
+	}
+}
 
 ISR(PCINT2_vect){
 	//SO2 [SOK] (PCINT18) - Sensor posición barrera
@@ -305,15 +312,16 @@ int main(){
 	setup_barrera();
 	setup_luz();
 	while(1){
-		/*// Prueba 1 Barrera
+		// Prueba 1 Barrera
 		static uint8_t enable_aux = 1; // Variable estática auxiliar
-		if(enable_aux == 1){
+		if(coche == 1){
 			openbarrera();		// CAMBIO MODO DE MAQUINA DE ESTADOS "ABRIR" - Solo se ejecuta una vez
 			enable_aux = 0;
 		} 
-		barrera();			// MAQUINA DE ESTADOS: MIRAR COMO FUNCIONA - Necesita su ejecución de forma cíclica
 		
+		//barrera();			// MAQUINA DE ESTADOS: MIRAR COMO FUNCIONA - Necesita su ejecución de forma cíclica
 		
+		/*
 		// Prueba 2 Barrera
 		static uint8_t enable_aux = 1; // Variable estática auxiliar
 		if(enable_aux == 1){
@@ -328,11 +336,11 @@ int main(){
 //  		modo_led1 = 1; //Parpadeo corto
 //  		control_LED1(modo_led1);
 // 		delay_seconds(2);
-		
+		/*
 		modo_led1 = 0; //Parpadeo largo
 		control_LED1(modo_led1);
 		delay_seconds(20);
-		/*setup(){
+		setup(){
 			modo_leds1=0; 
 		}
 		while(1)
@@ -347,3 +355,4 @@ int main(){
 		control_LED1(modo_led1); 
 		barrera(); 
 	}
+}
