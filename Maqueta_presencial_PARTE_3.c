@@ -297,9 +297,9 @@ uint8_t getStop(void){
 
 void setupTimers(void){
 	cli();
-	// TIMER 1 => Timer PWM : Modo PWM, Phase and Frequency Correct sin preescalado
+	// TIMER 1 => Timer PWM : Modo PWM, Phase and Frequency Correct CON PREESCALADO DE 1024
 	TCCR1A = 0b00101001;	// (1 << WGM10) | (1 << COM1B1) | (1 << COM1C1);
-	TCCR1B = 0b00010001;	// (1 << WGM13) | (1 << CS10);
+	TCCR1B = 0b00010101;	// (1 << WGM13) | (1 << CS12) | (1 << CS10);
 	TIMSK1 = 0b00000010;
 	OCR1A =  Freq_uC/5000;	// Frecuencia de 5KHz, 0.2ms el ciclo
 	OCR1B = CICLO_TRABAJO - 1;
