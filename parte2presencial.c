@@ -82,29 +82,30 @@
 
 volatile uint32_t s = 0; // Cuenta segundos
 volatile uint32_t ms = 0; // Cuenta milisegundos
+volatile uint32_t s_cnt = 0; // Cuenta segundos
+volatile uint32_t ms_cnt = 0; // Cuenta milisegundos
+
 
 void setupTimers(void){
 	cli();
 	// TIMER 1 => Timer segundos : Modo CTC (ICRn) con preescalado 256
-	TCCR1A |= (1 << WGM11);  //0b00000000
-	TCCR1B |= (1<< COM1A0) | (1 << COM1A1) | (1<< CS12); //0b00001101 SET OC1A ON COMPARE MATCH
-	TIMSK1|= (1 << OCIE1A);//0b00000010
-	OCR1A |=  Freq_uC/256;
-	TIFR1 |= (1 << OCF1A);
-	// TIMER 3 => Timer milisegundos :  Modo CTC (ICRn) sin preescalado
-	TCCR3A |= ( 1 << WGM31);//0b00000000
-	TCCR3B |= ( 1<< COM3A0) | (1<< COM3A1);
-	TIMSK3 |= (1 << OCIE3A);
-	OCR3A |=	Freq_uC/1000;
-	TIFR3 |= (1 << OCF3A);
-	sei();
+	TCCR4A = 0b00000000;                    //WGM40 y WGM41 == 0
+	TCCR4B = 0b00001101;                    //WGM42(bit3) == 1  CS42 == 1(preescalado 256)(bit2)
+	TIMSK4 = 0b00000010;
+	OCR4A =  Freq_uC/256;
+
+	// TIMER 3 => Timer milisegundos :  Modo CTC (OCRnA) sin preescalado
+	TCCR3A = 0b00000000;                    //WGM30 y WGM31 == 0
+	TCCR3B = 0b00001001;                    //WGM32(bit3) == 1  CS30 == 1(no preescalado)(bit0)
+	TIMSK3 = 0b00000010;
+	OCR3A = Freq_uC/1000;
 }
 
-// void delay_Ms(int ms){
-// 	for(int j=0; j<ms; j++){
-// 		for(volatile int i=0; i<153847; i++);
-// 	}
-// }
+	void delay_Ms(int ms){
+		for(int j=0; j<ms; j++){
+			for(volatile int i=0; i<444; i++);
+		}
+	}
 	
 void delay_milliseconds(uint32_t dms){
 	volatile uint32_t delay = ms + dms;
@@ -117,21 +118,27 @@ void delay_seconds(uint32_t ds){
 }
 
 uint32_t millis(void){
+	cli(); 
+	ms=ms_cnt; 
+	sei(); 
 	return ms;
 }
 
 uint32_t seconds(void){
+	cli(); 
+	s=s_cnt; 
+	sei(); 
 	return s;
 }
 
 // Funciones de interrupción
 
-ISR(TIMER1_COMPA_vect){ // Segundos
-	s++;
+ISR(TIMER4_COMPA_vect){ // Segundos
+	s_cnt++;
 }
 
 ISR(TIMER3_COMPA_vect){ // Milisegundos
-	ms++;
+	ms_cnt++;
 }
 
 ////////////////////////////////////////////////////////
@@ -202,7 +209,7 @@ void setup_barrera(){
 }
 
 void openbarrera(){
-	cnt_apertura_barrera = ms;
+	cnt_apertura_barrera = millis();
 	modo_barrera = 1;	// Para barrera()
 }
 
@@ -213,6 +220,8 @@ void closebarrera(){
 void stopbarrera(){
 	modo_barrera = 0;	// Para barrera()
 }
+volatile uint32_t segundos=0;
+volatile uint8_t bandera_coche=0; 
 // barrera(): Incluir en el WHILE DEL MAIN
 void barrera(){		// En WHILE del MAIN
 	
@@ -222,12 +231,11 @@ void barrera(){		// En WHILE del MAIN
 			break;
 			
 		case 1:		//Barrera Subir 
-			if(ms - cnt_apertura_barrera < 1200){		//Usar macro #define Check_apertura_barrera 1200 en Parte_2.h
-				setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido
-			} else{
-				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
-				modo_barrera = 0;  // Cambio a modo 0 (Barrera parada)
-			}
+			setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+			delay_Ms(2000);
+			clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
+			modo_barrera = 0;  // Cambio a modo 0 (Barrera parada)
+			bandera_coche=0; //necesaria para probar nosotras
 			break;
 			
 		case 2:		//Barrera Bajar
@@ -239,13 +247,14 @@ void barrera(){		// En WHILE del MAIN
 			break;
 	}
 }
-volatile uint8_t coche=0; 
+
 ISR(PCINT0_vect){
-	if (isBitSet(PINB,PIN_SO1_PIN) && reg_SO1 == 0){ // Flanco subida - Deja de detectar (No abajo)
+	if (isBitSet(PINB,PIN_SO1_PIN)  && reg_SO1 == 0){ // Flanco subida - Deja de detectar (No abajo)
+		bandera_coche=2; 
 		reg_SO1 = 1;			// Actualizo registro SO1 con valor actual
 	}
-	else if (isClrSet(PINB,PIN_SO1_PIN) && (reg_SO1 == 1)){ // Flanco bajada y entrada habilitada - Empieza a detectar (Abajo)
-		coche=1;  
+	else if ((isClrSet(PINB,PIN_SO1_PIN)&& (~PIN_SO1_PIN) )&& (reg_SO1 == 1)){ // Flanco bajada y entrada habilitada - Empieza a detectar (Abajo)
+		bandera_coche=1;  
 		reg_SO1=0; 
 		//modo_led1=1; 			// Actualizo registro SO1 con valor actual
 	}
@@ -306,30 +315,60 @@ ISR(TIMER5_COMPA_vect) {
 	}
 }
 
+/////////LAVADO/////////
+
+void setup_lv(){
+	setBit(REG_M2_en_DDR, PIN_M2_en_DDR);
+	clearBit(REG_M2_en_PORT, PIN_M2_en_PORT); //por defecto apagado
+}
+volatile uint32_t modo_lavado=0; 
+void lavadoV_on(){
+	modo_lavado=1; 
+	setBit(REG_M2_en_PORT, PIN_M2_en_PORT);
+}
+
+void lavadoV_off(){
+	modo_lavado=0; 
+}
+
+void lavadovertical(){
+	switch (modo_lavado){
+		case 0:		//Barrera parada
+			clearBit(REG_M2_en_PORT, PIN_M2_en_PORT); // Apago motor barrera, nos aseguramos que para
+		break;
+		
+		case 1:		//Barrera Subir
+			setBit(REG_M2_en_PORT, PIN_M2_en_PORT);
+		break;
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////////////
 
 int main(){
+	setupTimers(); 
 	setup_barrera();
 	setup_luz();
 	while(1){
 		// Prueba 1 Barrera
 		static uint8_t enable_aux = 1; // Variable estática auxiliar
-		if(coche == 1){
-			openbarrera();		// CAMBIO MODO DE MAQUINA DE ESTADOS "ABRIR" - Solo se ejecuta una vez
+		if(bandera_coche == 1){
+			openbarrera();
+			lavadoV_on(); 		// CAMBIO MODO DE MAQUINA DE ESTADOS "ABRIR" - Solo se ejecuta una vez
 			enable_aux = 0;
+			
 		} 
 		
-		//barrera();			// MAQUINA DE ESTADOS: MIRAR COMO FUNCIONA - Necesita su ejecución de forma cíclica
+				// MAQUINA DE ESTADOS: MIRAR COMO FUNCIONA - Necesita su ejecución de forma cíclica
 		
-		/*
+		
 		// Prueba 2 Barrera
-		static uint8_t enable_aux = 1; // Variable estática auxiliar
-		if(enable_aux == 1){
+		
+		if(bandera_coche == 2){
 			closebarrera();		// CAMBIO MODO DE MAQUINA DE ESTADOS "CERRAR" - Solo se ejecuta una vez
 			enable_aux = 0;
 		}
-		barrera();			// MAQUINA DE ESTADOS: MIRAR COMO FUNCIONA - Necesita su ejecución de forma cíclica
-		*/
+		
 		
 		
 		//Prueba LED1
@@ -354,5 +393,6 @@ int main(){
 		
 		control_LED1(modo_led1); 
 		barrera(); 
+		lavadovertical(); 
 	}
 }
