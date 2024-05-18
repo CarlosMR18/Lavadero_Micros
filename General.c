@@ -12,8 +12,8 @@ volatile uint8_t enable_prove_new = 0; // '1' pendiente comprobar entradas de ve
 volatile uint32_t cnt_prove_new = 0; // Cuenta tiempo para comprobar entradas de vehículos 
 
 	// Variables globales - Lavadero Horizontal
-volatile uint8_t lav_H[3] = {0,0,0}; // lav_H[0] para SO3, lav_H[1] para SO4, lav_H[2] para SO5
-volatile uint8_t prev_lav_H[3] = {0,0,0};
+volatile uint8_t so3 = 1, so4 = 1, so5 = 1;  //variables para ver el estado de los sensores
+volatile uint8_t so3p = 1, so4p = 1, so5p = 1; //variables para ver el estado previo de los sensores
 volatile uint8_t aux_lavH = 0;
 volatile uint8_t limit_switch_lavH = 0; //'1' SW2 detecta rodillo abajo
 	// Variables globales - Secado
@@ -45,14 +45,14 @@ uint8_t getStop(void){
 
 void setupTimers(void){
 	cli();
-	// TIMER 1 => Timer segundos : Modo CTC (ICRn) con preescalado 256
-	TCCR1A = 0b00000000;
-	TCCR1B = 0b00001101;
+		// TIMER 1 => Timer segundos : Modo CTC (OCRnA) con preescalado 256
+	TCCR1A = 0b00000000; //WGM10 y WGM11 == 0
+	TCCR1B = 0b00001101; //WGM12(bit3) == 1  CS12 == 1(preescalado 256)(bit2)
 	TIMSK1 = 0b00000010;
 	OCR1A =  Freq_uC/256;
-	// TIMER 3 => Timer milisegundos :  Modo CTC (ICRn) sin preescalado
-	TCCR3A = 0b00000000;
-	TCCR3B = 0b00001001;
+		// TIMER 3 => Timer milisegundos : Modo CTC (OCRnA) sin preescalado
+	TCCR3A = 0b00000000;  //WGM30 y WGM31 == 0
+	TCCR3B = 0b00001001;  //WGM32(bit3) == 1  CS30 == 1(no preescalado)(bit0)
 	TIMSK3 = 0b00000010;
 	OCR3A =	Freq_uC/1000;
 	sei();
@@ -136,33 +136,24 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 		enable_prove_new = 0;
 	}
 	// Parte 1
-	if(ms % Check_height_sensors == 0){ //#define macro en General.h
-		prev_lav_H[0] = lav_H[0];
-		prev_lav_H[1] = lav_H[1];
-		prev_lav_H[2] = lav_H[2];
-		//lav_H[0] = REG_S03_PIN & (1<<PIN_SO3_PIN); //REG_S03_PIN sustituir por etiqueta correcta
-		//lav_H[1] = REG_S04_PIN & (1<<PIN_SO4_PIN); //REG_S04_PIN sustituir por etiqueta correcta
-		//lav_H[2] = REG_S05_PIN & (1<<PIN_SO5_PIN); //REG_S05_PIN sustituir por etiqueta correcta
-		lav_H[0] = isBitSet(REG_S03_PIN,PIN_SO3_PIN);
-		lav_H[1] = isBitSet(REG_S04_PIN,PIN_SO4_PIN);
-		lav_H[2] = isBitSet(REG_S05_PIN,PIN_SO5_PIN);
+	if(ms % Check_height_sensors == 0){   //cada cuanto chequeo los sensores de altura //#define macro en General.h
+		so3p =so3;
+		so4p =so4;
+		so5p =so5;
+
+		//cargo los valores de los sensores de ese instante
+		so3 = isBitSet(REG_SOB_PIN,PIN_SO3_PIN);
+		so4 = isBitSet(REG_SOK_PIN,PIN_SO4_PIN);
+		so5 = isBitSet(REG_SOK_PIN,PIN_SO5_PIN);
 		limit_switch_lavH = isClrSet(REG_SW_PIN,PIN_SW2_PIN); // isClrSet porque SW2 '0' al detectar
 		
-		prev_secado[0] = secado[0];
-		prev_secado[1] = secado[1];
-		prev_secado[2] = secado[2];
-		lav_H[0] = isBitSet(REG_S07_PIN,PIN_SO7_PIN); //REG_S07_PIN sustituir por etiqueta correcta
-		lav_H[1] = isBitSet(REG_S08_PIN,PIN_SO8_PIN); //REG_S08_PIN sustituir por etiqueta correcta
-		lav_H[2] = isBitSet(REG_S09_PIN,PIN_SO9_PIN); //REG_S09_PIN sustituir por etiqueta correcta
-		limit_switch_secado = isClrSet(REG_SW_PIN,PIN_SW3_PIN); // isClrSet porque SW3 '0' al detectar
 		
-		if(prev_lav_H == lav_H){ // Filtrado rebotes
-			aux_lavH = 1;
+		if((so3p==so3) && (so4p==so4) && (so5p==so5)){  //Si los valores son los mismos que en instante anterior
+			aux_lavH = 1;		  //muevo el rodillo
+			}else{
+			aux_lavH = 0;		  //no hago nada
 		}
 		
-		if(prev_secado == secado){ // Filtrado rebotes
-			aux_secado = 1;
-		}
 	}
 	
 	if (enable_prove_new && (ms-cnt_prove_new > Tiempo_prove_new)){
