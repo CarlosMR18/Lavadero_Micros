@@ -1,25 +1,61 @@
 #include "Parte_1.h"
 
 	// FUNCIONES LAVADERO HORIZONTAL
+// Filtrado rebotes
+ISR(TIMER3_COMPA_vect){ // Milisegundos
+    ms++;
+    if(ms % Check_height_sensors == 0){   //cada cuanto chequeo los sensores de altura //#define macro en General.h
+        so3p = so3;
+	so4p = so4;
+	so5p = so5;
+	so7p = so7;
+        so8p = so8;
+        so9p = so9;
+
+        //cargo los valores de los sensores de ese instante
+	so3 = isBitSet(REG_SOB_PIN,PIN_SO3_PIN);
+	so4 = isBitSet(REG_SOK_PIN,PIN_SO4_PIN);
+	so5 = isBitSet(REG_SOK_PIN,PIN_SO5_PIN);
+        limit_switch_lavH = isClrSet(REG_SW_PIN,PIN_SW2_PIN); // isClrSet porque SW2 '0' al detectar
+
+	so7 = isBitSet(REG_SOB_PIN,PIN_SO7_PIN);
+        so8 = isBitSet(REG_SOK_PIN,PIN_SO8_PIN);
+        so9 = isBitSet(REG_SOK_PIN,PIN_SO9_PIN);
+        limit_switch_sec = isClrSet(REG_SW_PIN,PIN_SW3_PIN); // isClrSet porque SW3 '0' al detectar
+
+	if((so3p==so3) && (so4p==so4) && (so5p==so5)){  //Si los valores son los mismos que en instante anterior
+		aux_lavH = 1;		  //muevo el rodillo
+	}else{
+		aux_lavH = 0;		  //no hago nada
+	}
+
+        if((so7p==so7) && (so8p==so8) && (so9p==so9)){  //Si los valores son los mismos que en instante anterior
+            aux_sec = 1;          //muevo el secador
+           }else{
+            aux_sec = 0;          //no hago nada
+        }
+
+    }
+}
+
 
 void setup_LavHorizontal(){
 	// Motor 3: Altura rodillo H
 	setBit(REG_M3_en_DDR,PIN_M3_en_DDR); // Definir como salida
 	setBit(REG_M3_di_DDR,PIN_M3_di_DDR);
 	setBit(REG_M3_en_PORT,PIN_M3_en_PORT); // Subir rodillo
-	setBit(REG_M3_di_PORT,PIN_M3_di_PORT);
-	// Motor 4: Giro rodillo H
+	clearBit(REG_M3_di_PORT,PIN_M3_di_PORT);
+	
+	// Motor 4: Giro rodillo 
 	setBit(REG_M4_en_DDR,PIN_M4_en_DDR); // Definir como salida
-	setBit(REG_M4_di_DDR,PIN_M4_di_DDR);
 	clearBit(REG_M4_en_PORT,PIN_M4_en_PORT); // Apagado de inicio
-	setBit(REG_M4_di_PORT,PIN_M4_di_PORT); // Sentido giro -- COMPROBAR EN MAQUETA
 }
 
 	// Lavadero Horizontal - Altura
 	
 void up_LavHorizontal(){
 	setBit(REG_M3_en_PORT,PIN_M3_en_PORT);
-	setBit(REG_M3_di_PORT,PIN_M3_di_PORT); // COMPROBAR EN MAQUETA si es setBit() o clearBit()
+	setBit(REG_M3_di_PORT,PIN_M3_di_PORT);
 }
 
 void down_LavHorizontal(){
@@ -68,20 +104,22 @@ void lavaderoHorizontal(){
 	// FUNCIONES SECADO
 	
 void setup_secado(){
-	setBit(REG_M5_en_DDR,PIN_M5_en_DDR); // Definir como salida
-	setBit(REG_M5_di_DDR,PIN_M5_di_DDR);
-	setBit(REG_M5_en_PORT,PIN_M5_en_PORT); // Subir
-	setBit(REG_M5_di_PORT,PIN_M5_di_PORT);
+	// Motor 5: Altura secador
+    setBit(REG_M5_en_DDR,PIN_M5_en_DDR);                    // Definir como salida    :: DDRD |= (1 << DDD7)
+    setBit(REG_M5_di_DDR,PIN_M5_di_DDR);                    //                        :: DDRB |= (1 << DDB6)
+    setBit(REG_M5_en_PORT,PIN_M5_en_PORT);                  // Subir secador          :: PORTD |= (1 << PD7)
+    clearBit(REG_M5_di_PORT,PIN_M5_di_PORT);                //                        :: PORTB &= ~ (1 << PB6)
+
 }
 
 void up_secado(){
 	setBit(REG_M5_en_PORT,PIN_M5_en_PORT);
-	setBit(REG_M5_di_PORT,PIN_M5_di_PORT); // COMPROBAR EN MAQUETA si es setBit() o clearBit()
+	setBit(REG_M5_di_PORT,PIN_M5_di_PORT); 
 }
 
 void down_secado(){
 	setBit(REG_M5_en_PORT,PIN_M5_en_PORT);
-	clearBit(REG_M5_di_PORT,PIN_M5_di_PORT); // COMPROBAR EN MAQUETA si es ~[setBit() o clearBit()]
+	clearBit(REG_M5_di_PORT,PIN_M5_di_PORT); 
 }
 
 void stop_secado(){
@@ -89,32 +127,19 @@ void stop_secado(){
 }
 
 void secado(){
-	
-	if (limit_switch_secado == 1 && isBitSet(REG_M5_en_PORT,PIN_M5_en_PORT)){  // devuelve '1' si detecta fin de carrera Y si el motor esta encendido
-		toggleBit(REG_M5_di_PORT,PIN_M5_di_PORT); // cambia el sentido del motor
-		if (isBitSet(REG_M5_di_PORT,PIN_M5_di_PORT)){ //el rodillo esta abajo 
-			up_secado(); //vuelvo a la posicion inicial(arriba)
-		}else{ //el rodillo esta arriba
-			stop_secado(); //me quedo en la posicion inicial(arriba)
-		}
-	}
 
-	if(aux_secado){
-		if (secado[1]==0 && (secado[0]==1 || secado[2]==1)){
-			stop_secado();
-		} else if(secado[0]==0 && secado[1]==0){
-			up_secado();
-		} else {
-	           	down_secado();
-	        }
-	/*if (limit_switch_secado = 1 && isBitSet(REG_M5_en_PORT,PIN_M5_en_PORT)){
-		stop_secado();
-		toggleBit(REG_M5_di_PORT,PIN_M5_di_PORT);
-	}
-	
-	if(aux_secado){
-		// EQUIVALENTE A LAVADO_H
-	}*/
+        if(aux_sec) {
+            if( so8 && so7 && so9)                 // no detecta abajo
+                down_secado();                    // baja
+            else if( so8 || !(so7 && so9) )
+                up_secado();
+            else if( !(so8 || (so7 && so9)) )    // detecta abajo y en algun lateral
+                up_secado();                    // sube
+            else if( !so8 && so7 && so9 )        // detecta abajo pero no en los laterales
+                stop_secado();                    // permanece quieto
+            else
+                stop_secado();
+        }
 }
 
 void setup_Parte1(){
