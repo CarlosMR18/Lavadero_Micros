@@ -151,27 +151,22 @@ volatile uint8_t reg_SO2 = 1; // Almacena valor de SO2
 volatile uint8_t barrera_cerrada=0;
 volatile uint8_t modo_barrera = 0;
 volatile uint8_t cnt_apertura_barrera = 0;
+volatile uint8_t cuenta=0; 
 
 // FUNCIONES BARRERA
+
+void checkbarrera(){
+	if (PK2 == 1) {
+		setBit(REG_M2_en_PORT, PIN_M2_en_PORT);
+		delay_Ms(2000);
+		clearBit(REG_M2_en_PORT, PIN_M2_en_PORT);
+	}
+	
+}
 void setup_barrera(){
 	cli();
 	setBit(REG_M1_en_DDR, PIN_M1_en_DDR); // Como salida M1_en
 	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Inicialmente apagado
-	
-											//OJO, FALTAN MACROS NECESARIAS			//OJO, FALTAN MACROS NECESARIAS			//OJO, FALTAN MACROS NECESARIAS	
-	//setBit(REG_M1_di_DDR, PIN_M1_di_DDR);	//OJO, FALTAN MACROS NECESARIAS			//OJO, FALTAN MACROS NECESARIAS			//OJO, FALTAN MACROS NECESARIAS
-											
-	/* COMPROBAR QUE LOS PUERTOS SON ESOS, SE ESCRIBE FUERA DE LA FUNCIÓN, COLOCAR JUNTO AL RESTO DE MACROS
-	// Motor M1 => Barrera de entrada
-	// Direction
-	#define REG_M1_di_PORT	PORTL
-	#define REG_M1_di_DDR	DDRL
-	#define REG_M1_di_PIN	PINL
-
-	#define PIN_M1_di_PORT	PK0
-	#define PIN_M1_di_DDR  	DDK0
-	#define PIN_M1_di_PIN  	PINK0
-	*/
 	
 	//SO1 [SOB] (PCINT0)
 	clearBit(REG_SOB_DDR, PIN_SO1_DDR); // Entrada
@@ -188,14 +183,35 @@ void setup_barrera(){
 	setBit(PCIFR, PCIF2); // Borro bandera
 	
 	//SW1 -> NO USO, CONTROLO CON TIEMPOS PARA APERTURA
-
+	EIMSK |= (1<<INT3) ;
+	EICRA |= (1<<ISC31) |(1<< ISC30);
+	//checkbarrera();
 	sei();
-	if(isClrSet(PINK,PIN_SO2_PIN)==1){
-		barrera_cerrada=1; 
-	}
-	else{
-		barrera_cerrada=0; 
-	}
+// 	if (isClrSet(REG_SOK_PIN, PIN_SO2_PIN)==0) {
+// 		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+// 		if(isClrSet(REG_SOK_PIN, PIN_SO2_PIN)==1){
+// 			clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+// 		}
+// 	}
+	
+	
+// 	if(isClrSet(PINK,PIN_SO2_PIN)==1){
+// 		barrera_cerrada=1; 
+// 	}
+// 	else{
+// 		barrera_cerrada=0; 
+// 	}
+// 	switch(barrera_cerrada){
+// 		case 0: 
+// 			setBit(REG_M1_en_PORT, PIN_M1_en_PORT); 
+// 			if(barrera_cerrada=1){
+// 				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); 
+// 			}
+// 			break; 
+// 		case 1: 
+// 			break; 
+// 	}
+	
 	
 	// Dejo Barrera Cerrada de incicio
 // 	while(isClrSet(REG_SOK_PIN, PIN_SO2_PIN) == 0){		// Mientras barrera no bajada, activo motor barrera
@@ -206,6 +222,10 @@ void setup_barrera(){
 // 	} 
 	 // Apago motor barrera
 	// La variable barrera_cerrada se controla con INTERRUPCIONES
+}
+
+ISR(INT3_VECT){
+	cuenta++;
 }
 
 void openbarrera(){
@@ -318,13 +338,13 @@ ISR(TIMER5_COMPA_vect) {
 /////////LAVADO/////////
 
 void setup_lv(){
-	setBit(REG_M2_en_DDR, PIN_M2_en_DDR);
+	setBit (REG_M2_en_DDR, PIN_M2_en_DDR);
 	clearBit(REG_M2_en_PORT, PIN_M2_en_PORT); //por defecto apagado
 }
 volatile uint32_t modo_lavado=0; 
 void lavadoV_on(){
 	modo_lavado=1; 
-	setBit(REG_M2_en_PORT, PIN_M2_en_PORT);
+	//setBit(REG_M2_en_PORT, PIN_M2_en_PORT);
 }
 
 void lavadoV_off(){
@@ -333,11 +353,11 @@ void lavadoV_off(){
 
 void lavadovertical(){
 	switch (modo_lavado){
-		case 0:		//Barrera parada
-			clearBit(REG_M2_en_PORT, PIN_M2_en_PORT); // Apago motor barrera, nos aseguramos que para
+		case 0:		//lavado apagado
+			clearBit(REG_M2_en_PORT, PIN_M2_en_PORT); // Apago motor lavado, nos aseguramos que para
 		break;
 		
-		case 1:		//Barrera Subir
+		case 1:		//lavado encencido
 			setBit(REG_M2_en_PORT, PIN_M2_en_PORT);
 		break;
 	}
@@ -349,6 +369,7 @@ int main(){
 	setupTimers(); 
 	setup_barrera();
 	setup_luz();
+	setup_lv();
 	while(1){
 		// Prueba 1 Barrera
 		static uint8_t enable_aux = 1; // Variable estática auxiliar
@@ -367,9 +388,11 @@ int main(){
 		if(bandera_coche == 2){
 			closebarrera();		// CAMBIO MODO DE MAQUINA DE ESTADOS "CERRAR" - Solo se ejecuta una vez
 			enable_aux = 0;
+			lavadoV_off(); 
 		}
 		
 		
+	
 		
 		//Prueba LED1
 //  		modo_led1 = 1; //Parpadeo corto
