@@ -88,7 +88,13 @@ volatile uint32_t ms_cnt = 0; // Cuenta milisegundos
 
 void setupTimers(void){
 	cli();
-	// TIMER 1 => Timer segundos : Modo CTC (ICRn) con preescalado 256
+	// TIMER 1 -> Timer para interrupción cada 2 segundos 
+	TCCR1B |= (1<<WGM12) 	//Modo CTC (OCRnA)
+	OCR1B = 62499; 		//Valor comparación para contar 2 segundos
+	TCCR1B |= (1<<CS12); 	//Preescalado de 256
+	TIMSK1 |= (1<<OCIE1A); 	//Interrupción por comparación
+	
+	// TIMER 4 => Timer segundos : Modo CTC (ICRn) con preescalado 256
 	TCCR4A = 0b00000000;                    //WGM40 y WGM41 == 0
 	TCCR4B = 0b00001101;                    //WGM42(bit3) == 1  CS42 == 1(preescalado 256)(bit2)
 	TIMSK4 = 0b00000010;
@@ -133,6 +139,11 @@ uint32_t seconds(void){
 
 // Funciones de interrupción
 
+volatile uint8_t b_flag=0;
+ISR(TIMER1_COMPA_vect){ // Segundos
+	b_flag = 1;
+}
+
 ISR(TIMER4_COMPA_vect){ // Segundos
 	s_cnt++;
 }
@@ -174,16 +185,22 @@ void setup_barrera(){
 	setBit(PCMSK2, PCINT18); // Habilito mascara interrupción
 	setBit(PCICR, PCIE2); // Habilito registro interrupción
 	setBit(PCIFR, PCIF2); // Borro bandera
-	
-	clearBit(REG_SW_DDR, PIN_SW1_DDR);
+
 	//SW1 -> NO USO, CONTROLO CON TIEMPOS PARA APERTURA
+	clearBit(REG_SW_DDR, PIN_SW1_DDR);
+	
 	EIMSK |= (1<<INT3) ;
 	EICRA |= (1<<ISC31); //|(1<< ISC30);
 	EIFR |= (1<<INTF3); 
-	sei();
-	if(isClrSet(PINK,PIN_SO2_PIN)== 0){
+
+	//Empezar con barrera cerrada
+	if(isClrSet(REG_SOK_PIN,PIN_SO2_PIN)== 0){
 		setBit(REG_M1_en_PORT, PIN_M1_en_PORT); 
+		while (isClrSet(PINK,PIN_SO2_PIN)== 0);
+		barrera_cerrada=1;
 	}
+	
+	sei();
 }
 
 ISR(INT3_vect){
@@ -202,8 +219,10 @@ void closebarrera(){
 void stopbarrera(){
 	modo_barrera = 0;	// Para barrera()
 }
+
 volatile uint32_t segundos=0;
 volatile uint8_t bandera_coche=0; 
+
 // barrera(): Incluir en el WHILE DEL MAIN
 void barrera(){		// En WHILE del MAIN
 	
@@ -219,7 +238,13 @@ void barrera(){		// En WHILE del MAIN
 			}else if(cuenta==2){
 				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
 			}
-			
+
+			//OPCIÓN CON TIMER1
+			//if(b_flag = 0){
+			//	setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+			//}else if(b_flag = 1){
+			//	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
+			//}
 			
 			modo_barrera = 0;  // Cambio a modo 0 (Barrera parada)
 			bandera_coche=0; //necesaria para probar nosotras
@@ -255,8 +280,8 @@ ISR(PCINT2_vect){
 	}
 	else if(isClrSet(PINK,PIN_SO2_PIN) && reg_SO2 == 1){ // Flanco bajada y entrada habilitada - Empieza a detectar (Abajo)
 		barrera_cerrada = 1;
-		reg_SO2 = 0;			// Actualizo registro SO1 con valor actual
-		clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); 
+		reg_SO2 = 0;			// Actualizo registro SO2 con valor actual
+		//clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); 
 	}
 }
 
@@ -338,6 +363,7 @@ int main(){
 	setup_barrera();
 	setup_luz();
 	setup_lv();
+	sei();
 	while(1){
 		// Prueba 1 Barrera
 		static uint8_t enable_aux = 1; // Variable estática auxiliar
