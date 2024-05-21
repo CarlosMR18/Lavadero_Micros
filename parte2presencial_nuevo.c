@@ -245,6 +245,7 @@ void barrera(){		// En WHILE del MAIN
 			//}else if(b_flag = 1){
 			//	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
 			//}
+			//TCNT1 = 0;
 			
 			modo_barrera = 0;  // Cambio a modo 0 (Barrera parada)
 			bandera_coche=0; //necesaria para probar nosotras
