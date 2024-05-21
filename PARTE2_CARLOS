@@ -103,6 +103,22 @@ void setupTimers(void){
 	TCCR3B = 0b00001001;
 	TIMSK3 = 0b00000010;
 	OCR3A =	Freq_uC/1000;
+	
+	
+	// TIMER 4 => Timer segundos : Modo CTC (ICRn) con preescalado 256
+	TCCR4A = 0b00000000;                    //WGM40 y WGM41 == 0
+	TCCR4B = 0b00001101;                    //WGM42(bit3) == 1  CS42 == 1(preescalado 256)(bit2)
+	TIMSK4 = 0b00000010;
+	OCR4A =  Freq_uC/256;
+
+	// TIMER 3 => Timer milisegundos :  Modo CTC (OCRnA) sin preescalado
+	TCCR3A = 0b00000000;                    //WGM30 y WGM31 == 0
+	TCCR3B = 0b00001001;                    //WGM32(bit3) == 1  CS30 == 1(no preescalado)(bit0)
+	TIMSK3 = 0b00000010;
+	OCR3A = Freq_uC/1000;
+	
+	
+	
 	sei();
 }
 
@@ -141,7 +157,7 @@ ISR(TIMER3_COMPA_vect){ // Milisegundos
 // VARIABLES BARRERA
 volatile uint8_t reg_SO1 = 1; // Almacena valor de SO1
 volatile uint8_t reg_SO2 = 1; // Almacena valor de SO2
-volatile uint8_t barrera_cerrada=0;
+volatile uint8_t barrera_cerrada=0; // NO SE USA, SOBRA
 volatile uint8_t modo_barrera = 0;
 volatile uint8_t cnt_apertura_barrera = 0;
 
@@ -185,14 +201,14 @@ void setup_barrera(){
 	sei();
 	
 	// Dejo Barrera Cerrada de incicio
-	while(barrera_cerrada == 0){		// Mientras barrera no bajada, activo motor barrera
+	while(isClrSet(REG_SOK_PIN,PIN_SO2_PIN) == 0){		// Mientras barrera no abajo, activo motor barrera
 		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 	} clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
 	// La variable barrera_cerrada se controla con INTERRUPCIONES
 }
 
 void openbarrera(){
-	cnt_apertura_barrera = millis();
+	cnt_apertura_barrera = seconds();
 	modo_barrera = 1;	// Para barrera()
 }
 
@@ -213,7 +229,7 @@ void barrera(){		// En WHILE del MAIN
 			
 		case 1:		//Barrera Subir 
 			setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido
-			if(millis() - cnt_apertura_barrera > 1200){		//Usar macro #define Check_apertura_barrera 1200 en Parte_2.h
+			if(seconds() - cnt_apertura_barrera > 2){		//Usar macro #define Check_apertura_barrera 1200 en Parte_2.h
 				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
 				modo_barrera = 0; // Cambio a modo 0 (Barrera parada)
 			}
@@ -221,7 +237,7 @@ void barrera(){		// En WHILE del MAIN
 			
 		case 2:		//Barrera Bajar
 			setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido
-			if (barrera_cerrada==1){
+			if (isBitSet(REG_SOK_PIN,PIN_SO2_PIN)==1){
 				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
 				modo_barrera = 0;
 			}
@@ -282,13 +298,15 @@ ISR(TIMER5_COMPA_vect) {
 }
 
 //////////////////////////////////////////////////////////////////////////////////
+uint8_t enable_aux = 0; // Variable estática auxiliar
 
 int main(){
+	setupTimers();
 	setup_barrera();
 	setup_luz();
 	while(1){
 		// Prueba 1 Barrera
-		static uint8_t enable_aux = 1; // Variable estática auxiliar
+		
 		if(enable_aux == 1){
 			openbarrera();		// CAMBIO MODO DE MAQUINA DE ESTADOS "ABRIR" - Solo se ejecuta una vez
 			enable_aux = 0;
