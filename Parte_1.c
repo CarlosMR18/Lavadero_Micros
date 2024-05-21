@@ -4,38 +4,6 @@
 // Filtrado rebotes
 ISR(TIMER3_COMPA_vect){ // Milisegundos
     ms++;
-    if(ms % Check_height_sensors == 0){   //cada cuanto chequeo los sensores de altura //#define macro en General.h
-        so3p = so3;
-	so4p = so4;
-	so5p = so5;
-	so7p = so7;
-        so8p = so8;
-        so9p = so9;
-
-        //cargo los valores de los sensores de ese instante
-	so3 = isBitSet(REG_SOB_PIN,PIN_SO3_PIN);
-	so4 = isBitSet(REG_SOK_PIN,PIN_SO4_PIN);
-	so5 = isBitSet(REG_SOK_PIN,PIN_SO5_PIN);
-        limit_switch_lavH = isClrSet(REG_SW_PIN,PIN_SW2_PIN); // isClrSet porque SW2 '0' al detectar
-
-	so7 = isBitSet(REG_SOB_PIN,PIN_SO7_PIN);
-        so8 = isBitSet(REG_SOK_PIN,PIN_SO8_PIN);
-        so9 = isBitSet(REG_SOK_PIN,PIN_SO9_PIN);
-        limit_switch_sec = isClrSet(REG_SW_PIN,PIN_SW3_PIN); // isClrSet porque SW3 '0' al detectar
-
-	if((so3p==so3) && (so4p==so4) && (so5p==so5)){  //Si los valores son los mismos que en instante anterior
-		aux_lavH = 1;		  //muevo el rodillo
-	}else{
-		aux_lavH = 0;		  //no hago nada
-	}
-
-        if((so7p==so7) && (so8p==so8) && (so9p==so9)){  //Si los valores son los mismos que en instante anterior
-            aux_sec = 1;          //muevo el secador
-           }else{
-            aux_sec = 0;          //no hago nada
-        }
-
-    }
 }
 
 
@@ -79,6 +47,24 @@ void off_LavHorizontal(){
 
 void lavaderoHorizontal(){
 
+	if(ms % Check_height_sensors == 0){   //cada cuanto chequeo los sensores de altura //#define macro en General.h
+        so3p = so3;
+	so4p = so4;
+	so5p = so5;
+
+        //cargo los valores de los sensores de ese instante
+	so3 = isBitSet(REG_SOB_PIN,PIN_SO3_PIN);
+	so4 = isBitSet(REG_SOK_PIN,PIN_SO4_PIN);
+	so5 = isBitSet(REG_SOK_PIN,PIN_SO5_PIN);
+        limit_switch_lavH = isClrSet(REG_SW_PIN,PIN_SW2_PIN); // isClrSet porque SW2 '0' al detectar
+
+	if((so3p==so3) && (so4p==so4) && (so5p==so5)){  //Si los valores son los mismos que en instante anterior
+		aux_lavH = 1;		  //muevo el rodillo
+	}else{
+		aux_lavH = 0;		  //no hago nada
+	}
+    }
+	
 	if (limit_switch_lavH == 1 && isBitSet(REG_M3_en_PORT,PIN_M3_en_PORT)){  // devuelve '1' si detecta fin de carrera Y si el motor esta encendido
 		off_LavHorizontal(); //deja de girar el rodillo
 		toggleBit(REG_M3_di_PORT,PIN_M3_di_PORT); // cambia el sentido del motor
@@ -128,6 +114,23 @@ void stop_secado(){
 
 void secado(){
 
+	if(ms % Check_height_sensors == 0){   //cada cuanto chequeo los sensores de altura //#define macro en General.h
+	so7p = so7;
+        so8p = so8;
+        so9p = so9;
+		
+	so7 = isBitSet(REG_SOB_PIN,PIN_SO7_PIN);
+        so8 = isBitSet(REG_SOK_PIN,PIN_SO8_PIN);
+        so9 = isBitSet(REG_SOK_PIN,PIN_SO9_PIN);
+        limit_switch_sec = isClrSet(REG_SW_PIN,PIN_SW3_PIN); // isClrSet porque SW3 '0' al detectar
+
+        if((so7p==so7) && (so8p==so8) && (so9p==so9)){  //Si los valores son los mismos que en instante anterior
+            aux_sec = 1;          //muevo el secador
+           }else{
+            aux_sec = 0;          //no hago nada
+        }
+    }
+	
         if(aux_sec) {
             if( so8 && so7 && so9)                 // no detecta abajo
                 down_secado();                    // baja
