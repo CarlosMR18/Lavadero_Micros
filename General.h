@@ -71,7 +71,7 @@
 		#define REG_M3_di_PIN	PINL
 
 		#define PIN_M3_di_PORT	PL4
-		#define PIN_M3_di_PORT	DDL4
+		#define PIN_M3_di_DDR	DDL4
 		#define PIN_M3_di_PIN	PINL4
 			// Enable
 		#define REG_M3_en_PORT	PORTD
