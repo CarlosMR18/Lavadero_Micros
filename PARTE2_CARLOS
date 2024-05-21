@@ -148,7 +148,7 @@ volatile uint8_t reg_SO1 = 1; // Almacena valor de SO1
 volatile uint8_t reg_SO2 = 1; // Almacena valor de SO2
 volatile uint8_t barrera_cerrada=0; // NO SE USA, SOBRA
 volatile uint8_t modo_barrera = 0;
-volatile uint8_t cnt_apertura_barrera = 0;
+volatile uint32_t cnt_apertura_barrera = 0; // En millisegundos
 
 // FUNCIONES BARRERA
 void setup_barrera(){
@@ -197,7 +197,8 @@ void setup_barrera(){
 }
 
 void openbarrera(){
-	cnt_apertura_barrera = seconds();
+	cnt_apertura_barrera = millis();
+	setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido
 	modo_barrera = 1;	// Para barrera()
 }
 
@@ -217,8 +218,8 @@ void barrera(){		// En WHILE del MAIN
 			break;
 			
 		case 1:		//Barrera Subir 
-			setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido
-			if(seconds() - cnt_apertura_barrera > 2){		//Usar macro #define Check_apertura_barrera 1200 en Parte_2.h
+			//setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido
+			if(millis() - cnt_apertura_barrera > 1600){		//Usar macro #define Check_apertura_barrera 1200 en Parte_2.h
 				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
 				modo_barrera = 0; // Cambio a modo 0 (Barrera parada)
 			}
@@ -226,7 +227,7 @@ void barrera(){		// En WHILE del MAIN
 			
 		case 2:		//Barrera Bajar
 			setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido
-			if (isBitSet(REG_SOK_PIN,PIN_SO2_PIN)==1){
+			if (isClrSet(REG_SOK_PIN,PIN_SO2_PIN) == 1){
 				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
 				modo_barrera = 0;
 			}
@@ -287,7 +288,8 @@ ISR(TIMER5_COMPA_vect) {
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-uint8_t enable_aux = 0; // Variable estática auxiliar
+uint8_t enable_aux_open = 0; // Variable estática auxiliar
+uint8_t enable_aux_close = 0; // Variable estática auxiliar
 
 int main(){
 	setupTimers();
@@ -296,9 +298,13 @@ int main(){
 	while(1){
 		// Prueba 1 Barrera
 		
-		if(enable_aux == 1){
+		if(enable_aux_open == 1){
 			openbarrera();		// CAMBIO MODO DE MAQUINA DE ESTADOS "ABRIR" - Solo se ejecuta una vez
-			enable_aux = 0;
+			enable_aux_open = 0;
+		} 
+		if(enable_aux_close == 1){
+			closebarrera();		// CAMBIO MODO DE MAQUINA DE ESTADOS "ABRIR" - Solo se ejecuta una vez
+			enable_aux_close = 0;
 		} 
 		barrera();			// MAQUINA DE ESTADOS: MIRAR COMO FUNCIONA - Necesita su ejecución de forma cíclica
 		
