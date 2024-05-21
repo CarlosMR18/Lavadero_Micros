@@ -85,26 +85,23 @@ volatile uint32_t ms = 0; // Cuenta milisegundos
 volatile uint32_t s_cnt = 0; // Cuenta segundos
 volatile uint32_t ms_cnt = 0; // Cuenta milisegundos
 
-
 void setupTimers(void){
 	cli();
-	// TIMER 1 -> Timer para interrupción cada 2 segundos 
-	TCCR1B |= (1<<WGM12); 	//Modo CTC (OCRnA)
-	OCR1B = 62499; 		//Valor comparación para contar 2 segundos
-	TCCR1B |= (1<<CS12); 	//Preescalado de 256
-	TIMSK1 |= (1<<OCIE1A); 	//Interrupción por comparación
-	
-	// TIMER 4 => Timer segundos : Modo CTC (ICRn) con preescalado 256
-	TCCR4A = 0b00000000;                    //WGM40 y WGM41 == 0
-	TCCR4B = 0b00001101;                    //WGM42(bit3) == 1  CS42 == 1(preescalado 256)(bit2)
-	TIMSK4 = 0b00000010;
-	OCR4A =  Freq_uC/256;
 
-	// TIMER 3 => Timer milisegundos :  Modo CTC (OCRnA) sin preescalado
-	TCCR3A = 0b00000000;                    //WGM30 y WGM31 == 0
-	TCCR3B = 0b00001001;                    //WGM32(bit3) == 1  CS30 == 1(no preescalado)(bit0)
+	// TIMER 4 => Timer segundos : Modo CTC con preescalado 256
+	TCCR4A = 0b00000000;
+	TCCR4B = 0b00001100;
+	TIMSK4 = 0b00000010;
+	OCR4A =  (Freq_uC/256)-1;
+
+	// TIMER 3 => Timer milisegundos :  Modo CTC con preescalado 8
+	TCCR3A = 0b00000000;
+	TCCR3B = 0b00001010;
 	TIMSK3 = 0b00000010;
-	OCR3A = Freq_uC/1000;
+	OCR3A = 1000-1;
+	
+	
+	sei();
 }
 
 	void delay_Ms(int ms){
@@ -397,3 +394,5 @@ int main(){
 		lavadovertical(); 
 	}
 }
+
+
