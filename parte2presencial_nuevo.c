@@ -104,22 +104,6 @@ void setupTimers(void){
 	sei();
 }
 
-	void delay_Ms(int ms){
-		for(int j=0; j<ms; j++){
-			for(volatile int i=0; i<444; i++);
-		}
-	}
-	
-void delay_milliseconds(uint32_t dms){
-	volatile uint32_t delay = ms + dms;
-	while( ms < delay ){}
-}
-
-void delay_seconds(uint32_t ds){
-	volatile uint32_t delay = s + ds;
-	while( s < delay );
-}
-
 uint32_t millis(void){
 	cli(); 
 	ms=ms_cnt; 
@@ -135,11 +119,6 @@ uint32_t seconds(void){
 }
 
 // Funciones de interrupción
-
-volatile uint8_t b_flag=0;
-ISR(TIMER1_COMPA_vect){ // Segundos
-	b_flag = 1;
-}
 
 ISR(TIMER4_COMPA_vect){ // Segundos
 	s_cnt++;
@@ -244,11 +223,13 @@ void barrera(){		// En WHILE del MAIN
 ISR(PCINT0_vect){
 	if (isBitSet(PINB,PIN_SO1_PIN)  && reg_SO1 == 0){ // Flanco subida - Deja de detectar (No abajo)
 		bandera_coche=2; 
-		reg_SO1 = 1;			// Actualizo registro SO1 con valor actual
+		reg_SO1 = 1; // Actualizo registro SO1 con valor actual
+		closebarrera();
 	}
 	else if ((isClrSet(PINB,PIN_SO1_PIN)&& (~PIN_SO1_PIN) )&& (reg_SO1 == 1)){ // Flanco bajada y entrada habilitada - Empieza a detectar (Abajo)
 		bandera_coche=1;  
 		reg_SO1=0; 
+		openbarrera();
 		//modo_led1=1; 			// Actualizo registro SO1 con valor actual
 	}
 }
@@ -349,7 +330,7 @@ int main(){
 		// Prueba 1 Barrera
 		static uint8_t enable_aux = 1; // Variable estática auxiliar
 		if(bandera_coche == 1){
-			openbarrera();
+			//openbarrera();
 			lavadoV_on(); 		// CAMBIO MODO DE MAQUINA DE ESTADOS "ABRIR" - Solo se ejecuta una vez
 			enable_aux = 0;
 			
@@ -360,10 +341,10 @@ int main(){
 		
 		// Prueba 2 Barrera
 		
-		if(bandera_coche == 2){
-			closebarrera();		// CAMBIO MODO DE MAQUINA DE ESTADOS "CERRAR" - Solo se ejecuta una vez
+		//if(bandera_coche == 2){
+			//closebarrera();		// CAMBIO MODO DE MAQUINA DE ESTADOS "CERRAR" - Solo se ejecuta una vez
 			enable_aux = 0;
-			lavadoV_off(); 
+			//lavadoV_off(); 
 		}
 		
 		
