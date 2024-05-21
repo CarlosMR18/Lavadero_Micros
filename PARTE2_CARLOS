@@ -287,6 +287,33 @@ ISR(TIMER5_COMPA_vect) {
 	}
 }
 
+/////////LAVADO/////////
+
+void setup_lv(){
+	setBit (REG_M2_en_DDR, PIN_M2_en_DDR);
+	clearBit(REG_M2_en_PORT, PIN_M2_en_PORT); //por defecto apagado
+}
+volatile uint32_t modo_lavado=0; 
+void lavadoV_on(){
+	modo_lavado=1; 
+	//setBit(REG_M2_en_PORT, PIN_M2_en_PORT);
+}
+
+void lavadoV_off(){
+	modo_lavado=0; 
+}
+
+void lavadovertical(){
+	switch (modo_lavado){
+		case 0:		//lavado apagado
+			clearBit(REG_M2_en_PORT, PIN_M2_en_PORT); // Apago motor lavado, nos aseguramos que para
+		break;
+		
+		case 1:		//lavado encencido
+			setBit(REG_M2_en_PORT, PIN_M2_en_PORT);
+		break;
+	}
+}
 //////////////////////////////////////////////////////////////////////////////////
 uint8_t enable_aux_open = 0; // Variable estática auxiliar
 uint8_t enable_aux_close = 0; // Variable estática auxiliar
