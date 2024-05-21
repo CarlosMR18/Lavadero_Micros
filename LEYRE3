@@ -382,7 +382,7 @@ ISR(TIMER4_COMPA_vect){ // Segundos
 	}
 	
 	if (cnt_prove_new > Tiempo_prove_new && NumCarLavado > 0 && enable_prove_new == 0){
-		NumCarLavado--;
+		decNumCarLavado();
 		EnableEntrance = 1;
 		enable_prove_new = 0;
 	}
@@ -406,7 +406,7 @@ ISR(PCINT0_vect){
 		reg_SO1 = 1; // Actualizo registro SO1 con valor actual
 	}	
 	else if (isClrSet(REG_SOB_PIN,PIN_SO1_PIN) && (reg_SO1 == 1) && (EnableEntrance == 1)){ // Flanco bajada y entrada habilitada
-		NumCarLavado++;		// Ha entrado coche
+		incNumCarLavado();		// Ha entrado coche
 		enable_prove_new = 1; // Activo comprobación entrada
 		cnt_prove_new = 0;
 		//moveCinta(); //--------------------------------------------------------------------------------------------------------------- Mejor ponerlo por consulta periódica en main???
@@ -630,7 +630,7 @@ int main(void) {
 	*/
 		
 	//	if (isClrSet(REG_SOB_PIN,PIN_SO1_PIN) && reg_SO1 == 1 && EnableEntrance == 1){ // Flanco bajada y entrada habilitada
-	//		NumCarLavado++;		// Ha entrado coche
+	//		incNumCarLavado;		// Ha entrado coche
 	//	}
 		
 		/*
@@ -678,4 +678,3 @@ int main(void) {
 		}
 		reg_SO1 = current_state; 		
 		*/
-		
