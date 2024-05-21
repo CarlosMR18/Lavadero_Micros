@@ -193,24 +193,16 @@ void setup_barrera(){
 	EICRA |= (1<<ISC31); //|(1<< ISC30);
 	EIFR |= (1<<INTF3); 
 
-	//Empezar con barrera cerrada
-	if(isClrSet(REG_SOK_PIN,PIN_SO2_PIN)== 0){
-		setBit(REG_M1_en_PORT, PIN_M1_en_PORT); 
-		while (isClrSet(PINK,PIN_SO2_PIN)== 0);
-	}
-		clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
-		barrera_cerrada=1;
-	
-	
+	// Dejo Barrera Cerrada de incicio
+	while(isClrSet(REG_SOK_PIN,PIN_SO2_PIN) == 0){		// Mientras barrera no abajo, activo motor barrera
+		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+	} clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
+	// La variable barrera_cerrada se controla con INTERRUPCIONES
 	sei();
 }
 
-ISR(INT3_vect){
-	cuenta++;
-}
-
 void openbarrera(){
-	cnt_apertura_barrera = millis();
+	cnt_apertura_barrera = seconds();
 	modo_barrera = 1;	// Para barrera()
 }
 
@@ -228,40 +220,29 @@ volatile uint8_t bandera_coche=0;
 // barrera(): Incluir en el WHILE DEL MAIN
 void barrera(){		// En WHILE del MAIN
 	
-	b_flag=0;
 	switch (modo_barrera){
 		case 0:		//Barrera parada
 			clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera, nos aseguramos que para
 			break;
 			
 		case 1:		//Barrera Subir 
-			
-			//if(cuenta<2){
-			//	setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
-			//}else if(cuenta==2){
-			//	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
-			//}
-
-			//OPCIÓN CON TIMER1
-			//if(b_flag = 0){
-			//TCNT1=0;
-			setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
-			//}else if(b_flag = 1){
-				//clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
-			//}
-			modo_barrera = 0;  // Cambio a modo 0 (Barrera parada)
-			bandera_coche=0; //necesaria para probar nosotras
+			setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido
+			if(seconds() - cnt_apertura_barrera > 2){		//Usar macro #define Check_apertura_barrera 1200 en Parte_2.h
+				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
+				modo_barrera = 0; // Cambio a modo 0 (Barrera parada)
+			}
 			break;
 			
 		case 2:		//Barrera Bajar
 			setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido
-			if (barrera_cerrada==1){
+			if (isBitSet(REG_SOK_PIN,PIN_SO2_PIN)==1){
 				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
 				modo_barrera = 0;
 			}
 			break;
 	}
 }
+
 
 ISR(PCINT0_vect){
 	if (isBitSet(PINB,PIN_SO1_PIN)  && reg_SO1 == 0){ // Flanco subida - Deja de detectar (No abajo)
