@@ -89,7 +89,7 @@ volatile uint32_t ms_cnt = 0; // Cuenta milisegundos
 void setupTimers(void){
 	cli();
 	// TIMER 1 -> Timer para interrupción cada 2 segundos 
-	TCCR1B |= (1<<WGM12) 	//Modo CTC (OCRnA)
+	TCCR1B |= (1<<WGM12); 	//Modo CTC (OCRnA)
 	OCR1B = 62499; 		//Valor comparación para contar 2 segundos
 	TCCR1B |= (1<<CS12); 	//Preescalado de 256
 	TIMSK1 |= (1<<OCIE1A); 	//Interrupción por comparación
@@ -197,8 +197,10 @@ void setup_barrera(){
 	if(isClrSet(REG_SOK_PIN,PIN_SO2_PIN)== 0){
 		setBit(REG_M1_en_PORT, PIN_M1_en_PORT); 
 		while (isClrSet(PINK,PIN_SO2_PIN)== 0);
-		barrera_cerrada=1;
 	}
+		clearBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+		barrera_cerrada=1;
+	
 	
 	sei();
 }
@@ -226,6 +228,7 @@ volatile uint8_t bandera_coche=0;
 // barrera(): Incluir en el WHILE DEL MAIN
 void barrera(){		// En WHILE del MAIN
 	
+	b_flag=0;
 	switch (modo_barrera){
 		case 0:		//Barrera parada
 			clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera, nos aseguramos que para
@@ -233,20 +236,19 @@ void barrera(){		// En WHILE del MAIN
 			
 		case 1:		//Barrera Subir 
 			
-			if(cuenta<2){
-				setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
-			}else if(cuenta==2){
-				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
-			}
+			//if(cuenta<2){
+			//	setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+			//}else if(cuenta==2){
+			//	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
+			//}
 
 			//OPCIÓN CON TIMER1
 			//if(b_flag = 0){
-			//	setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+			//TCNT1=0;
+			setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
 			//}else if(b_flag = 1){
-			//	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
+				//clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
 			//}
-			//TCNT1 = 0;
-			
 			modo_barrera = 0;  // Cambio a modo 0 (Barrera parada)
 			bandera_coche=0; //necesaria para probar nosotras
 			break;
@@ -364,7 +366,7 @@ int main(){
 	setup_barrera();
 	setup_luz();
 	setup_lv();
-	sei();
+	
 	while(1){
 		// Prueba 1 Barrera
 		static uint8_t enable_aux = 1; // Variable estática auxiliar
