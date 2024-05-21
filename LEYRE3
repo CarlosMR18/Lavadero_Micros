@@ -249,7 +249,8 @@ volatile uint8_t NumCarSecado = 0; // Cuenta coches en zona secado
 volatile uint8_t EnableEntrance = 1; // '1' permite nuevas entradas de vehículos y '0' no permite
 volatile uint8_t enable_prove_new = 0; // '1' pendiente comprobar entradas de vehículos
 volatile uint32_t cnt_prove_new = 0; // Cuenta comprobar entradas de vehículos
-volatile uint32_t WrongExitCar = 0;		// Un coche ha entrado por la salida
+volatile uint8_t WrongExitCar = 0;		// Un coche ha entrado por la salida
+volatile uint8_t EmergenciaON = 0;		// '1' indica que está pulsada la parada de emergencia
 
 // Variables globales - Lavadero Horizontal
 volatile uint8_t lav_H[3] = {0,0,0}; // lav_H[0] para SO3, lav_H[1] para SO4, lav_H[2] para SO5
@@ -301,16 +302,18 @@ void setupTimers(void){
 	//TIMSK1 = (1 << OCIE1A);	// Se habilita la máscara que habilita recibir interrupciones por el timer
 	//TIFR1 = (1 << OCF1A);		// Se deshabilitan las demás interrupciones cuando salte la interrupción del OCR1A
 	
-	// TIMER 3 => Timer milisegundos :  Modo CTC (OCRnA) sin preescalado
-	TCCR3A = 0b00000000;
-	TCCR3B = 0b00001001;         	
-	TIMSK3 = 0b00000010;
-	OCR3A =	Freq_uC/1000;
-	// TIMER 4 => Timer segundos : Modo CTC (OCRnA) con preescalado 256
+	// TIMER 4 => Timer segundos : Modo CTC con preescalado 256
 	TCCR4A = 0b00000000;
-	TCCR4B = 0b00001101;
+	TCCR4B = 0b00001100;
 	TIMSK4 = 0b00000010;
-	OCR4A =  Freq_uC/256;
+	OCR4A =  (Freq_uC/256)-1;
+
+	// TIMER 3 => Timer milisegundos :  Modo CTC con preescalado 8
+	TCCR3A = 0b00000000;
+	TCCR3B = 0b00001010;
+	TIMSK3 = 0b00000010;
+	OCR3A = 1000-1;
+	
 	sei();
 }
 
@@ -397,7 +400,7 @@ ISR(PCINT0_vect){
 	
 	// Caso de que el coche entre por la salida
 	if (isClrSet(REG_SOB_PIN,PIN_SO12_PIN) && reg_SO12 == 1 && WrongExitCar == 0) {
-		// ParadaEmergencia();
+		ParadaEmergencia();
 	}
 	
 	//SO1 [SOB] (PCINT0)
@@ -469,7 +472,7 @@ void setupCinta(){
 }
 
 void moveCinta(){
-	//SETBit(REG_M6_en_PORT, PIN_M6_en_PORT);
+	//setBit(REG_M6_en_PORT, PIN_M6_en_PORT);
 	setBit(TCCR1A, COM1C1);
 }
 
@@ -533,7 +536,6 @@ void LED_1(){
 
 // Parada de emergencia
 void setup_ParadaEmergencia(){ // SW4 al soltar boton
-	
 	setBit(EICRA,ISC00); // Interrupción flanco subida
 	setBit(EICRA,ISC01);
 	
@@ -542,8 +544,19 @@ void setup_ParadaEmergencia(){ // SW4 al soltar boton
 
 void ParadaEmergencia() { // PENSAR DONDE PONERLO
 	setStop();
-	
-	/*Pendiente de partes previas 1, 2 y 3*/
+	EmergenciaON = 1;
+	while (EmergenciaON) {
+		EnableEntrance = 0;
+		/*Pendiente de partes previas 1, 2 y 3*/
+		stopCinta();
+		// Semáforo
+		clearBit(REG_LED_PORT, PIN_L4_PORT);	// GREEN: Apagado
+		setBit(REG_LED_PORT, PIN_L5_PORT);		// RED: Encendido
+	}
+}
+
+ISR (INT0_vect) {
+	EmergenciaON = 0;
 }
 
  // Sensores: SO1, SO3, SO6, SO10, SO11 y SO12
