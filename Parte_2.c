@@ -55,8 +55,8 @@ void closebarrera(){
 void stopbarrera(){
 	modo_barrera = 0;	// Para barrera()
 }
-// barrera(): Incluir en el WHILE DEL MAIN
-void barrera(){		// En WHILE del MAIN
+
+void barrera(){	
 	
 	switch (modo_barrera){
 		case 0:		//Barrera parada
