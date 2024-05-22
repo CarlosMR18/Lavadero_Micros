@@ -3,15 +3,16 @@ Trabajo Sistemas Microprocesadores 2023/2024 - EQUIPO LAVADERO 2
 
 # Puertos usados por Partes (J1)
 	// PARTE 1
+      --------------LAV H---------------
 	SO3	=>	PB1 // (PCINT1)
 	SO4	=>	PK5 // (PCINT21)
 	SO5	=>	PK1 // (PCINT17)
 	SW2	=>	PD1 // (INT1)
 	M3_di	=>	PL4 // (OC5B)
 	M3_en	=>	PD4 // (-)
-	M4_di	=>	PL6 // (-)  		//**no se usa***
+	M4_di	=>	PL6 // (-)  	//**no se usa***
 	M4_en	=>	PD6 // (-)	
-	
+      ---------------SEC----------------
 	SO7 	=>	PB3 // (PCINT3)
 	SO8	=>	PK7 // (PCINT23)
 	SO9	=>	PK3 // (PCINT19)
