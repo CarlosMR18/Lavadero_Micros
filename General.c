@@ -45,16 +45,19 @@ uint8_t getStop(void){
 
 void setupTimers(void){
 	cli();
-		// TIMER 1 => Timer segundos : Modo CTC (OCRnA) con preescalado 256
-	TCCR1A = 0b00000000; //WGM10 y WGM11 == 0
-	TCCR1B = 0b00001101; //WGM12(bit3) == 1  CS12 == 1(preescalado 256)(bit2)
-	TIMSK1 = 0b00000010;
-	OCR1A =  Freq_uC/256;
-		// TIMER 3 => Timer milisegundos : Modo CTC (OCRnA) sin preescalado
-	TCCR3A = 0b00000000;  //WGM30 y WGM31 == 0
-	TCCR3B = 0b00001001;  //WGM32(bit3) == 1  CS30 == 1(no preescalado)(bit0)
+
+	// TIMER 4 => Timer segundos : Modo CTC con preescalado 256
+	TCCR4A = 0b00000000;
+	TCCR4B = 0b00001100;
+	TIMSK4 = 0b00000010;
+	OCR4A =  (Freq_uC/256)-1;
+
+	// TIMER 3 => Timer milisegundos :  Modo CTC con preescalado 8
+	TCCR3A = 0b00000000;
+	TCCR3B = 0b00001010;
 	TIMSK3 = 0b00000010;
-	OCR3A =	Freq_uC/1000;
+	OCR3A = 1000-1;
+	
 	sei();
 }
 
