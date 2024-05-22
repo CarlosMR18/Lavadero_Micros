@@ -31,20 +31,16 @@ Trabajo Sistemas Microprocesadores 2023/2024 - EQUIPO LAVADERO 2
 	// PARTE 3
 	M6_di	=>	PL0 // (ICP4)		OJO Antes: PB5 // (PCINT5)	//**no se usa***
 	M6_en	=>	PB7 // (PCINT7)
-	
 	L4 	=>	PL3 // (OC5A)	
-	L5 	=>	PL5 // (OC5C)
-	
+	L5 	=>	PL5 // (OC5C)	
+	SW4	=>	PD0 // (INT0)
+	  
+	// INTEGRACIÓN
 	SO1 	=>	PB0 // (PCINT0)
 	SO6 	=>	PB4 // (PCINT4/OC1B)
 	SO10 	=>	PB5 // (PCINT5)		OJO Antes: PL0 // (ICP4)
 	SO11 	=>	PD5 // (-) -->revisar
 	SO12 	=>	PB2 // (PCINT2/OC2A)
-	
-	SW4	=>	PD0 // (INT0)
-	  
-	// INTEGRACIÓN
-
 
 # Puertos a usar (J1)
 	// MOTORES
