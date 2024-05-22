@@ -102,21 +102,21 @@
 
 		// Motor M5 => Ventilador de secado
 			// Direction
-		#define REG_M5_di_PORT	PORTB
-		#define REG_M5_di_DDR	DDRB
-		#define REG_M5_di_PIN	PINB
-		
-		#define PIN_M5_di_PORT	PB6
-		#define PIN_M5_di_DDR  	DDB6
-		#define PIN_M5_di_PIN  	PINB6
-			// Enable
-		#define REG_M5_en_PORT	PORTD
-		#define REG_M5_en_DDR	DDRD
-		#define REG_M5_en_PIN	PIND
+		#define REG_M5_di_PORT	PORTD
+		#define REG_M5_di_DDR	DDRD
+		#define REG_M5_di_PIN	PIND
 
-		#define PIN_M5_en_PORT	PD7
-		#define PIN_M5_en_DDR	DDD7
-		#define PIN_M5_en_PIN	PIND7
+		#define PIN_M5_di_PORT	PD7
+		#define PIN_M5_di_DDR	DDD7
+		#define PIN_M5_di_PIN	PIND7
+			// Enable
+		#define REG_M5_en_PORT	PORTB
+		#define REG_M5_en_DDR	DDRB
+		#define REG_M5_en_PIN	PINB
+
+		#define PIN_M5_en_PORT	PB6
+		#define PIN_M5_en_DDR	DDB6
+		#define PIN_M5_en_PIN	PINB6
 		
 		// Motor M6 => Cinta de arrastre
 			// Direction => PCINT5
