@@ -4,7 +4,6 @@
 #define PARTE_2_H_
 
 //Incluir macros necesarias
-//void funciones();
 void setup_luz(); 
 void control_L1(); 
 void setup_barrera(); 
