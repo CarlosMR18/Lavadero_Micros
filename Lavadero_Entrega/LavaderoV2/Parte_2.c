@@ -39,10 +39,6 @@ void setup_barrera(){		//************ REVISAR MACROS ************
 	
 	//SO2 [SOK] (PCINT18)
 	clearBit(REG_SOB_DDR, PIN_SO1_DDR); // Entrada
-	// Configuro interrupci髇 por cambio PCINT18
-	//setBit(PCMSK2, PCINT18); // Habilito mascara interrupci髇
-	//setBit(PCICR, PCIE2); // Habilito registro interrupci髇
-	//setBit(PCIFR, PCIF2); // Borro bandera
 	
 	//SW1 -> NO USO, CONTROLO CON TIEMPOS PARA APERTURA
 
@@ -105,11 +101,11 @@ void setup_luz(){
 	cli();
 	setBit(REG_LED_DDR, PIN_L1_DDR); // Pin del LED como salida
 	clearBit(REG_LED_PORT, PIN_L1_PORT); //LED apagado inicialmente
-	// Configurar Timer 5 para generar interrupci髇 cada 0.5 segundo
-	TCCR5B |= (1 << CS52) | (1 << WGM52); // Prescaler de 1024
+	// Configurar Timer 5 para generar interrupci贸n cada 0.5 segundo
+	TCCR5B |= (1 << CS52) | (1 << WGM52); // Prescaler de 256 y modo CTC
 	TCNT5 = 0; // Inicializar el contador
-	OCR5A = 15625-1; // Valor de comparaci髇 para 0.5 segundo
-	TIMSK5 |= (1 << OCIE5A); // Habilitar la interrupci髇 por comparaci髇
+	OCR5A = 15625-1; // Valor de comparaci贸n para 0.5 segundo
+	TIMSK5 |= (1 << OCIE5A); // Habilitar la interrupci贸n por comparaci贸n
 	TIFR5 |= (1<<OCF5A);
 	sei();
 }
@@ -126,7 +122,7 @@ void control_LED1(void){
 }
 
 ISR(TIMER5_COMPA_vect) {	//Timer solo usado por Parte2 
-	// Rutina de interrupci髇 del Timer 5
+	// Rutina de interrupci贸n del Timer 5
 	timer_ticks++;
 	if (timer_ticks == aux_parpadeo_LED1) { // 10 o 0.5 segundos
 		setBit(REG_LED_PORT,PIN_L1_PORT); // Enciendo el LED
@@ -170,7 +166,7 @@ void lavadovertical(uint8_t modo_lavado){
 
 
 //////////////////////////////////////////////
-//////////////////	 COM贜 	//////////////////
+//////////////////	 COM脷N 	//////////////////
 //////////////////////////////////////////////
 
 void setup_Parte2(void){
