@@ -1,0 +1,1919 @@
+
+LavaderoV2.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000012  00800200  00000c08  00000c9c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000c08  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          0000001c  00800212  00800212  00000cae  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000cae  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000ce0  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000268  00000000  00000000  00000d1c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00001b8c  00000000  00000000  00000f84  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000101a  00000000  00000000  00002b10  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00001204  00000000  00000000  00003b2a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000554  00000000  00000000  00004d30  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000945  00000000  00000000  00005284  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000003ca  00000000  00000000  00005bc9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000208  00000000  00000000  00005f93  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 72 00 	jmp	0xe4	; 0xe4 <__ctors_end>
+   4:	0c 94 2c 02 	jmp	0x458	; 0x458 <__vector_1>
+   8:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+   c:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  10:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  14:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  18:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  1c:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  20:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  24:	0c 94 33 02 	jmp	0x466	; 0x466 <__vector_9>
+  28:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  2c:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  30:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  34:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  38:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  3c:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  40:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  44:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  48:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  4c:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  50:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  54:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  58:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  5c:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  60:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  64:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  68:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  6c:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  70:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  74:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  78:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  7c:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  80:	0c 94 96 01 	jmp	0x32c	; 0x32c <__vector_32>
+  84:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  88:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  8c:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  90:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  94:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  98:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  9c:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  a0:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  a4:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  a8:	0c 94 43 01 	jmp	0x286	; 0x286 <__vector_42>
+  ac:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  b0:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  b4:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  b8:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  bc:	0c 94 12 05 	jmp	0xa24	; 0xa24 <__vector_47>
+  c0:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  c4:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  c8:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  cc:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  d0:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  d4:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  d8:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  dc:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+  e0:	0c 94 8f 00 	jmp	0x11e	; 0x11e <__bad_interrupt>
+
+000000e4 <__ctors_end>:
+  e4:	11 24       	eor	r1, r1
+  e6:	1f be       	out	0x3f, r1	; 63
+  e8:	cf ef       	ldi	r28, 0xFF	; 255
+  ea:	d1 e2       	ldi	r29, 0x21	; 33
+  ec:	de bf       	out	0x3e, r29	; 62
+  ee:	cd bf       	out	0x3d, r28	; 61
+
+000000f0 <__do_copy_data>:
+  f0:	12 e0       	ldi	r17, 0x02	; 2
+  f2:	a0 e0       	ldi	r26, 0x00	; 0
+  f4:	b2 e0       	ldi	r27, 0x02	; 2
+  f6:	e8 e0       	ldi	r30, 0x08	; 8
+  f8:	fc e0       	ldi	r31, 0x0C	; 12
+  fa:	02 c0       	rjmp	.+4      	; 0x100 <__do_copy_data+0x10>
+  fc:	05 90       	lpm	r0, Z+
+  fe:	0d 92       	st	X+, r0
+ 100:	a2 31       	cpi	r26, 0x12	; 18
+ 102:	b1 07       	cpc	r27, r17
+ 104:	d9 f7       	brne	.-10     	; 0xfc <__do_copy_data+0xc>
+
+00000106 <__do_clear_bss>:
+ 106:	22 e0       	ldi	r18, 0x02	; 2
+ 108:	a2 e1       	ldi	r26, 0x12	; 18
+ 10a:	b2 e0       	ldi	r27, 0x02	; 2
+ 10c:	01 c0       	rjmp	.+2      	; 0x110 <.do_clear_bss_start>
+
+0000010e <.do_clear_bss_loop>:
+ 10e:	1d 92       	st	X+, r1
+
+00000110 <.do_clear_bss_start>:
+ 110:	ae 32       	cpi	r26, 0x2E	; 46
+ 112:	b2 07       	cpc	r27, r18
+ 114:	e1 f7       	brne	.-8      	; 0x10e <.do_clear_bss_loop>
+ 116:	0e 94 fd 02 	call	0x5fa	; 0x5fa <main>
+ 11a:	0c 94 02 06 	jmp	0xc04	; 0xc04 <_exit>
+
+0000011e <__bad_interrupt>:
+ 11e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000122 <setupVariablesGeneral>:
+	}
+	
+	// NumCarSecado
+	uint8_t getNumCarSecado(void){ // Devuelve número coches en lavadero
+		return NumCarSecado;
+	}
+ 122:	10 92 2b 02 	sts	0x022B, r1	; 0x80022b <Stop>
+ 126:	10 92 25 02 	sts	0x0225, r1	; 0x800225 <s>
+ 12a:	10 92 26 02 	sts	0x0226, r1	; 0x800226 <s+0x1>
+ 12e:	10 92 27 02 	sts	0x0227, r1	; 0x800227 <s+0x2>
+ 132:	10 92 28 02 	sts	0x0228, r1	; 0x800228 <s+0x3>
+ 136:	10 92 1d 02 	sts	0x021D, r1	; 0x80021d <ms>
+ 13a:	10 92 1e 02 	sts	0x021E, r1	; 0x80021e <ms+0x1>
+ 13e:	10 92 1f 02 	sts	0x021F, r1	; 0x80021f <ms+0x2>
+ 142:	10 92 20 02 	sts	0x0220, r1	; 0x800220 <ms+0x3>
+ 146:	10 92 2d 02 	sts	0x022D, r1	; 0x80022d <NumCarSecado>
+ 14a:	10 92 29 02 	sts	0x0229, r1	; 0x800229 <NumCarLavado>
+ 14e:	81 e0       	ldi	r24, 0x01	; 1
+ 150:	80 93 2a 02 	sts	0x022A, r24	; 0x80022a <EnableEntrance>
+ 154:	10 92 2c 02 	sts	0x022C, r1	; 0x80022c <enable_prove_new>
+ 158:	10 92 21 02 	sts	0x0221, r1	; 0x800221 <cnt_prove_new>
+ 15c:	10 92 22 02 	sts	0x0222, r1	; 0x800222 <cnt_prove_new+0x1>
+ 160:	10 92 23 02 	sts	0x0223, r1	; 0x800223 <cnt_prove_new+0x2>
+ 164:	10 92 24 02 	sts	0x0224, r1	; 0x800224 <cnt_prove_new+0x3>
+ 168:	08 95       	ret
+
+0000016a <setupTimers>:
+ 16a:	f8 94       	cli
+ 16c:	8b e2       	ldi	r24, 0x2B	; 43
+ 16e:	80 93 80 00 	sts	0x0080, r24	; 0x800080 <__TEXT_REGION_LENGTH__+0x7f0080>
+ 172:	82 e1       	ldi	r24, 0x12	; 18
+ 174:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7f0081>
+ 178:	10 92 6f 00 	sts	0x006F, r1	; 0x80006f <__TEXT_REGION_LENGTH__+0x7f006f>
+ 17c:	8f e3       	ldi	r24, 0x3F	; 63
+ 17e:	96 e0       	ldi	r25, 0x06	; 6
+ 180:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f0089>
+ 184:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f0088>
+ 188:	8f e5       	ldi	r24, 0x5F	; 95
+ 18a:	94 e0       	ldi	r25, 0x04	; 4
+ 18c:	90 93 8b 00 	sts	0x008B, r25	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f008b>
+ 190:	80 93 8a 00 	sts	0x008A, r24	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f008a>
+ 194:	8f e7       	ldi	r24, 0x7F	; 127
+ 196:	92 e0       	ldi	r25, 0x02	; 2
+ 198:	90 93 8d 00 	sts	0x008D, r25	; 0x80008d <__TEXT_REGION_LENGTH__+0x7f008d>
+ 19c:	80 93 8c 00 	sts	0x008C, r24	; 0x80008c <__TEXT_REGION_LENGTH__+0x7f008c>
+ 1a0:	10 92 a0 00 	sts	0x00A0, r1	; 0x8000a0 <__TEXT_REGION_LENGTH__+0x7f00a0>
+ 1a4:	8c e0       	ldi	r24, 0x0C	; 12
+ 1a6:	80 93 a1 00 	sts	0x00A1, r24	; 0x8000a1 <__TEXT_REGION_LENGTH__+0x7f00a1>
+ 1aa:	82 e0       	ldi	r24, 0x02	; 2
+ 1ac:	80 93 72 00 	sts	0x0072, r24	; 0x800072 <__TEXT_REGION_LENGTH__+0x7f0072>
+ 1b0:	21 e1       	ldi	r18, 0x11	; 17
+ 1b2:	3a e7       	ldi	r19, 0x7A	; 122
+ 1b4:	30 93 a9 00 	sts	0x00A9, r19	; 0x8000a9 <__TEXT_REGION_LENGTH__+0x7f00a9>
+ 1b8:	20 93 a8 00 	sts	0x00A8, r18	; 0x8000a8 <__TEXT_REGION_LENGTH__+0x7f00a8>
+ 1bc:	10 92 90 00 	sts	0x0090, r1	; 0x800090 <__TEXT_REGION_LENGTH__+0x7f0090>
+ 1c0:	9a e0       	ldi	r25, 0x0A	; 10
+ 1c2:	90 93 91 00 	sts	0x0091, r25	; 0x800091 <__TEXT_REGION_LENGTH__+0x7f0091>
+ 1c6:	80 93 71 00 	sts	0x0071, r24	; 0x800071 <__TEXT_REGION_LENGTH__+0x7f0071>
+ 1ca:	87 ee       	ldi	r24, 0xE7	; 231
+ 1cc:	93 e0       	ldi	r25, 0x03	; 3
+ 1ce:	90 93 99 00 	sts	0x0099, r25	; 0x800099 <__TEXT_REGION_LENGTH__+0x7f0099>
+ 1d2:	80 93 98 00 	sts	0x0098, r24	; 0x800098 <__TEXT_REGION_LENGTH__+0x7f0098>
+ 1d6:	78 94       	sei
+ 1d8:	08 95       	ret
+
+000001da <incNumCarLavado>:
+ 1da:	80 91 29 02 	lds	r24, 0x0229	; 0x800229 <NumCarLavado>
+ 1de:	8f 5f       	subi	r24, 0xFF	; 255
+ 1e0:	80 93 29 02 	sts	0x0229, r24	; 0x800229 <NumCarLavado>
+ 1e4:	08 95       	ret
+
+000001e6 <decNumCarLavado>:
+ 1e6:	80 91 29 02 	lds	r24, 0x0229	; 0x800229 <NumCarLavado>
+ 1ea:	88 23       	and	r24, r24
+ 1ec:	29 f0       	breq	.+10     	; 0x1f8 <decNumCarLavado+0x12>
+ 1ee:	80 91 29 02 	lds	r24, 0x0229	; 0x800229 <NumCarLavado>
+ 1f2:	81 50       	subi	r24, 0x01	; 1
+ 1f4:	80 93 29 02 	sts	0x0229, r24	; 0x800229 <NumCarLavado>
+ 1f8:	08 95       	ret
+
+000001fa <incNumCarSecado>:
+
+	void incNumCarSecado(void){ // Incrementa en uno el contador de coches en lavadero
+		NumCarSecado++;
+ 1fa:	80 91 2d 02 	lds	r24, 0x022D	; 0x80022d <NumCarSecado>
+ 1fe:	8f 5f       	subi	r24, 0xFF	; 255
+ 200:	80 93 2d 02 	sts	0x022D, r24	; 0x80022d <NumCarSecado>
+ 204:	08 95       	ret
+
+00000206 <decNumCarSecado>:
+	}
+
+	void decNumCarSecado(void){ // Decrementa en uno el contador de coches en lavadero
+		if(NumCarSecado > 0) {
+ 206:	80 91 2d 02 	lds	r24, 0x022D	; 0x80022d <NumCarSecado>
+ 20a:	88 23       	and	r24, r24
+ 20c:	29 f0       	breq	.+10     	; 0x218 <decNumCarSecado+0x12>
+			NumCarSecado--;
+ 20e:	80 91 2d 02 	lds	r24, 0x022D	; 0x80022d <NumCarSecado>
+ 212:	81 50       	subi	r24, 0x01	; 1
+ 214:	80 93 2d 02 	sts	0x022D, r24	; 0x80022d <NumCarSecado>
+ 218:	08 95       	ret
+
+0000021a <setup_General>:
+///////////////////////////////////
+////// INICIALIZACIÓN COMÚN ///////
+///////////////////////////////////
+
+void setup_General(void){ //Incluir todas funciones inicialización
+	setupVariablesGeneral();
+ 21a:	0e 94 91 00 	call	0x122	; 0x122 <setupVariablesGeneral>
+	setupTimers();
+ 21e:	0e 94 b5 00 	call	0x16a	; 0x16a <setupTimers>
+ 222:	08 95       	ret
+
+00000224 <setup_sensores_integration>:
+
+	
+	 
+	 sei();*/
+	 
+	 cli();
+ 224:	f8 94       	cli
+	 //SO1 [SOB] PB0(PCINT0)
+	 clearBit(REG_SOB_DDR, PIN_SO1_DDR); // Entrada
+ 226:	84 b1       	in	r24, 0x04	; 4
+ 228:	8e 7f       	andi	r24, 0xFE	; 254
+ 22a:	84 b9       	out	0x04, r24	; 4
+	 // Configuro interrupción por cambio PCINT0
+	 setBit(PCMSK0, PCINT0); // Habilito mascara interrupción
+ 22c:	eb e6       	ldi	r30, 0x6B	; 107
+ 22e:	f0 e0       	ldi	r31, 0x00	; 0
+ 230:	80 81       	ld	r24, Z
+ 232:	81 60       	ori	r24, 0x01	; 1
+ 234:	80 83       	st	Z, r24
+	 setBit(PCICR, PCIE0); // Habilito registro interrupción
+ 236:	a8 e6       	ldi	r26, 0x68	; 104
+ 238:	b0 e0       	ldi	r27, 0x00	; 0
+ 23a:	8c 91       	ld	r24, X
+ 23c:	81 60       	ori	r24, 0x01	; 1
+ 23e:	8c 93       	st	X, r24
+	 setBit(PCIFR, PCIF0); // Borro bandera
+ 240:	8b b3       	in	r24, 0x1b	; 27
+ 242:	81 60       	ori	r24, 0x01	; 1
+ 244:	8b bb       	out	0x1b, r24	; 27
+
+	 //SO3 [SOB] PB1(PCINT1)
+	 clearBit(REG_SOB_DDR, PIN_SO3_DDR); // Entrada
+ 246:	84 b1       	in	r24, 0x04	; 4
+ 248:	8d 7f       	andi	r24, 0xFD	; 253
+ 24a:	84 b9       	out	0x04, r24	; 4
+	 // Configura interrupción por cambio PCINT1 junto PCINT0
+	 setBit(PCMSK0, PCINT1); // Habilito mascara interrupción
+ 24c:	80 81       	ld	r24, Z
+ 24e:	82 60       	ori	r24, 0x02	; 2
+ 250:	80 83       	st	Z, r24
+	 
+	 //SO6 [SOB] (PCINT4)
+	 clearBit(REG_SOB_DDR, PIN_SO6_DDR); // Entrada
+ 252:	84 b1       	in	r24, 0x04	; 4
+ 254:	8f 7e       	andi	r24, 0xEF	; 239
+ 256:	84 b9       	out	0x04, r24	; 4
+	 // Configura interrupción por cambio PCINT4 junto PCINT0
+	 setBit(PCMSK0, PCINT4); // Habilito mascara interrupción
+ 258:	80 81       	ld	r24, Z
+ 25a:	80 61       	ori	r24, 0x10	; 16
+ 25c:	80 83       	st	Z, r24
+
+	 //SO10 [SOB] PB5
+	 clearBit(REG_SOB_DDR, PIN_SO10_DDR); // Entrada
+ 25e:	84 b1       	in	r24, 0x04	; 4
+ 260:	8f 7d       	andi	r24, 0xDF	; 223
+ 262:	84 b9       	out	0x04, r24	; 4
+	 // Configura interrupción por cambio PCINT5 junto PCINT0
+	 setBit(PCMSK0, PCINT5); // Habilito mascara interrupción
+ 264:	80 81       	ld	r24, Z
+ 266:	80 62       	ori	r24, 0x20	; 32
+ 268:	80 83       	st	Z, r24
+
+	 //SO11 [SOB] PD5
+	 clearBit(REG_SOD_DDR, PIN_SO11_DDR); // Entrada
+ 26a:	8a b1       	in	r24, 0x0a	; 10
+ 26c:	8f 7d       	andi	r24, 0xDF	; 223
+ 26e:	8a b9       	out	0x0a, r24	; 10
+	 
+	  //SO12 [SOB] PB2 (PCINT2)
+	  clearBit(REG_SOB_DDR, PIN_SO12_DDR); // Entrada
+ 270:	84 b1       	in	r24, 0x04	; 4
+ 272:	8b 7f       	andi	r24, 0xFB	; 251
+ 274:	84 b9       	out	0x04, r24	; 4
+	  // Configura interrupción por cambio PCINT2 junto PCINT0
+	  setBit(PCMSK0, PCINT2); // Habilito mascara interrupción
+ 276:	80 81       	ld	r24, Z
+ 278:	84 60       	ori	r24, 0x04	; 4
+ 27a:	80 83       	st	Z, r24
+	 
+	 sei();
+ 27c:	78 94       	sei
+ 27e:	08 95       	ret
+
+00000280 <setup_Integration>:
+  ///////////////////
+  ////// COMÚN///////
+  ///////////////////
+  
+   void setup_Integration(){
+	   setup_sensores_integration();
+ 280:	0e 94 12 01 	call	0x224	; 0x224 <setup_sensores_integration>
+ 284:	08 95       	ret
+
+00000286 <__vector_42>:
+
+ ////////////////////////////////////////////////
+ ////// INTERRUPCIONES TIMERS INTEGRACIÓN ///////
+ ////////////////////////////////////////////////
+ 
+ ISR(TIMER4_COMPA_vect){ // Segundos
+ 286:	1f 92       	push	r1
+ 288:	0f 92       	push	r0
+ 28a:	0f b6       	in	r0, 0x3f	; 63
+ 28c:	0f 92       	push	r0
+ 28e:	11 24       	eor	r1, r1
+ 290:	4f 93       	push	r20
+ 292:	5f 93       	push	r21
+ 294:	6f 93       	push	r22
+ 296:	7f 93       	push	r23
+ 298:	8f 93       	push	r24
+ 29a:	9f 93       	push	r25
+ 29c:	af 93       	push	r26
+ 29e:	bf 93       	push	r27
+	 s++;
+ 2a0:	80 91 25 02 	lds	r24, 0x0225	; 0x800225 <s>
+ 2a4:	90 91 26 02 	lds	r25, 0x0226	; 0x800226 <s+0x1>
+ 2a8:	a0 91 27 02 	lds	r26, 0x0227	; 0x800227 <s+0x2>
+ 2ac:	b0 91 28 02 	lds	r27, 0x0228	; 0x800228 <s+0x3>
+ 2b0:	01 96       	adiw	r24, 0x01	; 1
+ 2b2:	a1 1d       	adc	r26, r1
+ 2b4:	b1 1d       	adc	r27, r1
+ 2b6:	80 93 25 02 	sts	0x0225, r24	; 0x800225 <s>
+ 2ba:	90 93 26 02 	sts	0x0226, r25	; 0x800226 <s+0x1>
+ 2be:	a0 93 27 02 	sts	0x0227, r26	; 0x800227 <s+0x2>
+ 2c2:	b0 93 28 02 	sts	0x0228, r27	; 0x800228 <s+0x3>
+	 
+	 if ((s - cnt_prove_new > Tiempo_prove_new) && NumCarLavado > 0 && enable_prove_new == 1){
+ 2c6:	80 91 25 02 	lds	r24, 0x0225	; 0x800225 <s>
+ 2ca:	90 91 26 02 	lds	r25, 0x0226	; 0x800226 <s+0x1>
+ 2ce:	a0 91 27 02 	lds	r26, 0x0227	; 0x800227 <s+0x2>
+ 2d2:	b0 91 28 02 	lds	r27, 0x0228	; 0x800228 <s+0x3>
+ 2d6:	40 91 21 02 	lds	r20, 0x0221	; 0x800221 <cnt_prove_new>
+ 2da:	50 91 22 02 	lds	r21, 0x0222	; 0x800222 <cnt_prove_new+0x1>
+ 2de:	60 91 23 02 	lds	r22, 0x0223	; 0x800223 <cnt_prove_new+0x2>
+ 2e2:	70 91 24 02 	lds	r23, 0x0224	; 0x800224 <cnt_prove_new+0x3>
+ 2e6:	84 1b       	sub	r24, r20
+ 2e8:	95 0b       	sbc	r25, r21
+ 2ea:	a6 0b       	sbc	r26, r22
+ 2ec:	b7 0b       	sbc	r27, r23
+ 2ee:	cd 97       	sbiw	r24, 0x3d	; 61
+ 2f0:	a1 05       	cpc	r26, r1
+ 2f2:	b1 05       	cpc	r27, r1
+ 2f4:	70 f0       	brcs	.+28     	; 0x312 <__vector_42+0x8c>
+ 2f6:	80 91 29 02 	lds	r24, 0x0229	; 0x800229 <NumCarLavado>
+ 2fa:	88 23       	and	r24, r24
+ 2fc:	51 f0       	breq	.+20     	; 0x312 <__vector_42+0x8c>
+ 2fe:	80 91 2c 02 	lds	r24, 0x022C	; 0x80022c <enable_prove_new>
+ 302:	81 30       	cpi	r24, 0x01	; 1
+ 304:	31 f4       	brne	.+12     	; 0x312 <__vector_42+0x8c>
+		 NumCarLavado = 0;
+ 306:	10 92 29 02 	sts	0x0229, r1	; 0x800229 <NumCarLavado>
+		 EnableEntrance = 1;
+ 30a:	80 93 2a 02 	sts	0x022A, r24	; 0x80022a <EnableEntrance>
+		 enable_prove_new = 0;
+ 30e:	10 92 2c 02 	sts	0x022C, r1	; 0x80022c <enable_prove_new>
+	 }
+ }
+ 312:	bf 91       	pop	r27
+ 314:	af 91       	pop	r26
+ 316:	9f 91       	pop	r25
+ 318:	8f 91       	pop	r24
+ 31a:	7f 91       	pop	r23
+ 31c:	6f 91       	pop	r22
+ 31e:	5f 91       	pop	r21
+ 320:	4f 91       	pop	r20
+ 322:	0f 90       	pop	r0
+ 324:	0f be       	out	0x3f, r0	; 63
+ 326:	0f 90       	pop	r0
+ 328:	1f 90       	pop	r1
+ 32a:	18 95       	reti
+
+0000032c <__vector_32>:
+
+ ISR(TIMER3_COMPA_vect){ // Milisegundos
+ 32c:	1f 92       	push	r1
+ 32e:	0f 92       	push	r0
+ 330:	0f b6       	in	r0, 0x3f	; 63
+ 332:	0f 92       	push	r0
+ 334:	11 24       	eor	r1, r1
+ 336:	2f 93       	push	r18
+ 338:	3f 93       	push	r19
+ 33a:	4f 93       	push	r20
+ 33c:	5f 93       	push	r21
+ 33e:	6f 93       	push	r22
+ 340:	7f 93       	push	r23
+ 342:	8f 93       	push	r24
+ 344:	9f 93       	push	r25
+ 346:	af 93       	push	r26
+ 348:	bf 93       	push	r27
+ 34a:	ef 93       	push	r30
+ 34c:	ff 93       	push	r31
+	 ms++;
+ 34e:	80 91 1d 02 	lds	r24, 0x021D	; 0x80021d <ms>
+ 352:	90 91 1e 02 	lds	r25, 0x021E	; 0x80021e <ms+0x1>
+ 356:	a0 91 1f 02 	lds	r26, 0x021F	; 0x80021f <ms+0x2>
+ 35a:	b0 91 20 02 	lds	r27, 0x0220	; 0x800220 <ms+0x3>
+ 35e:	01 96       	adiw	r24, 0x01	; 1
+ 360:	a1 1d       	adc	r26, r1
+ 362:	b1 1d       	adc	r27, r1
+ 364:	80 93 1d 02 	sts	0x021D, r24	; 0x80021d <ms>
+ 368:	90 93 1e 02 	sts	0x021E, r25	; 0x80021e <ms+0x1>
+ 36c:	a0 93 1f 02 	sts	0x021F, r26	; 0x80021f <ms+0x2>
+ 370:	b0 93 20 02 	sts	0x0220, r27	; 0x800220 <ms+0x3>
+	 
+	 if(ms % Check_height_sensors == 0){
+ 374:	60 91 1d 02 	lds	r22, 0x021D	; 0x80021d <ms>
+ 378:	70 91 1e 02 	lds	r23, 0x021E	; 0x80021e <ms+0x1>
+ 37c:	80 91 1f 02 	lds	r24, 0x021F	; 0x80021f <ms+0x2>
+ 380:	90 91 20 02 	lds	r25, 0x0220	; 0x800220 <ms+0x3>
+ 384:	2e e1       	ldi	r18, 0x1E	; 30
+ 386:	30 e0       	ldi	r19, 0x00	; 0
+ 388:	40 e0       	ldi	r20, 0x00	; 0
+ 38a:	50 e0       	ldi	r21, 0x00	; 0
+ 38c:	0e 94 e0 05 	call	0xbc0	; 0xbc0 <__udivmodsi4>
+ 390:	67 2b       	or	r22, r23
+ 392:	68 2b       	or	r22, r24
+ 394:	69 2b       	or	r22, r25
+ 396:	51 f5       	brne	.+84     	; 0x3ec <__vector_32+0xc0>
+		enable_check_parte1 = 1;
+ 398:	81 e0       	ldi	r24, 0x01	; 1
+ 39a:	80 93 14 02 	sts	0x0214, r24	; 0x800214 <enable_check_parte1>
+		
+		// Actualizo señales - Lavadero Horizontal
+		so3 = isBitSet(REG_SOB_PIN,PIN_SO3_PIN);
+ 39e:	93 b1       	in	r25, 0x03	; 3
+ 3a0:	92 70       	andi	r25, 0x02	; 2
+ 3a2:	90 93 10 02 	sts	0x0210, r25	; 0x800210 <so3>
+		so4 = isBitSet(REG_SOK_PIN,PIN_SO4_PIN);
+ 3a6:	e6 e0       	ldi	r30, 0x06	; 6
+ 3a8:	f1 e0       	ldi	r31, 0x01	; 1
+ 3aa:	90 81       	ld	r25, Z
+ 3ac:	90 72       	andi	r25, 0x20	; 32
+ 3ae:	90 93 0f 02 	sts	0x020F, r25	; 0x80020f <so4>
+		so5 = isBitSet(REG_SOK_PIN,PIN_SO5_PIN);
+ 3b2:	90 81       	ld	r25, Z
+ 3b4:	92 70       	andi	r25, 0x02	; 2
+ 3b6:	90 93 0e 02 	sts	0x020E, r25	; 0x80020e <so5>
+		limit_switch_lavH = isClrSet(REG_SW_PIN,PIN_SW2_PIN); // isClrSet porque SW2 '0' al detectar
+ 3ba:	99 b1       	in	r25, 0x09	; 9
+ 3bc:	96 95       	lsr	r25
+ 3be:	98 27       	eor	r25, r24
+ 3c0:	91 70       	andi	r25, 0x01	; 1
+ 3c2:	90 93 13 02 	sts	0x0213, r25	; 0x800213 <limit_switch_lavH>
+		 
+		// Actualizo señales - Secado
+		so7 = isBitSet(REG_SOB_PIN,PIN_SO7_PIN);
+ 3c6:	93 b1       	in	r25, 0x03	; 3
+ 3c8:	98 70       	andi	r25, 0x08	; 8
+ 3ca:	90 93 0a 02 	sts	0x020A, r25	; 0x80020a <so7>
+		so8 = isBitSet(REG_SOK_PIN,PIN_SO8_PIN);
+ 3ce:	90 81       	ld	r25, Z
+ 3d0:	90 78       	andi	r25, 0x80	; 128
+ 3d2:	90 93 09 02 	sts	0x0209, r25	; 0x800209 <so8>
+		so9 = isBitSet(REG_SOK_PIN,PIN_SO9_PIN);
+ 3d6:	90 81       	ld	r25, Z
+ 3d8:	98 70       	andi	r25, 0x08	; 8
+ 3da:	90 93 08 02 	sts	0x0208, r25	; 0x800208 <so9>
+		limit_switch_sec = isClrSet(REG_SW_PIN,PIN_SW3_PIN); // isClrSet porque SW3 '0' al detectar
+ 3de:	99 b1       	in	r25, 0x09	; 9
+ 3e0:	96 95       	lsr	r25
+ 3e2:	96 95       	lsr	r25
+ 3e4:	89 27       	eor	r24, r25
+ 3e6:	81 70       	andi	r24, 0x01	; 1
+ 3e8:	80 93 12 02 	sts	0x0212, r24	; 0x800212 <__data_end>
+	 }
+ }
+ 3ec:	ff 91       	pop	r31
+ 3ee:	ef 91       	pop	r30
+ 3f0:	bf 91       	pop	r27
+ 3f2:	af 91       	pop	r26
+ 3f4:	9f 91       	pop	r25
+ 3f6:	8f 91       	pop	r24
+ 3f8:	7f 91       	pop	r23
+ 3fa:	6f 91       	pop	r22
+ 3fc:	5f 91       	pop	r21
+ 3fe:	4f 91       	pop	r20
+ 400:	3f 91       	pop	r19
+ 402:	2f 91       	pop	r18
+ 404:	0f 90       	pop	r0
+ 406:	0f be       	out	0x3f, r0	; 63
+ 408:	0f 90       	pop	r0
+ 40a:	1f 90       	pop	r1
+ 40c:	18 95       	reti
+
+0000040e <setup_ParadaEmergencia>:
+ ////// PARADA DE EMERGENCIA ///////
+ ///////////////////////////////////
+
+ void setup_ParadaEmergencia(){ // SW4 al pulsar boton
+	 
+	 clearBit(REG_SW_DDR,PIN_SW4_DDR); //	Entrada
+ 40e:	8a b1       	in	r24, 0x0a	; 10
+ 410:	8e 7f       	andi	r24, 0xFE	; 254
+ 412:	8a b9       	out	0x0a, r24	; 10
+	 
+	 clearBit(EICRA,ISC00); // Interrupción flanco bajada
+ 414:	e9 e6       	ldi	r30, 0x69	; 105
+ 416:	f0 e0       	ldi	r31, 0x00	; 0
+ 418:	80 81       	ld	r24, Z
+ 41a:	8e 7f       	andi	r24, 0xFE	; 254
+ 41c:	80 83       	st	Z, r24
+	 setBit(EICRA,ISC01);
+ 41e:	80 81       	ld	r24, Z
+ 420:	82 60       	ori	r24, 0x02	; 2
+ 422:	80 83       	st	Z, r24
+	 
+	 setBit(EIMSK,INT0); // Activo mascara interrupción
+ 424:	8d b3       	in	r24, 0x1d	; 29
+ 426:	81 60       	ori	r24, 0x01	; 1
+ 428:	8d bb       	out	0x1d, r24	; 29
+	 
+	 setBit(EIFR,INTF0); // Borro bandera interrupción
+ 42a:	8c b3       	in	r24, 0x1c	; 28
+ 42c:	81 60       	ori	r24, 0x01	; 1
+ 42e:	8c bb       	out	0x1c, r24	; 28
+ 430:	08 95       	ret
+
+00000432 <ParadaEmergencia>:
+ }
+
+ void ParadaEmergencia() {
+	EnableEntrance = 0;
+ 432:	10 92 2a 02 	sts	0x022A, r1	; 0x80022a <EnableEntrance>
+	cli();
+ 436:	f8 94       	cli
+	//setStop();
+	
+	// Parte 1
+	stop_AlturaH();
+ 438:	0e 94 37 03 	call	0x66e	; 0x66e <stop_AlturaH>
+	off_LavHorizontal();
+ 43c:	0e 94 3f 03 	call	0x67e	; 0x67e <off_LavHorizontal>
+	stop_secado();
+ 440:	0e 94 bc 03 	call	0x778	; 0x778 <stop_secado>
+	
+	// Parte 2
+	stopbarrera();
+ 444:	0e 94 83 04 	call	0x906	; 0x906 <stopbarrera>
+	
+	// Parte 3
+	stopCinta();
+ 448:	0e 94 80 05 	call	0xb00	; 0xb00 <stopCinta>
+	off_Semaforo();
+ 44c:	0e 94 a0 05 	call	0xb40	; 0xb40 <off_Semaforo>
+	
+	while(1) {
+		lavadovertical(0);
+ 450:	80 e0       	ldi	r24, 0x00	; 0
+ 452:	0e 94 4b 05 	call	0xa96	; 0xa96 <lavadovertical>
+ 456:	fc cf       	rjmp	.-8      	; 0x450 <ParadaEmergencia+0x1e>
+
+00000458 <__vector_1>:
+
+ //////////////////////////////////////
+ ////// INTERRUPCIONES SENSORES ///////
+ //////////////////////////////////////
+ 
+ ISR(INT0_vect){ //Parada de emergencia
+ 458:	1f 92       	push	r1
+ 45a:	0f 92       	push	r0
+ 45c:	0f b6       	in	r0, 0x3f	; 63
+ 45e:	0f 92       	push	r0
+ 460:	11 24       	eor	r1, r1
+	 // SW4 al soltar boton [PD0] (INT0)
+	 ParadaEmergencia();
+ 462:	0e 94 19 02 	call	0x432	; 0x432 <ParadaEmergencia>
+
+00000466 <__vector_9>:
+	 
+ }
+ 
+ ISR(PCINT0_vect){
+ 466:	1f 92       	push	r1
+ 468:	0f 92       	push	r0
+ 46a:	0f b6       	in	r0, 0x3f	; 63
+ 46c:	0f 92       	push	r0
+ 46e:	11 24       	eor	r1, r1
+ 470:	2f 93       	push	r18
+ 472:	3f 93       	push	r19
+ 474:	4f 93       	push	r20
+ 476:	5f 93       	push	r21
+ 478:	6f 93       	push	r22
+ 47a:	7f 93       	push	r23
+ 47c:	8f 93       	push	r24
+ 47e:	9f 93       	push	r25
+ 480:	af 93       	push	r26
+ 482:	bf 93       	push	r27
+ 484:	cf 93       	push	r28
+ 486:	ef 93       	push	r30
+ 488:	ff 93       	push	r31
+	 
+	 //SO1 [SOB] (PCINT0)
+	 if (isBitSet(REG_SOB_PIN,PIN_SO1_PIN) && reg_SO1 == 0){ // Flanco subida
+ 48a:	18 9b       	sbis	0x03, 0	; 3
+ 48c:	0a c0       	rjmp	.+20     	; 0x4a2 <__vector_9+0x3c>
+ 48e:	80 91 04 02 	lds	r24, 0x0204	; 0x800204 <reg_SO1>
+ 492:	81 11       	cpse	r24, r1
+ 494:	06 c0       	rjmp	.+12     	; 0x4a2 <__vector_9+0x3c>
+		 closebarrera();
+ 496:	0e 94 7a 04 	call	0x8f4	; 0x8f4 <closebarrera>
+		 reg_SO1 = 1; // Actualizo registro SO1 con valor actual
+ 49a:	81 e0       	ldi	r24, 0x01	; 1
+ 49c:	80 93 04 02 	sts	0x0204, r24	; 0x800204 <reg_SO1>
+ 4a0:	9a c0       	rjmp	.+308    	; 0x5d6 <__vector_9+0x170>
+	 }
+	 
+	 else if (isClrSet(REG_SOB_PIN,PIN_SO1_PIN) && (reg_SO1 == 1) && (EnableEntrance == 1)){ // Flanco bajada y entrada habilitada
+ 4a2:	18 99       	sbic	0x03, 0	; 3
+ 4a4:	24 c0       	rjmp	.+72     	; 0x4ee <__vector_9+0x88>
+ 4a6:	80 91 04 02 	lds	r24, 0x0204	; 0x800204 <reg_SO1>
+ 4aa:	81 30       	cpi	r24, 0x01	; 1
+ 4ac:	01 f5       	brne	.+64     	; 0x4ee <__vector_9+0x88>
+ 4ae:	80 91 2a 02 	lds	r24, 0x022A	; 0x80022a <EnableEntrance>
+ 4b2:	81 30       	cpi	r24, 0x01	; 1
+ 4b4:	e1 f4       	brne	.+56     	; 0x4ee <__vector_9+0x88>
+		 incNumCarLavado();		// Ha entrado coche
+ 4b6:	0e 94 ed 00 	call	0x1da	; 0x1da <incNumCarLavado>
+		 enable_prove_new = 1; // Activo comprobación entrada
+ 4ba:	81 e0       	ldi	r24, 0x01	; 1
+ 4bc:	80 93 2c 02 	sts	0x022C, r24	; 0x80022c <enable_prove_new>
+		 cnt_prove_new = s;
+ 4c0:	80 91 25 02 	lds	r24, 0x0225	; 0x800225 <s>
+ 4c4:	90 91 26 02 	lds	r25, 0x0226	; 0x800226 <s+0x1>
+ 4c8:	a0 91 27 02 	lds	r26, 0x0227	; 0x800227 <s+0x2>
+ 4cc:	b0 91 28 02 	lds	r27, 0x0228	; 0x800228 <s+0x3>
+ 4d0:	80 93 21 02 	sts	0x0221, r24	; 0x800221 <cnt_prove_new>
+ 4d4:	90 93 22 02 	sts	0x0222, r25	; 0x800222 <cnt_prove_new+0x1>
+ 4d8:	a0 93 23 02 	sts	0x0223, r26	; 0x800223 <cnt_prove_new+0x2>
+ 4dc:	b0 93 24 02 	sts	0x0224, r27	; 0x800224 <cnt_prove_new+0x3>
+		 EnableEntrance = 0;
+ 4e0:	10 92 2a 02 	sts	0x022A, r1	; 0x80022a <EnableEntrance>
+		 openbarrera();  
+ 4e4:	0e 94 61 04 	call	0x8c2	; 0x8c2 <openbarrera>
+		 reg_SO1 = 0; // Actualizo registro SO1 con valor actual
+ 4e8:	10 92 04 02 	sts	0x0204, r1	; 0x800204 <reg_SO1>
+ 4ec:	74 c0       	rjmp	.+232    	; 0x5d6 <__vector_9+0x170>
+	 }
+	 //SO3 [SOL] *PB1*(*PCINT1*) -- MODIFICACIÓN PROPUESTA POR NACHO :) --
+	 else if (isClrSet(REG_SOB_PIN,PIN_SO3_PIN) && reg_SO3 == 1 && enable_prove_new == 1 && (s - cnt_prove_new < Tiempo_prove_new)){ // Flanco bajada y entrada habilitada
+ 4ee:	19 99       	sbic	0x03, 1	; 3
+ 4f0:	25 c0       	rjmp	.+74     	; 0x53c <__vector_9+0xd6>
+ 4f2:	80 91 03 02 	lds	r24, 0x0203	; 0x800203 <reg_SO3>
+ 4f6:	81 30       	cpi	r24, 0x01	; 1
+ 4f8:	09 f5       	brne	.+66     	; 0x53c <__vector_9+0xd6>
+ 4fa:	80 91 2c 02 	lds	r24, 0x022C	; 0x80022c <enable_prove_new>
+ 4fe:	81 30       	cpi	r24, 0x01	; 1
+ 500:	e9 f4       	brne	.+58     	; 0x53c <__vector_9+0xd6>
+ 502:	80 91 25 02 	lds	r24, 0x0225	; 0x800225 <s>
+ 506:	90 91 26 02 	lds	r25, 0x0226	; 0x800226 <s+0x1>
+ 50a:	a0 91 27 02 	lds	r26, 0x0227	; 0x800227 <s+0x2>
+ 50e:	b0 91 28 02 	lds	r27, 0x0228	; 0x800228 <s+0x3>
+ 512:	40 91 21 02 	lds	r20, 0x0221	; 0x800221 <cnt_prove_new>
+ 516:	50 91 22 02 	lds	r21, 0x0222	; 0x800222 <cnt_prove_new+0x1>
+ 51a:	60 91 23 02 	lds	r22, 0x0223	; 0x800223 <cnt_prove_new+0x2>
+ 51e:	70 91 24 02 	lds	r23, 0x0224	; 0x800224 <cnt_prove_new+0x3>
+ 522:	84 1b       	sub	r24, r20
+ 524:	95 0b       	sbc	r25, r21
+ 526:	a6 0b       	sbc	r26, r22
+ 528:	b7 0b       	sbc	r27, r23
+ 52a:	cc 97       	sbiw	r24, 0x3c	; 60
+ 52c:	a1 05       	cpc	r26, r1
+ 52e:	b1 05       	cpc	r27, r1
+ 530:	28 f4       	brcc	.+10     	; 0x53c <__vector_9+0xd6>
+		 enable_prove_new = 0;
+ 532:	10 92 2c 02 	sts	0x022C, r1	; 0x80022c <enable_prove_new>
+		 
+		 reg_SO3 = 0; // Actualizo registro SO3 con valor actual
+ 536:	10 92 03 02 	sts	0x0203, r1	; 0x800203 <reg_SO3>
+ 53a:	4d c0       	rjmp	.+154    	; 0x5d6 <__vector_9+0x170>
+	 }
+	 
+	 else if (isBitSet(REG_SOB_PIN,PIN_SO3_PIN) && reg_SO3 == 0 ){ // Flanco subida
+ 53c:	19 9b       	sbis	0x03, 1	; 3
+ 53e:	08 c0       	rjmp	.+16     	; 0x550 <__vector_9+0xea>
+ 540:	80 91 03 02 	lds	r24, 0x0203	; 0x800203 <reg_SO3>
+ 544:	81 11       	cpse	r24, r1
+ 546:	04 c0       	rjmp	.+8      	; 0x550 <__vector_9+0xea>
+		 reg_SO3 = 1; // Actualizo registro SO3 con valor actual
+ 548:	81 e0       	ldi	r24, 0x01	; 1
+ 54a:	80 93 03 02 	sts	0x0203, r24	; 0x800203 <reg_SO3>
+ 54e:	43 c0       	rjmp	.+134    	; 0x5d6 <__vector_9+0x170>
+	 }
+	 
+	 //SO6 [SOB] (PCINT4)
+	 else if (isBitSet(REG_SOB_PIN,PIN_SO6_PIN) && reg_SO6 == 0){ // Flanco subida - Paso del culo
+ 550:	1c 9b       	sbis	0x03, 4	; 3
+ 552:	0c c0       	rjmp	.+24     	; 0x56c <__vector_9+0x106>
+ 554:	80 91 02 02 	lds	r24, 0x0202	; 0x800202 <reg_SO6>
+ 558:	81 11       	cpse	r24, r1
+ 55a:	08 c0       	rjmp	.+16     	; 0x56c <__vector_9+0x106>
+		 EnableEntrance = 1;
+ 55c:	c1 e0       	ldi	r28, 0x01	; 1
+ 55e:	c0 93 2a 02 	sts	0x022A, r28	; 0x80022a <EnableEntrance>
+		 decNumCarLavado();
+ 562:	0e 94 f3 00 	call	0x1e6	; 0x1e6 <decNumCarLavado>
+		 
+		 reg_SO6 = 1; // Actualizo registro SO6 con valor actual
+ 566:	c0 93 02 02 	sts	0x0202, r28	; 0x800202 <reg_SO6>
+ 56a:	35 c0       	rjmp	.+106    	; 0x5d6 <__vector_9+0x170>
+	 }
+	 
+	 else if (isClrSet(REG_SOB_PIN,PIN_SO6_PIN) && reg_SO6 == 1){ // Flanco bajada - Paso del morro
+ 56c:	1c 99       	sbic	0x03, 4	; 3
+ 56e:	09 c0       	rjmp	.+18     	; 0x582 <__vector_9+0x11c>
+ 570:	80 91 02 02 	lds	r24, 0x0202	; 0x800202 <reg_SO6>
+ 574:	81 30       	cpi	r24, 0x01	; 1
+ 576:	29 f4       	brne	.+10     	; 0x582 <__vector_9+0x11c>
+		 incNumCarSecado();
+ 578:	0e 94 fd 00 	call	0x1fa	; 0x1fa <incNumCarSecado>
+		 reg_SO6 = 0;
+ 57c:	10 92 02 02 	sts	0x0202, r1	; 0x800202 <reg_SO6>
+ 580:	2a c0       	rjmp	.+84     	; 0x5d6 <__vector_9+0x170>
+	 }
+	 
+	 //SO12 [SOB] PB2 (PCINT2)
+	 else if (isBitSet(REG_SOB_PIN,PIN_SO12_PIN) && reg_SO12 == 0){ // Flanco subida
+ 582:	1a 9b       	sbis	0x03, 2	; 3
+ 584:	0a c0       	rjmp	.+20     	; 0x59a <__vector_9+0x134>
+ 586:	80 91 00 02 	lds	r24, 0x0200	; 0x800200 <__DATA_REGION_ORIGIN__>
+ 58a:	81 11       	cpse	r24, r1
+ 58c:	06 c0       	rjmp	.+12     	; 0x59a <__vector_9+0x134>
+		 decNumCarSecado();
+ 58e:	0e 94 03 01 	call	0x206	; 0x206 <decNumCarSecado>
+		 reg_SO12 = 1; // Actualizo registro SO12 con valor actual
+ 592:	81 e0       	ldi	r24, 0x01	; 1
+ 594:	80 93 00 02 	sts	0x0200, r24	; 0x800200 <__DATA_REGION_ORIGIN__>
+ 598:	1e c0       	rjmp	.+60     	; 0x5d6 <__vector_9+0x170>
+	 }
+	 
+	 else if (isClrSet(REG_SOB_PIN,PIN_SO12_PIN) && reg_SO12 == 1){ // Flanco bajada
+ 59a:	1a 99       	sbic	0x03, 2	; 3
+ 59c:	0a c0       	rjmp	.+20     	; 0x5b2 <__vector_9+0x14c>
+ 59e:	80 91 00 02 	lds	r24, 0x0200	; 0x800200 <__DATA_REGION_ORIGIN__>
+ 5a2:	81 30       	cpi	r24, 0x01	; 1
+ 5a4:	31 f4       	brne	.+12     	; 0x5b2 <__vector_9+0x14c>
+		 reg_SO12 = 0; // Actualizo registro SO12 con valor actual
+ 5a6:	10 92 00 02 	sts	0x0200, r1	; 0x800200 <__DATA_REGION_ORIGIN__>
+		 if (isBitSet(REG_SOD_PIN,PIN_SO11_PIN)){							
+ 5aa:	4d 9b       	sbis	0x09, 5	; 9
+ 5ac:	14 c0       	rjmp	.+40     	; 0x5d6 <__vector_9+0x170>
+			ParadaEmergencia();	// Caso en que el coche entre por la salida
+ 5ae:	0e 94 19 02 	call	0x432	; 0x432 <ParadaEmergencia>
+		 }
+	 }
+	 
+	 //SO10 [SOB] PB5 (PCINT5)
+	 else if (isClrSet(REG_SOB_PIN,PIN_SO10_PIN) && reg_SO10 == 1){ // Flanco bajada
+ 5b2:	1d 99       	sbic	0x03, 5	; 3
+ 5b4:	07 c0       	rjmp	.+14     	; 0x5c4 <__vector_9+0x15e>
+ 5b6:	80 91 01 02 	lds	r24, 0x0201	; 0x800201 <reg_SO10>
+ 5ba:	81 30       	cpi	r24, 0x01	; 1
+ 5bc:	19 f4       	brne	.+6      	; 0x5c4 <__vector_9+0x15e>
+		 reg_SO10 = 0; // Actualizo registro SO12 con valor actual
+ 5be:	10 92 01 02 	sts	0x0201, r1	; 0x800201 <reg_SO10>
+ 5c2:	09 c0       	rjmp	.+18     	; 0x5d6 <__vector_9+0x170>
+	 }
+	 
+	 else if (isBitSet(REG_SOB_PIN,PIN_SO10_PIN) && reg_SO10 == 0){ // Flanco bajada
+ 5c4:	1d 9b       	sbis	0x03, 5	; 3
+ 5c6:	07 c0       	rjmp	.+14     	; 0x5d6 <__vector_9+0x170>
+ 5c8:	80 91 01 02 	lds	r24, 0x0201	; 0x800201 <reg_SO10>
+ 5cc:	81 11       	cpse	r24, r1
+ 5ce:	03 c0       	rjmp	.+6      	; 0x5d6 <__vector_9+0x170>
+		 reg_SO10 = 1; // Actualizo registro SO12 con valor actual
+ 5d0:	81 e0       	ldi	r24, 0x01	; 1
+ 5d2:	80 93 01 02 	sts	0x0201, r24	; 0x800201 <reg_SO10>
+	 }
+	 
+ }
+ 5d6:	ff 91       	pop	r31
+ 5d8:	ef 91       	pop	r30
+ 5da:	cf 91       	pop	r28
+ 5dc:	bf 91       	pop	r27
+ 5de:	af 91       	pop	r26
+ 5e0:	9f 91       	pop	r25
+ 5e2:	8f 91       	pop	r24
+ 5e4:	7f 91       	pop	r23
+ 5e6:	6f 91       	pop	r22
+ 5e8:	5f 91       	pop	r21
+ 5ea:	4f 91       	pop	r20
+ 5ec:	3f 91       	pop	r19
+ 5ee:	2f 91       	pop	r18
+ 5f0:	0f 90       	pop	r0
+ 5f2:	0f be       	out	0x3f, r0	; 63
+ 5f4:	0f 90       	pop	r0
+ 5f6:	1f 90       	pop	r1
+ 5f8:	18 95       	reti
+
+000005fa <main>:
+#include "Integration.h"
+
+
+int main(void) {
+
+	setup_General();
+ 5fa:	0e 94 0d 01 	call	0x21a	; 0x21a <setup_General>
+	setup_Integration();
+ 5fe:	0e 94 40 01 	call	0x280	; 0x280 <setup_Integration>
+	setup_Parte1();
+ 602:	0e 94 27 04 	call	0x84e	; 0x84e <setup_Parte1>
+	setup_Parte2();
+ 606:	0e 94 59 05 	call	0xab2	; 0xab2 <setup_Parte2>
+	setup_Parte3();
+ 60a:	0e 94 d2 05 	call	0xba4	; 0xba4 <setup_Parte3>
+	
+
+	while(1) {
+		Parte_1();
+ 60e:	0e 94 2e 04 	call	0x85c	; 0x85c <Parte_1>
+		Parte_2();
+ 612:	0e 94 60 05 	call	0xac0	; 0xac0 <Parte_2>
+		Parte_3();
+ 616:	0e 94 db 05 	call	0xbb6	; 0xbb6 <Parte_3>
+ 61a:	f9 cf       	rjmp	.-14     	; 0x60e <main+0x14>
+
+0000061c <setup_LavHorizontal>:
+//////////////////////////////////
+
+
+void setup_LavHorizontal(){ // Inicialización
+	// Motor 3: Altura rodillo H
+	setBit(REG_M3_en_DDR,PIN_M3_en_DDR); // Definir como salida
+ 61c:	8a b1       	in	r24, 0x0a	; 10
+ 61e:	80 61       	ori	r24, 0x10	; 16
+ 620:	8a b9       	out	0x0a, r24	; 10
+	setBit(REG_M3_di_DDR,PIN_M3_di_DDR);
+ 622:	ea e0       	ldi	r30, 0x0A	; 10
+ 624:	f1 e0       	ldi	r31, 0x01	; 1
+ 626:	80 81       	ld	r24, Z
+ 628:	80 61       	ori	r24, 0x10	; 16
+ 62a:	80 83       	st	Z, r24
+	setBit(REG_M3_en_PORT,PIN_M3_en_PORT); // Subir rodillo
+ 62c:	8b b1       	in	r24, 0x0b	; 11
+ 62e:	80 61       	ori	r24, 0x10	; 16
+ 630:	8b b9       	out	0x0b, r24	; 11
+	clearBit(REG_M3_di_PORT,PIN_M3_di_PORT);
+ 632:	eb e0       	ldi	r30, 0x0B	; 11
+ 634:	f1 e0       	ldi	r31, 0x01	; 1
+ 636:	80 81       	ld	r24, Z
+ 638:	8f 7e       	andi	r24, 0xEF	; 239
+ 63a:	80 83       	st	Z, r24
+	
+	// Motor 4: Giro rodillo
+	setBit(REG_M4_en_DDR,PIN_M4_en_DDR); // Definir como salida
+ 63c:	8a b1       	in	r24, 0x0a	; 10
+ 63e:	80 64       	ori	r24, 0x40	; 64
+ 640:	8a b9       	out	0x0a, r24	; 10
+	clearBit(REG_M4_en_PORT,PIN_M4_en_PORT); // Apagado de inicio
+ 642:	8b b1       	in	r24, 0x0b	; 11
+ 644:	8f 7b       	andi	r24, 0xBF	; 191
+ 646:	8b b9       	out	0x0b, r24	; 11
+ 648:	08 95       	ret
+
+0000064a <up_LavHorizontal>:
+
+
+	// LAVADERO HORIZONTAL - ALTURA
+
+void up_LavHorizontal(){
+	setBit(REG_M3_en_PORT,PIN_M3_en_PORT);
+ 64a:	8b b1       	in	r24, 0x0b	; 11
+ 64c:	80 61       	ori	r24, 0x10	; 16
+ 64e:	8b b9       	out	0x0b, r24	; 11
+	setBit(REG_M3_di_PORT,PIN_M3_di_PORT);
+ 650:	eb e0       	ldi	r30, 0x0B	; 11
+ 652:	f1 e0       	ldi	r31, 0x01	; 1
+ 654:	80 81       	ld	r24, Z
+ 656:	80 61       	ori	r24, 0x10	; 16
+ 658:	80 83       	st	Z, r24
+ 65a:	08 95       	ret
+
+0000065c <down_LavHorizontal>:
+}
+
+void down_LavHorizontal(){
+	setBit(REG_M3_en_PORT,PIN_M3_en_PORT);
+ 65c:	8b b1       	in	r24, 0x0b	; 11
+ 65e:	80 61       	ori	r24, 0x10	; 16
+ 660:	8b b9       	out	0x0b, r24	; 11
+	clearBit(REG_M3_di_PORT,PIN_M3_di_PORT); // COMPROBAR EN MAQUETA si es ~[setBit() o clearBit()]
+ 662:	eb e0       	ldi	r30, 0x0B	; 11
+ 664:	f1 e0       	ldi	r31, 0x01	; 1
+ 666:	80 81       	ld	r24, Z
+ 668:	8f 7e       	andi	r24, 0xEF	; 239
+ 66a:	80 83       	st	Z, r24
+ 66c:	08 95       	ret
+
+0000066e <stop_AlturaH>:
+}
+
+void stop_AlturaH(){
+	clearBit(REG_M3_en_PORT,PIN_M3_en_PORT);
+ 66e:	8b b1       	in	r24, 0x0b	; 11
+ 670:	8f 7e       	andi	r24, 0xEF	; 239
+ 672:	8b b9       	out	0x0b, r24	; 11
+ 674:	08 95       	ret
+
+00000676 <on_LavHorizontal>:
+
+
+	// LAVADERO HORIZONTAL - GIRO
+
+void on_LavHorizontal(){
+	setBit(REG_M4_en_PORT,PIN_M4_en_PORT);
+ 676:	8b b1       	in	r24, 0x0b	; 11
+ 678:	80 64       	ori	r24, 0x40	; 64
+ 67a:	8b b9       	out	0x0b, r24	; 11
+ 67c:	08 95       	ret
+
+0000067e <off_LavHorizontal>:
+}
+
+void off_LavHorizontal(){
+	clearBit(REG_M4_en_PORT,PIN_M4_en_PORT);
+ 67e:	8b b1       	in	r24, 0x0b	; 11
+ 680:	8f 7b       	andi	r24, 0xBF	; 191
+ 682:	8b b9       	out	0x0b, r24	; 11
+ 684:	08 95       	ret
+
+00000686 <lavaderoHorizontal>:
+}
+
+void lavaderoHorizontal(){
+		
+	if((so3p==so3) && (so4p==so4) && (so5p==so5)){  //Si los valores son los mismos que en instante anterior
+ 686:	90 91 0d 02 	lds	r25, 0x020D	; 0x80020d <so3p>
+ 68a:	80 91 10 02 	lds	r24, 0x0210	; 0x800210 <so3>
+ 68e:	98 13       	cpse	r25, r24
+ 690:	10 c0       	rjmp	.+32     	; 0x6b2 <lavaderoHorizontal+0x2c>
+ 692:	90 91 0c 02 	lds	r25, 0x020C	; 0x80020c <so4p>
+ 696:	80 91 0f 02 	lds	r24, 0x020F	; 0x80020f <so4>
+ 69a:	98 13       	cpse	r25, r24
+ 69c:	0a c0       	rjmp	.+20     	; 0x6b2 <lavaderoHorizontal+0x2c>
+ 69e:	90 91 0b 02 	lds	r25, 0x020B	; 0x80020b <so5p>
+ 6a2:	80 91 0e 02 	lds	r24, 0x020E	; 0x80020e <so5>
+ 6a6:	98 13       	cpse	r25, r24
+ 6a8:	04 c0       	rjmp	.+8      	; 0x6b2 <lavaderoHorizontal+0x2c>
+		aux_lavH = 1;		  //muevo el rodillo
+ 6aa:	81 e0       	ldi	r24, 0x01	; 1
+ 6ac:	80 93 16 02 	sts	0x0216, r24	; 0x800216 <aux_lavH>
+ 6b0:	02 c0       	rjmp	.+4      	; 0x6b6 <lavaderoHorizontal+0x30>
+	}
+	else{
+		aux_lavH = 0;		  //no hago nada
+ 6b2:	10 92 16 02 	sts	0x0216, r1	; 0x800216 <aux_lavH>
+	}
+	
+	if (limit_switch_lavH == 1 && isBitSet(REG_M3_en_PORT,PIN_M3_en_PORT)){  // devuelve '1' si detecta fin de carrera Y si el motor esta encendido
+ 6b6:	80 91 13 02 	lds	r24, 0x0213	; 0x800213 <limit_switch_lavH>
+ 6ba:	81 30       	cpi	r24, 0x01	; 1
+ 6bc:	61 f4       	brne	.+24     	; 0x6d6 <lavaderoHorizontal+0x50>
+ 6be:	5c 9b       	sbis	0x0b, 4	; 11
+ 6c0:	0a c0       	rjmp	.+20     	; 0x6d6 <lavaderoHorizontal+0x50>
+		off_LavHorizontal(); //deja de girar el rodillo
+ 6c2:	0e 94 3f 03 	call	0x67e	; 0x67e <off_LavHorizontal>
+		toggleBit(REG_M3_di_PORT,PIN_M3_di_PORT); // cambia el sentido del motor
+ 6c6:	eb e0       	ldi	r30, 0x0B	; 11
+ 6c8:	f1 e0       	ldi	r31, 0x01	; 1
+ 6ca:	90 81       	ld	r25, Z
+ 6cc:	80 e1       	ldi	r24, 0x10	; 16
+ 6ce:	89 27       	eor	r24, r25
+ 6d0:	80 83       	st	Z, r24
+		stop_AlturaH(); //se para el rodillo
+ 6d2:	0e 94 37 03 	call	0x66e	; 0x66e <stop_AlturaH>
+	}
+	
+	if(aux_lavH){		//si los valores de los sensores son los mismos que en instante anterior (antirrebotes)
+ 6d6:	80 91 16 02 	lds	r24, 0x0216	; 0x800216 <aux_lavH>
+ 6da:	88 23       	and	r24, r24
+ 6dc:	29 f1       	breq	.+74     	; 0x728 <lavaderoHorizontal+0xa2>
+		if ((so4==0||so5==0) && so3!=0){		//detecta abajo pero no a los lados
+ 6de:	80 91 0f 02 	lds	r24, 0x020F	; 0x80020f <so4>
+ 6e2:	88 23       	and	r24, r24
+ 6e4:	21 f0       	breq	.+8      	; 0x6ee <lavaderoHorizontal+0x68>
+ 6e6:	80 91 0e 02 	lds	r24, 0x020E	; 0x80020e <so5>
+ 6ea:	81 11       	cpse	r24, r1
+ 6ec:	09 c0       	rjmp	.+18     	; 0x700 <lavaderoHorizontal+0x7a>
+ 6ee:	80 91 10 02 	lds	r24, 0x0210	; 0x800210 <so3>
+ 6f2:	88 23       	and	r24, r24
+ 6f4:	29 f0       	breq	.+10     	; 0x700 <lavaderoHorizontal+0x7a>
+			stop_AlturaH();
+ 6f6:	0e 94 37 03 	call	0x66e	; 0x66e <stop_AlturaH>
+			on_LavHorizontal();
+ 6fa:	0e 94 3b 03 	call	0x676	; 0x676 <on_LavHorizontal>
+ 6fe:	14 c0       	rjmp	.+40     	; 0x728 <lavaderoHorizontal+0xa2>
+			} else if(so3==0){					//detecta alguno de los lados
+ 700:	80 91 10 02 	lds	r24, 0x0210	; 0x800210 <so3>
+ 704:	81 11       	cpse	r24, r1
+ 706:	05 c0       	rjmp	.+10     	; 0x712 <lavaderoHorizontal+0x8c>
+			up_LavHorizontal();  //sube el rodillo
+ 708:	0e 94 25 03 	call	0x64a	; 0x64a <up_LavHorizontal>
+			on_LavHorizontal();  //empieza a girar el rodillo
+ 70c:	0e 94 3b 03 	call	0x676	; 0x676 <on_LavHorizontal>
+ 710:	0b c0       	rjmp	.+22     	; 0x728 <lavaderoHorizontal+0xa2>
+			} else if(limit_switch_lavH==0){												//no detecta nada
+ 712:	80 91 13 02 	lds	r24, 0x0213	; 0x800213 <limit_switch_lavH>
+ 716:	81 11       	cpse	r24, r1
+ 718:	05 c0       	rjmp	.+10     	; 0x724 <lavaderoHorizontal+0x9e>
+			down_LavHorizontal();
+ 71a:	0e 94 2e 03 	call	0x65c	; 0x65c <down_LavHorizontal>
+			on_LavHorizontal();
+ 71e:	0e 94 3b 03 	call	0x676	; 0x676 <on_LavHorizontal>
+ 722:	02 c0       	rjmp	.+4      	; 0x728 <lavaderoHorizontal+0xa2>
+			} else{
+			off_LavHorizontal();
+ 724:	0e 94 3f 03 	call	0x67e	; 0x67e <off_LavHorizontal>
+		}
+	}
+	so3p = so3;
+ 728:	80 91 10 02 	lds	r24, 0x0210	; 0x800210 <so3>
+ 72c:	80 93 0d 02 	sts	0x020D, r24	; 0x80020d <so3p>
+	so4p = so4;
+ 730:	80 91 0f 02 	lds	r24, 0x020F	; 0x80020f <so4>
+ 734:	80 93 0c 02 	sts	0x020C, r24	; 0x80020c <so4p>
+	so5p = so5;
+ 738:	80 91 0e 02 	lds	r24, 0x020E	; 0x80020e <so5>
+ 73c:	80 93 0b 02 	sts	0x020B, r24	; 0x80020b <so5p>
+ 740:	08 95       	ret
+
+00000742 <setup_secado>:
+////// FUNCIONES SECADO ///////
+///////////////////////////////
+
+void setup_secado(){
+	// Motor 5: Altura secador
+	setBit(REG_M5_en_DDR,PIN_M5_en_DDR);
+ 742:	84 b1       	in	r24, 0x04	; 4
+ 744:	80 64       	ori	r24, 0x40	; 64
+ 746:	84 b9       	out	0x04, r24	; 4
+	setBit(REG_M5_di_DDR,PIN_M5_di_DDR);
+ 748:	8a b1       	in	r24, 0x0a	; 10
+ 74a:	80 68       	ori	r24, 0x80	; 128
+ 74c:	8a b9       	out	0x0a, r24	; 10
+	setBit(REG_M5_en_PORT,PIN_M5_en_PORT);
+ 74e:	85 b1       	in	r24, 0x05	; 5
+ 750:	80 64       	ori	r24, 0x40	; 64
+ 752:	85 b9       	out	0x05, r24	; 5
+	clearBit(REG_M5_di_PORT,PIN_M5_di_PORT);
+ 754:	8b b1       	in	r24, 0x0b	; 11
+ 756:	8f 77       	andi	r24, 0x7F	; 127
+ 758:	8b b9       	out	0x0b, r24	; 11
+ 75a:	08 95       	ret
+
+0000075c <up_secado>:
+
+}
+
+void up_secado(){
+	setBit(REG_M5_en_PORT,PIN_M5_en_PORT);
+ 75c:	85 b1       	in	r24, 0x05	; 5
+ 75e:	80 64       	ori	r24, 0x40	; 64
+ 760:	85 b9       	out	0x05, r24	; 5
+	setBit(REG_M5_di_PORT,PIN_M5_di_PORT);
+ 762:	8b b1       	in	r24, 0x0b	; 11
+ 764:	80 68       	ori	r24, 0x80	; 128
+ 766:	8b b9       	out	0x0b, r24	; 11
+ 768:	08 95       	ret
+
+0000076a <down_secado>:
+}
+
+void down_secado(){
+	setBit(REG_M5_en_PORT,PIN_M5_en_PORT);
+ 76a:	85 b1       	in	r24, 0x05	; 5
+ 76c:	80 64       	ori	r24, 0x40	; 64
+ 76e:	85 b9       	out	0x05, r24	; 5
+	clearBit(REG_M5_di_PORT,PIN_M5_di_PORT);
+ 770:	8b b1       	in	r24, 0x0b	; 11
+ 772:	8f 77       	andi	r24, 0x7F	; 127
+ 774:	8b b9       	out	0x0b, r24	; 11
+ 776:	08 95       	ret
+
+00000778 <stop_secado>:
+}
+
+void stop_secado(){
+	clearBit(REG_M5_en_PORT,PIN_M5_en_PORT);
+ 778:	85 b1       	in	r24, 0x05	; 5
+ 77a:	8f 7b       	andi	r24, 0xBF	; 191
+ 77c:	85 b9       	out	0x05, r24	; 5
+ 77e:	08 95       	ret
+
+00000780 <secado>:
+}
+
+void secado(){
+
+	if((so7p==so7) && (so8p==so8) && (so9p==so9)){  //Si los valores son los mismos que en instante anterior
+ 780:	90 91 07 02 	lds	r25, 0x0207	; 0x800207 <so7p>
+ 784:	80 91 0a 02 	lds	r24, 0x020A	; 0x80020a <so7>
+ 788:	98 13       	cpse	r25, r24
+ 78a:	10 c0       	rjmp	.+32     	; 0x7ac <secado+0x2c>
+ 78c:	90 91 06 02 	lds	r25, 0x0206	; 0x800206 <so8p>
+ 790:	80 91 09 02 	lds	r24, 0x0209	; 0x800209 <so8>
+ 794:	98 13       	cpse	r25, r24
+ 796:	0a c0       	rjmp	.+20     	; 0x7ac <secado+0x2c>
+ 798:	90 91 05 02 	lds	r25, 0x0205	; 0x800205 <so9p>
+ 79c:	80 91 08 02 	lds	r24, 0x0208	; 0x800208 <so9>
+ 7a0:	98 13       	cpse	r25, r24
+ 7a2:	04 c0       	rjmp	.+8      	; 0x7ac <secado+0x2c>
+		aux_sec = 1;          //muevo el secador
+ 7a4:	81 e0       	ldi	r24, 0x01	; 1
+ 7a6:	80 93 15 02 	sts	0x0215, r24	; 0x800215 <aux_sec>
+ 7aa:	02 c0       	rjmp	.+4      	; 0x7b0 <secado+0x30>
+	}
+	else{
+		aux_sec = 0;          //no hago nada
+ 7ac:	10 92 15 02 	sts	0x0215, r1	; 0x800215 <aux_sec>
+	}
+	
+	if(aux_sec) {
+ 7b0:	80 91 15 02 	lds	r24, 0x0215	; 0x800215 <aux_sec>
+ 7b4:	88 23       	and	r24, r24
+ 7b6:	f1 f1       	breq	.+124    	; 0x834 <secado+0xb4>
+		if( so8 && so7 && so9)                 // no detecta abajo
+ 7b8:	80 91 09 02 	lds	r24, 0x0209	; 0x800209 <so8>
+ 7bc:	88 23       	and	r24, r24
+ 7be:	59 f0       	breq	.+22     	; 0x7d6 <secado+0x56>
+ 7c0:	80 91 0a 02 	lds	r24, 0x020A	; 0x80020a <so7>
+ 7c4:	88 23       	and	r24, r24
+ 7c6:	39 f0       	breq	.+14     	; 0x7d6 <secado+0x56>
+ 7c8:	80 91 08 02 	lds	r24, 0x0208	; 0x800208 <so9>
+ 7cc:	88 23       	and	r24, r24
+ 7ce:	19 f0       	breq	.+6      	; 0x7d6 <secado+0x56>
+			down_secado();                    // baja
+ 7d0:	0e 94 b5 03 	call	0x76a	; 0x76a <down_secado>
+ 7d4:	2f c0       	rjmp	.+94     	; 0x834 <secado+0xb4>
+		else if( so8 || !(so7 && so9) )
+ 7d6:	80 91 09 02 	lds	r24, 0x0209	; 0x800209 <so8>
+ 7da:	81 11       	cpse	r24, r1
+ 7dc:	08 c0       	rjmp	.+16     	; 0x7ee <secado+0x6e>
+ 7de:	80 91 0a 02 	lds	r24, 0x020A	; 0x80020a <so7>
+ 7e2:	88 23       	and	r24, r24
+ 7e4:	21 f0       	breq	.+8      	; 0x7ee <secado+0x6e>
+ 7e6:	80 91 08 02 	lds	r24, 0x0208	; 0x800208 <so9>
+ 7ea:	81 11       	cpse	r24, r1
+ 7ec:	03 c0       	rjmp	.+6      	; 0x7f4 <secado+0x74>
+			up_secado();
+ 7ee:	0e 94 ae 03 	call	0x75c	; 0x75c <up_secado>
+ 7f2:	20 c0       	rjmp	.+64     	; 0x834 <secado+0xb4>
+		else if( !(so8 || (so7 && so9)) )    // detecta abajo y en algun lateral
+ 7f4:	80 91 09 02 	lds	r24, 0x0209	; 0x800209 <so8>
+ 7f8:	81 11       	cpse	r24, r1
+ 7fa:	0b c0       	rjmp	.+22     	; 0x812 <secado+0x92>
+ 7fc:	80 91 0a 02 	lds	r24, 0x020A	; 0x80020a <so7>
+ 800:	88 23       	and	r24, r24
+ 802:	21 f0       	breq	.+8      	; 0x80c <secado+0x8c>
+ 804:	80 91 08 02 	lds	r24, 0x0208	; 0x800208 <so9>
+ 808:	81 11       	cpse	r24, r1
+ 80a:	03 c0       	rjmp	.+6      	; 0x812 <secado+0x92>
+			up_secado();                    // sube
+ 80c:	0e 94 ae 03 	call	0x75c	; 0x75c <up_secado>
+ 810:	11 c0       	rjmp	.+34     	; 0x834 <secado+0xb4>
+		else if( !so8 && so7 && so9 )        // detecta abajo pero no en los laterales
+ 812:	80 91 09 02 	lds	r24, 0x0209	; 0x800209 <so8>
+ 816:	81 11       	cpse	r24, r1
+ 818:	0b c0       	rjmp	.+22     	; 0x830 <secado+0xb0>
+ 81a:	80 91 0a 02 	lds	r24, 0x020A	; 0x80020a <so7>
+ 81e:	88 23       	and	r24, r24
+ 820:	39 f0       	breq	.+14     	; 0x830 <secado+0xb0>
+ 822:	80 91 08 02 	lds	r24, 0x0208	; 0x800208 <so9>
+ 826:	88 23       	and	r24, r24
+ 828:	19 f0       	breq	.+6      	; 0x830 <secado+0xb0>
+			stop_secado();                    // permanece quieto
+ 82a:	0e 94 bc 03 	call	0x778	; 0x778 <stop_secado>
+ 82e:	02 c0       	rjmp	.+4      	; 0x834 <secado+0xb4>
+		else
+			stop_secado();
+ 830:	0e 94 bc 03 	call	0x778	; 0x778 <stop_secado>
+	}
+	so7p = so7;
+ 834:	80 91 0a 02 	lds	r24, 0x020A	; 0x80020a <so7>
+ 838:	80 93 07 02 	sts	0x0207, r24	; 0x800207 <so7p>
+	so8p = so8;
+ 83c:	80 91 09 02 	lds	r24, 0x0209	; 0x800209 <so8>
+ 840:	80 93 06 02 	sts	0x0206, r24	; 0x800206 <so8p>
+	so9p = so9;
+ 844:	80 91 08 02 	lds	r24, 0x0208	; 0x800208 <so9>
+ 848:	80 93 05 02 	sts	0x0205, r24	; 0x800205 <so9p>
+ 84c:	08 95       	ret
+
+0000084e <setup_Parte1>:
+////////////////////
+////// COMÚN ///////
+////////////////////
+
+void setup_Parte1(){
+	cli();
+ 84e:	f8 94       	cli
+	setup_LavHorizontal();
+ 850:	0e 94 0e 03 	call	0x61c	; 0x61c <setup_LavHorizontal>
+	setup_secado();
+ 854:	0e 94 a1 03 	call	0x742	; 0x742 <setup_secado>
+	sei();
+ 858:	78 94       	sei
+ 85a:	08 95       	ret
+
+0000085c <Parte_1>:
+}
+
+void Parte_1(){
+	if (enable_check_parte1){
+ 85c:	80 91 14 02 	lds	r24, 0x0214	; 0x800214 <enable_check_parte1>
+ 860:	88 23       	and	r24, r24
+ 862:	31 f0       	breq	.+12     	; 0x870 <Parte_1+0x14>
+		lavaderoHorizontal();
+ 864:	0e 94 43 03 	call	0x686	; 0x686 <lavaderoHorizontal>
+		secado();
+ 868:	0e 94 c0 03 	call	0x780	; 0x780 <secado>
+		enable_check_parte1 = 0;
+ 86c:	10 92 14 02 	sts	0x0214, r1	; 0x800214 <enable_check_parte1>
+	}
+	if (NumCarLavado){
+ 870:	80 91 29 02 	lds	r24, 0x0229	; 0x800229 <NumCarLavado>
+ 874:	88 23       	and	r24, r24
+ 876:	19 f0       	breq	.+6      	; 0x87e <Parte_1+0x22>
+		on_LavHorizontal();
+ 878:	0e 94 3b 03 	call	0x676	; 0x676 <on_LavHorizontal>
+ 87c:	08 95       	ret
+	} 	else off_LavHorizontal();
+ 87e:	0e 94 3f 03 	call	0x67e	; 0x67e <off_LavHorizontal>
+ 882:	08 95       	ret
+
+00000884 <setup_barrera>:
+////////////////////	 BARRERA	////////////////////
+////////////////////////////////////////////////////////
+
+
+void setup_barrera(){		//************ REVISAR MACROS ************
+	cli();
+ 884:	f8 94       	cli
+	setBit(REG_M1_en_DDR, PIN_M1_en_DDR); // Como salida M1_en
+ 886:	ea e0       	ldi	r30, 0x0A	; 10
+ 888:	f1 e0       	ldi	r31, 0x01	; 1
+ 88a:	80 81       	ld	r24, Z
+ 88c:	84 60       	ori	r24, 0x04	; 4
+ 88e:	80 83       	st	Z, r24
+	clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Inicialmente apagado								
+ 890:	eb e0       	ldi	r30, 0x0B	; 11
+ 892:	f1 e0       	ldi	r31, 0x01	; 1
+ 894:	80 81       	ld	r24, Z
+ 896:	8b 7f       	andi	r24, 0xFB	; 251
+ 898:	80 83       	st	Z, r24
+	//clearBit(REG_M1_di_DDR, PIN_M1_di_DDR);	// Sentido giro
+	
+	//SO2 [SOK] (PCINT18)
+	clearBit(REG_SOB_DDR, PIN_SO1_DDR); // Entrada
+ 89a:	84 b1       	in	r24, 0x04	; 4
+ 89c:	8e 7f       	andi	r24, 0xFE	; 254
+ 89e:	84 b9       	out	0x04, r24	; 4
+	//setBit(PCICR, PCIE2); // Habilito registro interrupción
+	//setBit(PCIFR, PCIF2); // Borro bandera
+	
+	//SW1 -> NO USO, CONTROLO CON TIEMPOS PARA APERTURA
+
+	sei();
+ 8a0:	78 94       	sei
+	
+	// Dejo Barrera Cerrada de incicio
+	while(isClrSet(REG_SOK_PIN,PIN_SO2_PIN) == 0){		// Mientras barrera no abajo, activo motor barrera
+ 8a2:	05 c0       	rjmp	.+10     	; 0x8ae <setup_barrera+0x2a>
+		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+ 8a4:	eb e0       	ldi	r30, 0x0B	; 11
+ 8a6:	f1 e0       	ldi	r31, 0x01	; 1
+ 8a8:	80 81       	ld	r24, Z
+ 8aa:	84 60       	ori	r24, 0x04	; 4
+ 8ac:	80 83       	st	Z, r24
+	//SW1 -> NO USO, CONTROLO CON TIEMPOS PARA APERTURA
+
+	sei();
+	
+	// Dejo Barrera Cerrada de incicio
+	while(isClrSet(REG_SOK_PIN,PIN_SO2_PIN) == 0){		// Mientras barrera no abajo, activo motor barrera
+ 8ae:	80 91 06 01 	lds	r24, 0x0106	; 0x800106 <__TEXT_REGION_LENGTH__+0x7f0106>
+ 8b2:	82 fd       	sbrc	r24, 2
+ 8b4:	f7 cf       	rjmp	.-18     	; 0x8a4 <setup_barrera+0x20>
+		setBit(REG_M1_en_PORT, PIN_M1_en_PORT);
+	} clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
+ 8b6:	eb e0       	ldi	r30, 0x0B	; 11
+ 8b8:	f1 e0       	ldi	r31, 0x01	; 1
+ 8ba:	80 81       	ld	r24, Z
+ 8bc:	8b 7f       	andi	r24, 0xFB	; 251
+ 8be:	80 83       	st	Z, r24
+ 8c0:	08 95       	ret
+
+000008c2 <openbarrera>:
+}
+
+void openbarrera(){
+	cnt_apertura_barrera = ms;
+ 8c2:	80 91 1d 02 	lds	r24, 0x021D	; 0x80021d <ms>
+ 8c6:	90 91 1e 02 	lds	r25, 0x021E	; 0x80021e <ms+0x1>
+ 8ca:	a0 91 1f 02 	lds	r26, 0x021F	; 0x80021f <ms+0x2>
+ 8ce:	b0 91 20 02 	lds	r27, 0x0220	; 0x800220 <ms+0x3>
+ 8d2:	80 93 18 02 	sts	0x0218, r24	; 0x800218 <cnt_apertura_barrera>
+ 8d6:	90 93 19 02 	sts	0x0219, r25	; 0x800219 <cnt_apertura_barrera+0x1>
+ 8da:	a0 93 1a 02 	sts	0x021A, r26	; 0x80021a <cnt_apertura_barrera+0x2>
+ 8de:	b0 93 1b 02 	sts	0x021B, r27	; 0x80021b <cnt_apertura_barrera+0x3>
+	setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido motor barrera
+ 8e2:	eb e0       	ldi	r30, 0x0B	; 11
+ 8e4:	f1 e0       	ldi	r31, 0x01	; 1
+ 8e6:	80 81       	ld	r24, Z
+ 8e8:	84 60       	ori	r24, 0x04	; 4
+ 8ea:	80 83       	st	Z, r24
+	modo_barrera = 1;
+ 8ec:	81 e0       	ldi	r24, 0x01	; 1
+ 8ee:	80 93 1c 02 	sts	0x021C, r24	; 0x80021c <modo_barrera>
+ 8f2:	08 95       	ret
+
+000008f4 <closebarrera>:
+}
+
+void closebarrera(){
+	setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido motor barrera
+ 8f4:	eb e0       	ldi	r30, 0x0B	; 11
+ 8f6:	f1 e0       	ldi	r31, 0x01	; 1
+ 8f8:	80 81       	ld	r24, Z
+ 8fa:	84 60       	ori	r24, 0x04	; 4
+ 8fc:	80 83       	st	Z, r24
+	modo_barrera = 2;	// Cambia estado en barrera()
+ 8fe:	82 e0       	ldi	r24, 0x02	; 2
+ 900:	80 93 1c 02 	sts	0x021C, r24	; 0x80021c <modo_barrera>
+ 904:	08 95       	ret
+
+00000906 <stopbarrera>:
+}
+
+void stopbarrera(){
+	modo_barrera = 0;	// Cambia estado en barrera()
+ 906:	10 92 1c 02 	sts	0x021C, r1	; 0x80021c <modo_barrera>
+ 90a:	08 95       	ret
+
+0000090c <barrera>:
+}
+
+void barrera(){		// Loop
+	
+	switch (modo_barrera){
+ 90c:	80 91 1c 02 	lds	r24, 0x021C	; 0x80021c <modo_barrera>
+ 910:	81 30       	cpi	r24, 0x01	; 1
+ 912:	51 f0       	breq	.+20     	; 0x928 <barrera+0x1c>
+ 914:	18 f0       	brcs	.+6      	; 0x91c <barrera+0x10>
+ 916:	82 30       	cpi	r24, 0x02	; 2
+ 918:	41 f1       	breq	.+80     	; 0x96a <barrera+0x5e>
+ 91a:	08 95       	ret
+		case 0:		//Barrera parada
+			clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera, nos aseguramos que se para
+ 91c:	eb e0       	ldi	r30, 0x0B	; 11
+ 91e:	f1 e0       	ldi	r31, 0x01	; 1
+ 920:	80 81       	ld	r24, Z
+ 922:	8b 7f       	andi	r24, 0xFB	; 251
+ 924:	80 83       	st	Z, r24
+			break;
+ 926:	08 95       	ret
+			
+		case 1:		//Barrera Subir 
+			// setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido -- Ya uncluido en openbarrera();
+			if(ms - cnt_apertura_barrera > Check_apertura_barrera){		
+ 928:	80 91 1d 02 	lds	r24, 0x021D	; 0x80021d <ms>
+ 92c:	90 91 1e 02 	lds	r25, 0x021E	; 0x80021e <ms+0x1>
+ 930:	a0 91 1f 02 	lds	r26, 0x021F	; 0x80021f <ms+0x2>
+ 934:	b0 91 20 02 	lds	r27, 0x0220	; 0x800220 <ms+0x3>
+ 938:	40 91 18 02 	lds	r20, 0x0218	; 0x800218 <cnt_apertura_barrera>
+ 93c:	50 91 19 02 	lds	r21, 0x0219	; 0x800219 <cnt_apertura_barrera+0x1>
+ 940:	60 91 1a 02 	lds	r22, 0x021A	; 0x80021a <cnt_apertura_barrera+0x2>
+ 944:	70 91 1b 02 	lds	r23, 0x021B	; 0x80021b <cnt_apertura_barrera+0x3>
+ 948:	84 1b       	sub	r24, r20
+ 94a:	95 0b       	sbc	r25, r21
+ 94c:	a6 0b       	sbc	r26, r22
+ 94e:	b7 0b       	sbc	r27, r23
+ 950:	81 34       	cpi	r24, 0x41	; 65
+ 952:	96 40       	sbci	r25, 0x06	; 6
+ 954:	a1 05       	cpc	r26, r1
+ 956:	b1 05       	cpc	r27, r1
+ 958:	98 f0       	brcs	.+38     	; 0x980 <barrera+0x74>
+				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
+ 95a:	eb e0       	ldi	r30, 0x0B	; 11
+ 95c:	f1 e0       	ldi	r31, 0x01	; 1
+ 95e:	80 81       	ld	r24, Z
+ 960:	8b 7f       	andi	r24, 0xFB	; 251
+ 962:	80 83       	st	Z, r24
+				modo_barrera = 0; // Cambio a modo 0 (Barrera parada)
+ 964:	10 92 1c 02 	sts	0x021C, r1	; 0x80021c <modo_barrera>
+ 968:	08 95       	ret
+			}
+			break;
+			
+		case 2:		//Barrera Bajar
+			// setBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Encendido -- Ya uncluido en closebarrera();
+			if (isClrSet(REG_SOK_PIN,PIN_SO2_PIN) == 1){ // Detecto barrera cerrada
+ 96a:	80 91 06 01 	lds	r24, 0x0106	; 0x800106 <__TEXT_REGION_LENGTH__+0x7f0106>
+ 96e:	82 fd       	sbrc	r24, 2
+ 970:	07 c0       	rjmp	.+14     	; 0x980 <barrera+0x74>
+				clearBit(REG_M1_en_PORT, PIN_M1_en_PORT); // Apago motor barrera
+ 972:	eb e0       	ldi	r30, 0x0B	; 11
+ 974:	f1 e0       	ldi	r31, 0x01	; 1
+ 976:	80 81       	ld	r24, Z
+ 978:	8b 7f       	andi	r24, 0xFB	; 251
+ 97a:	80 83       	st	Z, r24
+				modo_barrera = 0;
+ 97c:	10 92 1c 02 	sts	0x021C, r1	; 0x80021c <modo_barrera>
+ 980:	08 95       	ret
+
+00000982 <setup_luz>:
+////////////////////	 LUZ (L1)	////////////////////
+////////////////////////////////////////////////////////
+
+
+void setup_luz(){
+	cli();
+ 982:	f8 94       	cli
+	setBit(REG_LED_DDR, PIN_L1_DDR); // Pin del LED como salida
+ 984:	ea e0       	ldi	r30, 0x0A	; 10
+ 986:	f1 e0       	ldi	r31, 0x01	; 1
+ 988:	80 81       	ld	r24, Z
+ 98a:	82 60       	ori	r24, 0x02	; 2
+ 98c:	80 83       	st	Z, r24
+	clearBit(REG_LED_PORT, PIN_L1_PORT); //LED apagado inicialmente
+ 98e:	eb e0       	ldi	r30, 0x0B	; 11
+ 990:	f1 e0       	ldi	r31, 0x01	; 1
+ 992:	80 81       	ld	r24, Z
+ 994:	8d 7f       	andi	r24, 0xFD	; 253
+ 996:	80 83       	st	Z, r24
+	// Configurar Timer 5 para generar interrupción cada 0.5 segundo
+	TCCR5B |= (1 << CS52) | (1 << WGM52); // Prescaler de 1024
+ 998:	e1 e2       	ldi	r30, 0x21	; 33
+ 99a:	f1 e0       	ldi	r31, 0x01	; 1
+ 99c:	80 81       	ld	r24, Z
+ 99e:	8c 60       	ori	r24, 0x0C	; 12
+ 9a0:	80 83       	st	Z, r24
+	TCNT5 = 0; // Inicializar el contador
+ 9a2:	10 92 25 01 	sts	0x0125, r1	; 0x800125 <__TEXT_REGION_LENGTH__+0x7f0125>
+ 9a6:	10 92 24 01 	sts	0x0124, r1	; 0x800124 <__TEXT_REGION_LENGTH__+0x7f0124>
+	OCR5A = 15625-1; // Valor de comparación para 0.5 segundo
+ 9aa:	88 e0       	ldi	r24, 0x08	; 8
+ 9ac:	9d e3       	ldi	r25, 0x3D	; 61
+ 9ae:	90 93 29 01 	sts	0x0129, r25	; 0x800129 <__TEXT_REGION_LENGTH__+0x7f0129>
+ 9b2:	80 93 28 01 	sts	0x0128, r24	; 0x800128 <__TEXT_REGION_LENGTH__+0x7f0128>
+	TIMSK5 |= (1 << OCIE5A); // Habilitar la interrupción por comparación
+ 9b6:	e3 e7       	ldi	r30, 0x73	; 115
+ 9b8:	f0 e0       	ldi	r31, 0x00	; 0
+ 9ba:	80 81       	ld	r24, Z
+ 9bc:	82 60       	ori	r24, 0x02	; 2
+ 9be:	80 83       	st	Z, r24
+	TIFR5 |= (1<<OCF5A);
+ 9c0:	8a b3       	in	r24, 0x1a	; 26
+ 9c2:	82 60       	ori	r24, 0x02	; 2
+ 9c4:	8a bb       	out	0x1a, r24	; 26
+	sei();
+ 9c6:	78 94       	sei
+ 9c8:	08 95       	ret
+
+000009ca <control_LED1>:
+}
+
+void control_LED1(void){
+	if (!(NumCarLavado == 0 && NumCarSecado == 0) && aux_parpadeo_LED1 == 20) timer_ticks = 0; //cambio modo
+ 9ca:	80 91 29 02 	lds	r24, 0x0229	; 0x800229 <NumCarLavado>
+ 9ce:	81 11       	cpse	r24, r1
+ 9d0:	04 c0       	rjmp	.+8      	; 0x9da <control_LED1+0x10>
+ 9d2:	80 91 2d 02 	lds	r24, 0x022D	; 0x80022d <NumCarSecado>
+ 9d6:	88 23       	and	r24, r24
+ 9d8:	39 f0       	breq	.+14     	; 0x9e8 <control_LED1+0x1e>
+ 9da:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <aux_parpadeo_LED1>
+ 9de:	84 31       	cpi	r24, 0x14	; 20
+ 9e0:	19 f4       	brne	.+6      	; 0x9e8 <control_LED1+0x1e>
+ 9e2:	10 92 17 02 	sts	0x0217, r1	; 0x800217 <timer_ticks>
+ 9e6:	0e c0       	rjmp	.+28     	; 0xa04 <control_LED1+0x3a>
+	else if ((NumCarLavado == 0 && NumCarSecado == 0) && aux_parpadeo_LED1 == 2) timer_ticks = 0; //cambio modo
+ 9e8:	80 91 29 02 	lds	r24, 0x0229	; 0x800229 <NumCarLavado>
+ 9ec:	81 11       	cpse	r24, r1
+ 9ee:	0a c0       	rjmp	.+20     	; 0xa04 <control_LED1+0x3a>
+ 9f0:	80 91 2d 02 	lds	r24, 0x022D	; 0x80022d <NumCarSecado>
+ 9f4:	81 11       	cpse	r24, r1
+ 9f6:	06 c0       	rjmp	.+12     	; 0xa04 <control_LED1+0x3a>
+ 9f8:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <aux_parpadeo_LED1>
+ 9fc:	82 30       	cpi	r24, 0x02	; 2
+ 9fe:	11 f4       	brne	.+4      	; 0xa04 <control_LED1+0x3a>
+ a00:	10 92 17 02 	sts	0x0217, r1	; 0x800217 <timer_ticks>
+	
+	if (NumCarLavado == 0 && NumCarSecado == 0) { aux_parpadeo_LED1 = 20; } // Parpadeo largo: Lavadero no funciona (sin coches)
+ a04:	80 91 29 02 	lds	r24, 0x0229	; 0x800229 <NumCarLavado>
+ a08:	81 11       	cpse	r24, r1
+ a0a:	08 c0       	rjmp	.+16     	; 0xa1c <control_LED1+0x52>
+ a0c:	80 91 2d 02 	lds	r24, 0x022D	; 0x80022d <NumCarSecado>
+ a10:	81 11       	cpse	r24, r1
+ a12:	04 c0       	rjmp	.+8      	; 0xa1c <control_LED1+0x52>
+ a14:	84 e1       	ldi	r24, 0x14	; 20
+ a16:	80 93 11 02 	sts	0x0211, r24	; 0x800211 <aux_parpadeo_LED1>
+ a1a:	08 95       	ret
+	
+	else aux_parpadeo_LED1 = 2; // Parpadeo corto: Lavadero funciona (hay coches)
+ a1c:	82 e0       	ldi	r24, 0x02	; 2
+ a1e:	80 93 11 02 	sts	0x0211, r24	; 0x800211 <aux_parpadeo_LED1>
+ a22:	08 95       	ret
+
+00000a24 <__vector_47>:
+	
+	
+}
+
+ISR(TIMER5_COMPA_vect) {	//Timer solo usado por Parte2 
+ a24:	1f 92       	push	r1
+ a26:	0f 92       	push	r0
+ a28:	0f b6       	in	r0, 0x3f	; 63
+ a2a:	0f 92       	push	r0
+ a2c:	11 24       	eor	r1, r1
+ a2e:	8f 93       	push	r24
+ a30:	9f 93       	push	r25
+ a32:	ef 93       	push	r30
+ a34:	ff 93       	push	r31
+	// Rutina de interrupción del Timer 5
+	timer_ticks++;
+ a36:	80 91 17 02 	lds	r24, 0x0217	; 0x800217 <timer_ticks>
+ a3a:	8f 5f       	subi	r24, 0xFF	; 255
+ a3c:	80 93 17 02 	sts	0x0217, r24	; 0x800217 <timer_ticks>
+	if (timer_ticks == aux_parpadeo_LED1) { // 10 o 0.5 segundos
+ a40:	90 91 17 02 	lds	r25, 0x0217	; 0x800217 <timer_ticks>
+ a44:	80 91 11 02 	lds	r24, 0x0211	; 0x800211 <aux_parpadeo_LED1>
+ a48:	98 13       	cpse	r25, r24
+ a4a:	08 c0       	rjmp	.+16     	; 0xa5c <__vector_47+0x38>
+		setBit(REG_LED_PORT,PIN_L1_PORT); // Enciendo el LED
+ a4c:	eb e0       	ldi	r30, 0x0B	; 11
+ a4e:	f1 e0       	ldi	r31, 0x01	; 1
+ a50:	80 81       	ld	r24, Z
+ a52:	82 60       	ori	r24, 0x02	; 2
+ a54:	80 83       	st	Z, r24
+		timer_ticks = 0; // Reiniciar el contador
+ a56:	10 92 17 02 	sts	0x0217, r1	; 0x800217 <timer_ticks>
+ a5a:	09 c0       	rjmp	.+18     	; 0xa6e <__vector_47+0x4a>
+	}
+	else if (timer_ticks == 1) { // 0.5 segundo
+ a5c:	80 91 17 02 	lds	r24, 0x0217	; 0x800217 <timer_ticks>
+ a60:	81 30       	cpi	r24, 0x01	; 1
+ a62:	29 f4       	brne	.+10     	; 0xa6e <__vector_47+0x4a>
+		clearBit(REG_LED_PORT,PIN_L1_PORT); // Apago el LED
+ a64:	eb e0       	ldi	r30, 0x0B	; 11
+ a66:	f1 e0       	ldi	r31, 0x01	; 1
+ a68:	80 81       	ld	r24, Z
+ a6a:	8d 7f       	andi	r24, 0xFD	; 253
+ a6c:	80 83       	st	Z, r24
+	}
+}
+ a6e:	ff 91       	pop	r31
+ a70:	ef 91       	pop	r30
+ a72:	9f 91       	pop	r25
+ a74:	8f 91       	pop	r24
+ a76:	0f 90       	pop	r0
+ a78:	0f be       	out	0x3f, r0	; 63
+ a7a:	0f 90       	pop	r0
+ a7c:	1f 90       	pop	r1
+ a7e:	18 95       	reti
+
+00000a80 <setup_lv>:
+///////////////////	 LAVADO VERTICAL  //////////////////
+////////////////////////////////////////////////////////
+
+
+void setup_lv(){
+	setBit (REG_M2_en_DDR, PIN_M2_en_DDR);
+ a80:	e7 e0       	ldi	r30, 0x07	; 7
+ a82:	f1 e0       	ldi	r31, 0x01	; 1
+ a84:	80 81       	ld	r24, Z
+ a86:	80 64       	ori	r24, 0x40	; 64
+ a88:	80 83       	st	Z, r24
+	clearBit(REG_M2_en_PORT, PIN_M2_en_PORT); //por defecto apagado
+ a8a:	e8 e0       	ldi	r30, 0x08	; 8
+ a8c:	f1 e0       	ldi	r31, 0x01	; 1
+ a8e:	80 81       	ld	r24, Z
+ a90:	8f 7b       	andi	r24, 0xBF	; 191
+ a92:	80 83       	st	Z, r24
+ a94:	08 95       	ret
+
+00000a96 <lavadovertical>:
+	modo_lavado=0;
+}*/
+
+void lavadovertical(uint8_t modo_lavado){
+	
+	if (!modo_lavado){	// Para: No hay Coches
+ a96:	81 11       	cpse	r24, r1
+ a98:	06 c0       	rjmp	.+12     	; 0xaa6 <lavadovertical+0x10>
+		clearBit(REG_M2_en_PORT, PIN_M2_en_PORT); // Apago motor lavado, nos aseguramos que para
+ a9a:	e8 e0       	ldi	r30, 0x08	; 8
+ a9c:	f1 e0       	ldi	r31, 0x01	; 1
+ a9e:	80 81       	ld	r24, Z
+ aa0:	8f 7b       	andi	r24, 0xBF	; 191
+ aa2:	80 83       	st	Z, r24
+ aa4:	08 95       	ret
+	} 
+	else{	// Activa: Hay Coches
+		setBit(REG_M2_en_PORT, PIN_M2_en_PORT);
+ aa6:	e8 e0       	ldi	r30, 0x08	; 8
+ aa8:	f1 e0       	ldi	r31, 0x01	; 1
+ aaa:	80 81       	ld	r24, Z
+ aac:	80 64       	ori	r24, 0x40	; 64
+ aae:	80 83       	st	Z, r24
+ ab0:	08 95       	ret
+
+00000ab2 <setup_Parte2>:
+//////////////////////////////////////////////
+//////////////////	 COMÚN 	//////////////////
+//////////////////////////////////////////////
+
+void setup_Parte2(void){
+	setup_barrera();
+ ab2:	0e 94 42 04 	call	0x884	; 0x884 <setup_barrera>
+	setup_luz();
+ ab6:	0e 94 c1 04 	call	0x982	; 0x982 <setup_luz>
+	setup_lv();
+ aba:	0e 94 40 05 	call	0xa80	; 0xa80 <setup_lv>
+ abe:	08 95       	ret
+
+00000ac0 <Parte_2>:
+}
+
+void Parte_2(void){
+	barrera();
+ ac0:	0e 94 86 04 	call	0x90c	; 0x90c <barrera>
+	control_LED1();
+ ac4:	0e 94 e5 04 	call	0x9ca	; 0x9ca <control_LED1>
+	lavadovertical(NumCarLavado);	
+ ac8:	80 91 29 02 	lds	r24, 0x0229	; 0x800229 <NumCarLavado>
+ acc:	0e 94 4b 05 	call	0xa96	; 0xa96 <lavadovertical>
+ ad0:	08 95       	ret
+
+00000ad2 <setupCinta>:
+////////////////////////////////
+////// CINTA DE ARRASTRE ///////
+////////////////////////////////
+
+void setupCinta(){	//Inicialización
+	setBit(REG_M6_di_DDR, PIN_M6_di_DDR); //Configurar el pin de dirección M6 como salida
+ ad2:	ea e0       	ldi	r30, 0x0A	; 10
+ ad4:	f1 e0       	ldi	r31, 0x01	; 1
+ ad6:	80 81       	ld	r24, Z
+ ad8:	81 60       	ori	r24, 0x01	; 1
+ ada:	80 83       	st	Z, r24
+	setBit(REG_M6_en_DDR, PIN_M6_en_DDR); //Configurar el pin M6 en como salida
+ adc:	84 b1       	in	r24, 0x04	; 4
+ ade:	80 68       	ori	r24, 0x80	; 128
+ ae0:	84 b9       	out	0x04, r24	; 4
+	setBit(REG_M6_di_PORT, PIN_M6_di_PORT); //Ajustar el sentido de giro de M6 a la derecha
+ ae2:	eb e0       	ldi	r30, 0x0B	; 11
+ ae4:	f1 e0       	ldi	r31, 0x01	; 1
+ ae6:	80 81       	ld	r24, Z
+ ae8:	81 60       	ori	r24, 0x01	; 1
+ aea:	80 83       	st	Z, r24
+ aec:	08 95       	ret
+
+00000aee <moveCinta>:
+}
+
+void moveCinta(){
+	setBit(REG_M6_en_PORT, PIN_M6_en_PORT);
+ aee:	85 b1       	in	r24, 0x05	; 5
+ af0:	80 68       	ori	r24, 0x80	; 128
+ af2:	85 b9       	out	0x05, r24	; 5
+	setBit(TCCR1A, COM1C1);
+ af4:	e0 e8       	ldi	r30, 0x80	; 128
+ af6:	f0 e0       	ldi	r31, 0x00	; 0
+ af8:	80 81       	ld	r24, Z
+ afa:	88 60       	ori	r24, 0x08	; 8
+ afc:	80 83       	st	Z, r24
+ afe:	08 95       	ret
+
+00000b00 <stopCinta>:
+}
+
+void stopCinta(){
+	clearBit(REG_M6_en_PORT, PIN_M6_en_PORT);
+ b00:	85 b1       	in	r24, 0x05	; 5
+ b02:	8f 77       	andi	r24, 0x7F	; 127
+ b04:	85 b9       	out	0x05, r24	; 5
+	clearBit(TCCR1A, COM1C1);
+ b06:	e0 e8       	ldi	r30, 0x80	; 128
+ b08:	f0 e0       	ldi	r31, 0x00	; 0
+ b0a:	80 81       	ld	r24, Z
+ b0c:	87 7f       	andi	r24, 0xF7	; 247
+ b0e:	80 83       	st	Z, r24
+ b10:	08 95       	ret
+
+00000b12 <cinta>:
+}
+
+void cinta(){	//Loop
+	if (NumCarLavado == 0 && NumCarSecado == 0){	// Ningún vehículo
+ b12:	80 91 29 02 	lds	r24, 0x0229	; 0x800229 <NumCarLavado>
+ b16:	81 11       	cpse	r24, r1
+ b18:	07 c0       	rjmp	.+14     	; 0xb28 <cinta+0x16>
+ b1a:	80 91 2d 02 	lds	r24, 0x022D	; 0x80022d <NumCarSecado>
+ b1e:	81 11       	cpse	r24, r1
+ b20:	03 c0       	rjmp	.+6      	; 0xb28 <cinta+0x16>
+		stopCinta();
+ b22:	0e 94 80 05 	call	0xb00	; 0xb00 <stopCinta>
+ b26:	08 95       	ret
+	}
+	else{	// Algún vehículo
+		moveCinta();
+ b28:	0e 94 77 05 	call	0xaee	; 0xaee <moveCinta>
+ b2c:	08 95       	ret
+
+00000b2e <setup_semaforo>:
+///////////////////////////////////////
+//////////	SEMÁFORO LEDs	 //////////
+///////////////////////////////////////
+
+void setup_semaforo(){ //Inicialización Semáforo: LED4 y LED5
+	setBit(REG_LED_DDR, PIN_L4_DDR);	// GREEN: Establecer LED 4 pin como salida
+ b2e:	ea e0       	ldi	r30, 0x0A	; 10
+ b30:	f1 e0       	ldi	r31, 0x01	; 1
+ b32:	80 81       	ld	r24, Z
+ b34:	88 60       	ori	r24, 0x08	; 8
+ b36:	80 83       	st	Z, r24
+	setBit(	REG_LED_DDR, PIN_L5_DDR);	// RED: Establecer LED 5 pin como salida
+ b38:	80 81       	ld	r24, Z
+ b3a:	80 62       	ori	r24, 0x20	; 32
+ b3c:	80 83       	st	Z, r24
+ b3e:	08 95       	ret
+
+00000b40 <off_Semaforo>:
+}
+
+void off_Semaforo() {
+	clearBit(REG_LED_PORT, PIN_L4_PORT);	// GREEN: Apagado
+ b40:	eb e0       	ldi	r30, 0x0B	; 11
+ b42:	f1 e0       	ldi	r31, 0x01	; 1
+ b44:	80 81       	ld	r24, Z
+ b46:	87 7f       	andi	r24, 0xF7	; 247
+ b48:	80 83       	st	Z, r24
+	setBit(REG_LED_PORT, PIN_L5_PORT);		// RED: Encendido
+ b4a:	80 81       	ld	r24, Z
+ b4c:	80 62       	ori	r24, 0x20	; 32
+ b4e:	80 83       	st	Z, r24
+ b50:	08 95       	ret
+
+00000b52 <semaforo>:
+}
+
+void semaforo(){ //LED_4_5
+	if (NumCarLavado == 0 && NumCarSecado == 0){	// Ningún vehículo
+ b52:	80 91 29 02 	lds	r24, 0x0229	; 0x800229 <NumCarLavado>
+ b56:	81 11       	cpse	r24, r1
+ b58:	0d c0       	rjmp	.+26     	; 0xb74 <semaforo+0x22>
+ b5a:	80 91 2d 02 	lds	r24, 0x022D	; 0x80022d <NumCarSecado>
+ b5e:	81 11       	cpse	r24, r1
+ b60:	09 c0       	rjmp	.+18     	; 0xb74 <semaforo+0x22>
+		clearBit(REG_LED_PORT, PIN_L4_PORT);	// GREEN: Apagado
+ b62:	eb e0       	ldi	r30, 0x0B	; 11
+ b64:	f1 e0       	ldi	r31, 0x01	; 1
+ b66:	80 81       	ld	r24, Z
+ b68:	87 7f       	andi	r24, 0xF7	; 247
+ b6a:	80 83       	st	Z, r24
+		clearBit(REG_LED_PORT, PIN_L5_PORT);	// RED: Apagado
+ b6c:	80 81       	ld	r24, Z
+ b6e:	8f 7d       	andi	r24, 0xDF	; 223
+ b70:	80 83       	st	Z, r24
+ b72:	08 95       	ret
+	}
+	else{	// Algún vehículo
+		
+		if(isBitSet(REG_SOB_PIN, PIN_SO10_PIN) && isClrSet(REG_SOD_PIN, PIN_SO11_PIN) && isClrSet(REG_SOB_PIN, PIN_SO12_PIN)){
+ b74:	1d 9b       	sbis	0x03, 5	; 3
+ b76:	0d c0       	rjmp	.+26     	; 0xb92 <semaforo+0x40>
+ b78:	4d 99       	sbic	0x09, 5	; 9
+ b7a:	0b c0       	rjmp	.+22     	; 0xb92 <semaforo+0x40>
+ b7c:	1a 99       	sbic	0x03, 2	; 3
+ b7e:	09 c0       	rjmp	.+18     	; 0xb92 <semaforo+0x40>
+			// No hay coche liberado de la cinta (SO10 && not_SO11 && not_SO12)
+			clearBit(REG_LED_PORT, PIN_L4_PORT);	// GREEN: Apagado
+ b80:	eb e0       	ldi	r30, 0x0B	; 11
+ b82:	f1 e0       	ldi	r31, 0x01	; 1
+ b84:	80 81       	ld	r24, Z
+ b86:	87 7f       	andi	r24, 0xF7	; 247
+ b88:	80 83       	st	Z, r24
+			setBit(REG_LED_PORT, PIN_L5_PORT);		// RED: Encendido
+ b8a:	80 81       	ld	r24, Z
+ b8c:	80 62       	ori	r24, 0x20	; 32
+ b8e:	80 83       	st	Z, r24
+ b90:	08 95       	ret
+		}
+		else {
+			// Coche liberado de la cinta
+			setBit(REG_LED_PORT, PIN_L4_PORT);		// GREEN: Encendido
+ b92:	eb e0       	ldi	r30, 0x0B	; 11
+ b94:	f1 e0       	ldi	r31, 0x01	; 1
+ b96:	80 81       	ld	r24, Z
+ b98:	88 60       	ori	r24, 0x08	; 8
+ b9a:	80 83       	st	Z, r24
+			clearBit(REG_LED_PORT, PIN_L5_PORT);	// RED: Apagado
+ b9c:	80 81       	ld	r24, Z
+ b9e:	8f 7d       	andi	r24, 0xDF	; 223
+ ba0:	80 83       	st	Z, r24
+ ba2:	08 95       	ret
+
+00000ba4 <setup_Parte3>:
+///////////////////////////////
+///////		 COMÚN		///////
+///////////////////////////////
+
+void setup_Parte3(){
+	cli();
+ ba4:	f8 94       	cli
+	setupCinta();
+ ba6:	0e 94 69 05 	call	0xad2	; 0xad2 <setupCinta>
+	setup_semaforo();
+ baa:	0e 94 97 05 	call	0xb2e	; 0xb2e <setup_semaforo>
+	setup_ParadaEmergencia();
+ bae:	0e 94 07 02 	call	0x40e	; 0x40e <setup_ParadaEmergencia>
+	sei();
+ bb2:	78 94       	sei
+ bb4:	08 95       	ret
+
+00000bb6 <Parte_3>:
+}
+
+void Parte_3(){	//loop
+	cinta();
+ bb6:	0e 94 89 05 	call	0xb12	; 0xb12 <cinta>
+	semaforo();
+ bba:	0e 94 a9 05 	call	0xb52	; 0xb52 <semaforo>
+ bbe:	08 95       	ret
+
+00000bc0 <__udivmodsi4>:
+ bc0:	a1 e2       	ldi	r26, 0x21	; 33
+ bc2:	1a 2e       	mov	r1, r26
+ bc4:	aa 1b       	sub	r26, r26
+ bc6:	bb 1b       	sub	r27, r27
+ bc8:	fd 01       	movw	r30, r26
+ bca:	0d c0       	rjmp	.+26     	; 0xbe6 <__udivmodsi4_ep>
+
+00000bcc <__udivmodsi4_loop>:
+ bcc:	aa 1f       	adc	r26, r26
+ bce:	bb 1f       	adc	r27, r27
+ bd0:	ee 1f       	adc	r30, r30
+ bd2:	ff 1f       	adc	r31, r31
+ bd4:	a2 17       	cp	r26, r18
+ bd6:	b3 07       	cpc	r27, r19
+ bd8:	e4 07       	cpc	r30, r20
+ bda:	f5 07       	cpc	r31, r21
+ bdc:	20 f0       	brcs	.+8      	; 0xbe6 <__udivmodsi4_ep>
+ bde:	a2 1b       	sub	r26, r18
+ be0:	b3 0b       	sbc	r27, r19
+ be2:	e4 0b       	sbc	r30, r20
+ be4:	f5 0b       	sbc	r31, r21
+
+00000be6 <__udivmodsi4_ep>:
+ be6:	66 1f       	adc	r22, r22
+ be8:	77 1f       	adc	r23, r23
+ bea:	88 1f       	adc	r24, r24
+ bec:	99 1f       	adc	r25, r25
+ bee:	1a 94       	dec	r1
+ bf0:	69 f7       	brne	.-38     	; 0xbcc <__udivmodsi4_loop>
+ bf2:	60 95       	com	r22
+ bf4:	70 95       	com	r23
+ bf6:	80 95       	com	r24
+ bf8:	90 95       	com	r25
+ bfa:	9b 01       	movw	r18, r22
+ bfc:	ac 01       	movw	r20, r24
+ bfe:	bd 01       	movw	r22, r26
+ c00:	cf 01       	movw	r24, r30
+ c02:	08 95       	ret
+
+00000c04 <_exit>:
+ c04:	f8 94       	cli
+
+00000c06 <__stop_program>:
+ c06:	ff cf       	rjmp	.-2      	; 0xc06 <__stop_program>
