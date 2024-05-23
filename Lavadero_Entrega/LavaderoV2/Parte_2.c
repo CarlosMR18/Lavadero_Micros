@@ -11,9 +11,6 @@ extern volatile uint8_t NumCarLavado; // Cuenta coches en zona lavado
 extern volatile uint8_t NumCarSecado; // Cuenta coches en zona secado
 
 // VARIABLES BARRERA
-// volatile uint8_t reg_SO1 = 1; // Almacena valor de SO1
-// volatile uint8_t reg_SO2 = 1; // Almacena valor de SO2
-// volatile uint8_t barrera_cerrada=0; // NO SE USA, SOBRA
 volatile uint8_t modo_barrera = 0;
 volatile uint32_t cnt_apertura_barrera = 0; // En millisegundos
 
