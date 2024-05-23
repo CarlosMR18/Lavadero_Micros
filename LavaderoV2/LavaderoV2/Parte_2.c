@@ -110,13 +110,13 @@ void setup_luz(){
 	TCNT5 = 0; // Inicializar el contador
 	OCR5A = 15625-1; // Valor de comparación para 0.5 segundo
 	TIMSK5 |= (1 << OCIE5A); // Habilitar la interrupción por comparación
-	TIFR5 = (1<<OCF5A);
+	TIFR5 |= (1<<OCF5A);
 	sei();
 }
 
 void control_LED1(void){
-	if (NumCarLavado == 0 && NumCarSecado == 0) aux_parpadeo_LED1 = 20; // Parpadeo largo: Lavadero no funciona (sin coches)
-	else aux_parpadeo_LED1 = 2; // Parpadeo corto: Lavadero funciona (hay coches)
+	if ((NumCarLavado == 0) && (NumCarSecado == 0)){aux_parpadeo_LED1 = 20;} // Parpadeo largo: Lavadero no funciona (sin coches)
+	else {aux_parpadeo_LED1 = 2;} // Parpadeo corto: Lavadero funciona (hay coches)
 }
 
 ISR(TIMER5_COMPA_vect) {	//Timer solo usado por Parte2 
